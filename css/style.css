@@ -977,3 +977,27 @@ footer p {
     height: 18px;
     accent-color: #c9a227;
 }
+
+/* =========================================
+   STATUS DOS PEDIDOS
+========================================= */
+
+.status-pedido {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.status-agendado {
+    background: #5a4500;
+    color: #ffd84d;
+    border: 1px solid #c9a227;
+}
+
+.status-concluido {
+    background: #164d2a;
+    color: #5cff91;
+    border: 1px solid #2ecc71;
+}
