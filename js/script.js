@@ -268,29 +268,37 @@ function mostrarAgendamento(
 
     botaoAgendar.addEventListener("click", function () {
 
-        const data = campoData.value;
+    const data = campoData.value;
 
-        const horario =
-            janela.querySelector("#horario-agendamento").value;
+    const horario =
+        janela.querySelector("#horario-agendamento").value;
 
-        if (!data) {
-            alert("Por favor, escolha uma data.");
-            return;
-        }
+    if (!data) {
 
-        if (!horario) {
-            alert("Por favor, escolha um horário.");
-            return;
-        }
+        alert("Por favor, escolha uma data.");
 
-        mostrarDadosCliente(
-    janela,
-    veiculo,
-    nomePacote,
-    data,
-    horario,
-    total
-);
+        return;
+    }
+
+    if (!horario) {
+
+        alert("Por favor, escolha um horário.");
+
+        return;
+    }
+
+    mostrarDadosCliente(
+        janela,
+        veiculo,
+        nomePacote,
+        data,
+        horario,
+        total
+    );
+
+});
+}
+
 
 // =========================================
 // DADOS DO CLIENTE
@@ -430,7 +438,7 @@ function mostrarDadosCliente(
 
 
             // =========================================
-            // PRÓXIMA ETAPA
+            // TESTE FINAL
             // =========================================
 
             alert(
