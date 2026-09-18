@@ -644,3 +644,211 @@ footer p {
 
     margin-top: 10px;
 }
+
+/* =========================================
+   ESCOLHA DO VEÍCULO
+========================================= */
+
+.vehicle-selection {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.85);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 9999;
+}
+
+.vehicle-box {
+    background: #111;
+
+    border: 1px solid #c9a227;
+
+    border-radius: 12px;
+
+    width: 90%;
+    max-width: 500px;
+
+    padding: 40px;
+
+    text-align: center;
+}
+
+.vehicle-box h2 {
+    color: #c9a227;
+
+    margin-bottom: 20px;
+}
+
+.vehicle-box p {
+    color: #ddd;
+
+    margin-bottom: 12px;
+}
+
+.vehicle-buttons {
+    display: flex;
+
+    gap: 20px;
+
+    justify-content: center;
+
+    margin-top: 30px;
+}
+
+.vehicle-btn {
+    background: #c9a227;
+
+    color: #111;
+
+    border: none;
+
+    border-radius: 6px;
+
+    padding: 15px 30px;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.vehicle-btn:hover {
+    transform: translateY(-3px);
+
+    background: #e0bd3a;
+}
+
+
+/* =========================================
+   SERVIÇOS EXTRAS
+========================================= */
+
+.vehicle-box hr {
+    border: none;
+
+    border-top: 1px solid #333;
+
+    margin: 25px 0;
+}
+
+.vehicle-box h3 {
+    color: #c9a227;
+
+    margin-bottom: 20px;
+}
+
+.extra-service {
+    text-align: left;
+
+    margin: 12px 0;
+}
+
+.extra-service label {
+    display: block;
+
+    background: #181818;
+
+    border: 1px solid #333;
+
+    border-radius: 6px;
+
+    padding: 14px;
+
+    color: #ddd;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.extra-service label:hover {
+    border-color: #c9a227;
+}
+
+.extra-checkbox {
+    margin-right: 10px;
+
+    accent-color: #c9a227;
+}
+
+.total-box {
+    margin-top: 25px;
+
+    padding: 18px;
+
+    border-top: 1px solid #c9a227;
+
+    color: #c9a227;
+
+    font-size: 20px;
+}
+
+
+/* =========================================
+   AGENDAMENTO
+========================================= */
+
+.schedule-input {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 14px;
+
+    margin-bottom: 20px;
+
+    background: #181818;
+
+    color: #fff;
+
+    border: 1px solid #444;
+
+    border-radius: 6px;
+
+    font-size: 16px;
+}
+
+.schedule-input:focus {
+    outline: none;
+
+    border-color: #c9a227;
+}
+
+#continuar-btn,
+#agendar-btn {
+    width: 100%;
+
+    margin-top: 20px;
+}
+
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 500px) {
+
+    .vehicle-buttons {
+        flex-direction: column;
+    }
+
+    .vehicle-btn {
+        width: 100%;
+    }
+
+    .vehicle-box {
+        padding: 25px;
+    }
+
+}
