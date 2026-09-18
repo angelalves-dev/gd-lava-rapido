@@ -727,4 +727,45 @@ ${extrasSelecionados.map(function (extra) {
 </button>
         </div>
     `;
+
+    const botaoFinalizar =
+    janela.querySelector("#finalizar-servico-btn");
+
+botaoFinalizar.addEventListener(
+    "click",
+    function () {
+
+        const checkboxes =
+            janela.querySelectorAll(
+                '.check-item input[type="checkbox"]'
+            );
+
+        let todosConcluidos = true;
+
+        checkboxes.forEach(function (checkbox) {
+
+            if (!checkbox.checked) {
+                todosConcluidos = false;
+            }
+
+        });
+
+        if (!todosConcluidos) {
+
+            alert(
+                "Antes de finalizar, marque todas as etapas do checklist."
+            );
+
+            return;
+        }
+
+        alert(
+            "Serviço finalizado com sucesso!\n\n" +
+            "Cliente: " + nome + "\n" +
+            "Veículo: " + modelo + "\n" +
+            "Placa: " + placa
+        );
+
+    }
+);
 }
