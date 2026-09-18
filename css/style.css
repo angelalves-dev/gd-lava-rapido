@@ -543,3 +543,68 @@ footer p {
     }
 
 }
+
+/* =========================================
+   SERVIÇOS EXTRAS
+========================================= */
+
+.vehicle-box hr {
+    border: none;
+    border-top: 1px solid #333;
+    margin: 25px 0;
+}
+
+.vehicle-box h3 {
+    color: #c9a227;
+    margin-bottom: 20px;
+}
+
+.extra-service {
+    text-align: left;
+    margin: 12px 0;
+}
+
+.extra-service label {
+    display: block;
+
+    background: #181818;
+
+    border: 1px solid #333;
+
+    border-radius: 6px;
+
+    padding: 14px;
+
+    color: #ddd;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.extra-service label:hover {
+    border-color: #c9a227;
+}
+
+.extra-checkbox {
+    margin-right: 10px;
+
+    accent-color: #c9a227;
+}
+
+.total-box {
+    margin-top: 25px;
+
+    padding: 18px;
+
+    border-top: 1px solid #c9a227;
+
+    color: #c9a227;
+
+    font-size: 20px;
+}
+
+#continuar-btn {
+    margin-top: 20px;
+    width: 100%;
+}
