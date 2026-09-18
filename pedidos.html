@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pedidos - GD Lava Rápido</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <header>
+
+        <div class="container">
+
+            <h1>GD Lava Rápido</h1>
+
+            <p>Painel de Pedidos</p>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <section class="container">
+
+            <h2>Pedido recebido</h2>
+
+            <div id="pedido-container">
+
+                <!-- O pedido aparecerá aqui -->
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        const pedidoContainer =
+            document.querySelector("#pedido-container");
+
+
+        const pedidoSalvo =
+            localStorage.getItem("pedidoGD");
+
+
+        if (!pedidoSalvo) {
+
+            pedidoContainer.innerHTML = `
+                <div class="vehicle-box">
+
+                    <h3>Nenhum pedido encontrado</h3>
+
+                    <p>
+                        Ainda não existe um pedido salvo neste navegador.
+                    </p>
+
+                </div>
+            `;
+
+        } else {
+
+            const pedido =
+                JSON.parse(pedidoSalvo);
+
+
+            pedidoContainer.innerHTML = `
+
+                <div class="vehicle-box">
+
+                    <h3>Dados do cliente</h3>
+
+                    <p>
+                        <strong>Nome:</strong>
+                        ${pedido.nome}
+                    </p>
+
+                    <p>
+                        <strong>WhatsApp:</strong>
+                        ${pedido.whatsapp}
+                    </p>
+
+                    <hr>
+
+                    <h3>Veículo</h3>
+
+                    <p>
+                        <strong>Tipo:</strong>
+                        ${pedido.veiculo}
+                    </p>
+
+                    <p>
+                        <strong>Modelo:</strong>
+                        ${pedido.modelo}
+                    </p>
+
+                    <p>
+                        <strong>Placa:</strong>
+                        ${pedido.placa}
+                    </p>
+
+                    <hr>
+
+                    <h3>Serviço</h3>
+
+                    <p>
+                        <strong>Pacote:</strong>
+                        ${pedido.pacote}
+                    </p>
+
+                    <p>
+                        <strong>Extras:</strong>
+                        ${
+                            pedido.extras.length > 0
+                                ? pedido.extras.join(", ")
+                                : "Nenhum"
+                        }
+                    </p>
+
+                    <p>
+                        <strong>Data:</strong>
+                        ${pedido.data}
+                    </p>
+
+                    <p>
+                        <strong>Horário:</strong>
+                        ${pedido.horario}
+                    </p>
+
+                    <div class="resumo-total">
+
+                        TOTAL: R$ ${pedido.total}
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+    </script>
+
+</body>
+
+</html>
