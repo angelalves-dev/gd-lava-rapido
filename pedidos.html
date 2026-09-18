@@ -352,7 +352,61 @@ const fecharOS =
 
 fecharOS.addEventListener("click", function () {
 
+    const checkboxes =
+        ordemServico.querySelectorAll(
+            'input[type="checkbox"]'
+        );
+
+    let todosMarcados = true;
+
+    checkboxes.forEach(function (checkbox) {
+
+        if (!checkbox.checked) {
+            todosMarcados = false;
+        }
+
+    });
+
+    if (!todosMarcados) {
+
+        alert(
+            "Antes de finalizar a Ordem de Serviço, marque todos os itens do checklist."
+        );
+
+        return;
+
+    }
+
+    const pedidosAtualizados =
+        JSON.parse(
+            localStorage.getItem("pedidosGD")
+        ) || [];
+
+    const pedidoAtualizado =
+        pedidosAtualizados.find(function (pedido) {
+
+            return pedido.id === pedidoId;
+
+        });
+
+    if (pedidoAtualizado) {
+
+        pedidoAtualizado.status = "Concluído";
+
+        localStorage.setItem(
+            "pedidosGD",
+            JSON.stringify(pedidosAtualizados)
+        );
+
+    }
+
+    alert(
+        "Ordem de Serviço finalizada com sucesso! ✅"
+    );
+
     ordemServico.remove();
+
+    location.reload();
 
 });
 
