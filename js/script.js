@@ -222,16 +222,13 @@ function mostrarServicosExtras(
     const continuar =
         janela.querySelector("#continuar-btn");
 
-    continuar.addEventListener("click", function () {
+   continuar.addEventListener("click", function () {
 
-        alert(
-            "Pedido iniciado!\n\n" +
-            "Veículo: " + veiculo +
-            "\nPacote: " + nomePacote +
-            "\nTotal: R$ " +
-            totalElemento.textContent
-        );
+    mostrarAgendamento(
+        janela,
+        veiculo,
+        nomePacote,
+        totalElemento.textContent
+    );
 
-    });
-
-}
+});
