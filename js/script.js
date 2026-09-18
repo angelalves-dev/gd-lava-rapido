@@ -646,7 +646,8 @@ function mostrarChecklist(
     extrasSelecionados,
     data,
     horario,
-    total
+    total,
+    pedidoId
 ) {
 
     janela.innerHTML = `
