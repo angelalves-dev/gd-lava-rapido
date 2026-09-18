@@ -18,7 +18,7 @@ botoes.forEach(function (botao) {
             precoTexto.replace("A partir de R$", "").replace(",", ".")
         );
 
-        // Criar área de escolha do veículo
+        // Criar janela de escolha do veículo
         const escolhaVeiculo = document.createElement("div");
 
         escolhaVeiculo.classList.add("vehicle-selection");
@@ -28,9 +28,13 @@ botoes.forEach(function (botao) {
 
                 <h2>Escolha seu veículo</h2>
 
-                <p>Você escolheu o pacote <strong>${nome}</strong>.</p>
+                <p>
+                    Você escolheu o pacote <strong>${nome}</strong>.
+                </p>
 
-                <p>Agora informe o tipo de veículo:</p>
+                <p>
+                    Agora informe o tipo de veículo:
+                </p>
 
                 <div class="vehicle-buttons">
 
@@ -75,87 +79,3 @@ botoes.forEach(function (botao) {
     });
 
 });
-
-/* =========================================
-   ESCOLHA DO VEÍCULO
-========================================= */
-
-.vehicle-selection {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    z-index: 9999;
-}
-
-.vehicle-box {
-    background: #111;
-    border: 1px solid #c9a227;
-    border-radius: 12px;
-
-    width: 90%;
-    max-width: 500px;
-
-    padding: 40px;
-
-    text-align: center;
-}
-
-.vehicle-box h2 {
-    color: #c9a227;
-    margin-bottom: 20px;
-}
-
-.vehicle-box p {
-    color: #ddd;
-    margin-bottom: 12px;
-}
-
-.vehicle-buttons {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-
-    margin-top: 30px;
-}
-
-.vehicle-btn {
-    background: #c9a227;
-    color: #111;
-
-    border: none;
-    border-radius: 6px;
-
-    padding: 15px 30px;
-
-    font-size: 16px;
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: 0.3s;
-}
-
-.vehicle-btn:hover {
-    transform: translateY(-3px);
-    background: #e0bd3a;
-}
-
-@media (max-width: 500px) {
-
-    .vehicle-buttons {
-        flex-direction: column;
-    }
-
-    .vehicle-btn {
-        width: 100%;
-    }
-
-}
