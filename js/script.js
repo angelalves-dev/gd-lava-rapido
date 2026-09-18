@@ -205,7 +205,8 @@ function mostrarAgendamento(
     janela,
     veiculo,
     nomePacote,
-    total
+    total,
+    extrasSelecionados
 ) {
 
     janela.innerHTML = `
