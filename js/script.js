@@ -585,6 +585,26 @@ function mostrarResumoPedido(
     "click",
     function () {
 
+        const pedido = {
+
+            nome: nome,
+            whatsapp: whatsapp,
+            modelo: modelo,
+            placa: placa,
+            veiculo: veiculo,
+            pacote: nomePacote,
+            extras: extrasSelecionados,
+            data: data,
+            horario: horario,
+            total: total
+
+        };
+
+        localStorage.setItem(
+            "pedidoGD",
+            JSON.stringify(pedido)
+        );
+
         mostrarChecklist(
             janela,
             nome,
