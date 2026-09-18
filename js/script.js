@@ -328,7 +328,8 @@ function mostrarDadosCliente(
     nomePacote,
     data,
     horario,
-    total
+    total,
+    extrasSelecionados
 ) {
 
     janela.innerHTML = `
@@ -460,17 +461,18 @@ function mostrarDadosCliente(
             // =========================================
 
                mostrarResumoPedido(
-                janela,
-                nome,
-                whatsapp,
-                modelo,
-                placa,
-                veiculo,
-                nomePacote,
-                data,
-                horario,
-                total
-            );
+    janela,
+    nome,
+    whatsapp,
+    modelo,
+    placa,
+    veiculo,
+    nomePacote,
+    data,
+    horario,
+    total,
+    extrasSelecionados
+);
 
         }
 
@@ -492,7 +494,8 @@ function mostrarResumoPedido(
     nomePacote,
     data,
     horario,
-    total
+    total,
+    extrasSelecionados
 ) {
 
     janela.innerHTML = `
@@ -536,6 +539,16 @@ function mostrarResumoPedido(
                 <strong>${nomePacote}</strong>
             </div>
 
+<div class="resumo-item">
+    <span>Extras</span>
+    <strong>
+        ${
+            extrasSelecionados.length > 0
+                ? extrasSelecionados.join(", ")
+                : "Nenhum"
+        }
+    </strong>
+</div>
             <div class="resumo-item">
                 <span>Data</span>
                 <strong>${data}</strong>
