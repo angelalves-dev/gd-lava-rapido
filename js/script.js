@@ -622,7 +622,8 @@ localStorage.setItem(
             extrasSelecionados,
             data,
             horario,
-            total
+            total,
+            pedido.id
         );
 
     }
