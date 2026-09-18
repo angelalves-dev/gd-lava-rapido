@@ -180,7 +180,38 @@
 
 
                     pedidoContainer.appendChild(card);
+const botaoOS =
+    card.querySelector(".abrir-os-btn");
 
+botaoOS.addEventListener("click", function () {
+
+    const pedidoId =
+        Number(botaoOS.dataset.id);
+
+    const pedidoSelecionado =
+        pedidosNovos.find(function (pedido) {
+
+            return pedido.id === pedidoId;
+
+        });
+
+    if (!pedidoSelecionado) {
+
+        alert("Pedido não encontrado.");
+
+        return;
+
+    }
+
+    alert(
+        "Ordem de Serviço\n\n" +
+        "Cliente: " + pedidoSelecionado.nome + "\n" +
+        "Veículo: " + pedidoSelecionado.modelo + "\n" +
+        "Placa: " + pedidoSelecionado.placa + "\n" +
+        "Pacote: " + pedidoSelecionado.pacote
+    );
+
+});
                 }
             );
 
