@@ -161,10 +161,15 @@
                             ${pedido.horario}
                         </p>
 
-                        <div class="status-pedido ${pedido.status === "Concluído" ? "status-concluido" : "status-agendado"}">
+                        <div class="status-pedido ${
+    pedido.status === "Concluído"
+        ? "status-concluido"
+        : pedido.status === "Em andamento"
+            ? "status-andamento"
+            : "status-agendado"
+}">
     ${pedido.status || "Agendado"}
 </div>
-
                         <div class="resumo-total">
 
                             TOTAL: R$ ${pedido.total}
