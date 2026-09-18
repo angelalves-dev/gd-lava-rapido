@@ -1,7 +1,3 @@
-// =========================================
-// SELEÇÃO DE PACOTE
-// =========================================
-
 const botoes = document.querySelectorAll(".select-btn");
 
 botoes.forEach(function (botao) {
@@ -17,10 +13,6 @@ botoes.forEach(function (botao) {
         const preco = parseFloat(
             precoTexto.replace("A partir de R$", "").replace(",", ".")
         );
-
-        // =========================================
-        // ESCOLHA DO VEÍCULO
-        // =========================================
 
         const escolhaVeiculo = document.createElement("div");
 
@@ -56,10 +48,6 @@ botoes.forEach(function (botao) {
 
         document.body.appendChild(escolhaVeiculo);
 
-        // =========================================
-        // BOTÕES CARRO / MOTO
-        // =========================================
-
         const botoesVeiculo =
             escolhaVeiculo.querySelectorAll(".vehicle-btn");
 
@@ -84,10 +72,6 @@ botoes.forEach(function (botao) {
 
 });
 
-
-// =========================================
-// SERVIÇOS EXTRAS
-// =========================================
 
 function mostrarServicosExtras(
     janela,
@@ -114,55 +98,40 @@ function mostrarServicosExtras(
             <h3>Serviços adicionais</h3>
 
             <div class="extra-service">
-
                 <label>
-                    <input type="checkbox"
-                           class="extra-checkbox"
-                           data-preco="30">
+                    <input type="checkbox" class="extra-checkbox" data-preco="30">
                     Lavagem externa — R$ 30,00
                 </label>
-
             </div>
 
             <div class="extra-service">
-
                 <label>
-                    <input type="checkbox"
-                           class="extra-checkbox"
-                           data-preco="50">
+                    <input type="checkbox" class="extra-checkbox" data-preco="50">
                     Higienização interna — R$ 50,00
                 </label>
-
             </div>
 
             <div class="extra-service">
-
                 <label>
-                    <input type="checkbox"
-                           class="extra-checkbox"
-                           data-preco="40">
+                    <input type="checkbox" class="extra-checkbox" data-preco="40">
                     Enceramento — R$ 40,00
                 </label>
-
             </div>
 
             <div class="extra-service">
-
                 <label>
-                    <input type="checkbox"
-                           class="extra-checkbox"
-                           data-preco="100">
+                    <input type="checkbox" class="extra-checkbox" data-preco="100">
                     Polimento — R$ 100,00
                 </label>
-
             </div>
 
             <div class="total-box">
-
                 <strong>
-                    Total: R$ <span id="total">${precoPacote.toFixed(2).replace(".", ",")}</span>
+                    Total: R$ 
+                    <span id="total">
+                        ${precoPacote.toFixed(2).replace(".", ",")}
+                    </span>
                 </strong>
-
             </div>
 
             <button id="continuar-btn" class="vehicle-btn">
@@ -172,9 +141,49 @@ function mostrarServicosExtras(
         </div>
     `;
 
-    // =========================================
-// AGENDAMENTO
-// =========================================
+    const checkboxes =
+        janela.querySelectorAll(".extra-checkbox");
+
+    const totalElemento =
+        janela.querySelector("#total");
+
+    checkboxes.forEach(function (checkbox) {
+
+        checkbox.addEventListener("change", function () {
+
+            let total = precoPacote;
+
+            checkboxes.forEach(function (item) {
+
+                if (item.checked) {
+                    total += parseFloat(item.dataset.preco);
+                }
+
+            });
+
+            totalElemento.textContent =
+                total.toFixed(2).replace(".", ",");
+
+        });
+
+    });
+
+    const continuar =
+        janela.querySelector("#continuar-btn");
+
+    continuar.addEventListener("click", function () {
+
+        mostrarAgendamento(
+            janela,
+            veiculo,
+            nomePacote,
+            totalElemento.textContent
+        );
+
+    });
+
+}
+
 
 function mostrarAgendamento(
     janela,
@@ -221,41 +230,15 @@ function mostrarAgendamento(
                     Selecione um horário
                 </option>
 
-                <option value="08:00">
-                    08:00
-                </option>
-
-                <option value="09:00">
-                    09:00
-                </option>
-
-                <option value="10:00">
-                    10:00
-                </option>
-
-                <option value="11:00">
-                    11:00
-                </option>
-
-                <option value="13:00">
-                    13:00
-                </option>
-
-                <option value="14:00">
-                    14:00
-                </option>
-
-                <option value="15:00">
-                    15:00
-                </option>
-
-                <option value="16:00">
-                    16:00
-                </option>
-
-                <option value="17:00">
-                    17:00
-                </option>
+                <option value="08:00">08:00</option>
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="13:00">13:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
 
             </select>
 
@@ -269,140 +252,46 @@ function mostrarAgendamento(
         </div>
     `;
 
-
-    // =========================================
-    // IMPEDIR DATA PASSADA
-    // =========================================
-
     const campoData =
         janela.querySelector("#data-agendamento");
 
     const hoje = new Date();
 
     const ano = hoje.getFullYear();
+    const mes = String(hoje.getMonth() + 1).padStart(2, "0");
+    const dia = String(hoje.getDate()).padStart(2, "0");
 
-    const mes = String(
-        hoje.getMonth() + 1
-    ).padStart(2, "0");
-
-    const dia = String(
-        hoje.getDate()
-    ).padStart(2, "0");
-
-    campoData.min =
-        `${ano}-${mes}-${dia}`;
-
-
-    // =========================================
-    // BOTÃO AGENDAR
-    // =========================================
+    campoData.min = `${ano}-${mes}-${dia}`;
 
     const botaoAgendar =
         janela.querySelector("#agendar-btn");
 
-    botaoAgendar.addEventListener(
-        "click",
-        function () {
+    botaoAgendar.addEventListener("click", function () {
 
-            const data =
-                campoData.value;
+        const data = campoData.value;
 
-            const horario =
-                janela.querySelector(
-                    "#horario-agendamento"
-                ).value;
+        const horario =
+            janela.querySelector("#horario-agendamento").value;
 
-
-            if (!data) {
-
-                alert(
-                    "Por favor, escolha uma data."
-                );
-
-                return;
-            }
-
-
-            if (!horario) {
-
-                alert(
-                    "Por favor, escolha um horário."
-                );
-
-                return;
-            }
-
-
-            alert(
-                "Agendamento selecionado!\n\n" +
-                "Veículo: " + veiculo +
-                "\nPacote: " + nomePacote +
-                "\nData: " + data +
-                "\nHorário: " + horario +
-                "\nTotal: R$ " + total
-            );
-
+        if (!data) {
+            alert("Por favor, escolha uma data.");
+            return;
         }
-    );
 
-}
+        if (!horario) {
+            alert("Por favor, escolha um horário.");
+            return;
+        }
 
-    // =========================================
-    // CALCULAR TOTAL
-    // =========================================
-
-    const checkboxes =
-        janela.querySelectorAll(".extra-checkbox");
-
-    const totalElemento =
-        janela.querySelector("#total");
-
-    function atualizarTotal() {
-
-        let total = precoPacote;
-
-        checkboxes.forEach(function (checkbox) {
-
-            if (checkbox.checked) {
-
-                total += parseFloat(
-                    checkbox.dataset.preco
-                );
-
-            }
-
-        });
-
-        totalElemento.textContent =
-            total.toFixed(2).replace(".", ",");
-
-    }
-
-
-    checkboxes.forEach(function (checkbox) {
-
-        checkbox.addEventListener(
-            "change",
-            atualizarTotal
+        alert(
+            "Agendamento selecionado!\n\n" +
+            "Veículo: " + veiculo +
+            "\nPacote: " + nomePacote +
+            "\nData: " + data +
+            "\nHorário: " + horario +
+            "\nTotal: R$ " + total
         );
 
     });
 
-
-    // =========================================
-    // CONTINUAR
-    // =========================================
-
-    const continuar =
-        janela.querySelector("#continuar-btn");
-
-   continuar.addEventListener("click", function () {
-
-    mostrarAgendamento(
-        janela,
-        veiculo,
-        nomePacote,
-        totalElemento.textContent
-    );
-
-});
+}
