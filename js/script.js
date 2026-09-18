@@ -783,7 +783,31 @@ botaoFinalizar.addEventListener(
 
             return;
         }
+const pedidosSalvos =
+    JSON.parse(localStorage.getItem("pedidosGD")) || [];
 
+const pedidoEncontrado =
+    pedidosSalvos.find(function (pedido) {
+
+        return (
+            pedido.nome === nome &&
+            pedido.placa === placa &&
+            pedido.data === data &&
+            pedido.horario === horario
+        );
+
+    });
+
+if (pedidoEncontrado) {
+
+    pedidoEncontrado.status = "Concluído";
+
+    localStorage.setItem(
+        "pedidosGD",
+        JSON.stringify(pedidosSalvos)
+    );
+
+}
         alert(
             "Serviço finalizado com sucesso!\n\n" +
             "Cliente: " + nome + "\n" +
