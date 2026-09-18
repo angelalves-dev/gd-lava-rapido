@@ -872,3 +872,71 @@ footer p {
 .form-label + .schedule-input {
     margin-bottom: 18px;
 }
+
+/* =========================================
+   RESUMO DO PEDIDO
+========================================= */
+
+.resumo-box {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.resumo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid #292929;
+
+    text-align: left;
+}
+
+.resumo-item span {
+    color: #999;
+}
+
+.resumo-item strong {
+    color: #fff;
+    text-align: right;
+}
+
+.resumo-total {
+    margin-top: 25px;
+
+    padding: 20px;
+
+    border-top: 1px solid #c9a227;
+
+    color: #c9a227;
+
+    font-size: 22px;
+
+    font-weight: bold;
+}
+
+#confirmar-btn {
+    width: 100%;
+
+    margin-top: 20px;
+}
+
+@media (max-width: 500px) {
+
+    .resumo-item {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 5px;
+    }
+
+    .resumo-item strong {
+        text-align: left;
+    }
+
+}
