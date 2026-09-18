@@ -61,9 +61,6 @@
             localStorage.getItem("pedidoGD");
 
 
-        // Se existir um pedido antigo,
-        // adiciona ele à lista.
-
         if (pedidoAntigo && pedidosNovos.length === 0) {
 
             pedidosNovos.push(
@@ -161,268 +158,450 @@
                             ${pedido.horario}
                         </p>
 
+
                         <div class="status-pedido ${
-    pedido.status === "Concluído"
-        ? "status-concluido"
-        : pedido.status === "Em andamento"
-            ? "status-andamento"
-            : "status-agendado"
-}">
-    ${pedido.status || "Agendado"}
-</div>
+                            pedido.status === "Concluído"
+                                ? "status-concluido"
+                                : pedido.status === "Em andamento"
+                                    ? "status-andamento"
+                                    : "status-agendado"
+                        }">
+
+                            ${pedido.status || "Agendado"}
+
+                        </div>
+
+
                         <div class="resumo-total">
 
                             TOTAL: R$ ${pedido.total}
 
                         </div>
-<button
-    class="vehicle-btn abrir-os-btn"
-    data-id="${pedido.id}"
->
-    ABRIR ORDEM DE SERVIÇO
-</button>
 
-<button
-    class="vehicle-btn alterar-status-btn"
-    data-id="${pedido.id}"
->
-    ALTERAR STATUS
-</button>
+
+                        <button
+                            class="vehicle-btn abrir-os-btn"
+                        >
+
+                            ABRIR ORDEM DE SERVIÇO
+
+                        </button>
+
+
+                        <button
+                            class="vehicle-btn alterar-status-btn"
+                        >
+
+                            ALTERAR STATUS
+
+                        </button>
+
                     `;
 
 
                     pedidoContainer.appendChild(card);
-const botaoOS =
-    card.querySelector(".abrir-os-btn");
 
-botaoOS.addEventListener("click", function () {
 
-    const pedidoId =
-        Number(botaoOS.dataset.id);
+                    /* =====================================
+                       BOTÃO ABRIR ORDEM DE SERVIÇO
+                    ===================================== */
 
-    const pedidoSelecionado =
-        pedidosNovos.find(function (pedido) {
+                    const botaoOS =
+                        card.querySelector(".abrir-os-btn");
 
-            return pedido.id === pedidoId;
 
-        });
+                    botaoOS.addEventListener(
+                        "click",
+                        function () {
 
-    if (!pedidoSelecionado) {
 
-        alert("Pedido não encontrado.");
+                            const ordemServico =
+                                document.createElement("div");
 
-        return;
 
-    }
+                            ordemServico.classList.add(
+                                "vehicle-selection"
+                            );
 
-    const ordemServico =
-    document.createElement("div");
 
-ordemServico.classList.add("vehicle-selection");
+                            ordemServico.innerHTML = `
 
-ordemServico.innerHTML = `
-
-    <div class="vehicle-box checklist-box">
-
-        <h2>Ordem de Serviço</h2>
-
-        <p>
-            Pedido #${pedidoId}
-        </p>
-
-        <hr>
-
-        <div class="resumo-item">
-            <span>Cliente</span>
-            <strong>${pedidoSelecionado.nome}</strong>
-        </div>
-
-        <div class="resumo-item">
-            <span>WhatsApp</span>
-            <strong>${pedidoSelecionado.whatsapp}</strong>
-        </div>
-
-        <div class="resumo-item">
-            <span>Veículo</span>
-            <strong>
-                ${pedidoSelecionado.veiculo} -
-                ${pedidoSelecionado.modelo}
-            </strong>
-        </div>
-
-        <div class="resumo-item">
-            <span>Placa</span>
-            <strong>${pedidoSelecionado.placa}</strong>
-        </div>
-
-        <div class="resumo-item">
-            <span>Pacote</span>
-            <strong>${pedidoSelecionado.pacote}</strong>
-        </div>
-
-        <div class="resumo-item">
-            <span>Extras</span>
-            <strong>
-                ${
-                    pedidoSelecionado.extras &&
-                    pedidoSelecionado.extras.length > 0
-                        ? pedidoSelecionado.extras.join(", ")
-                        : "Nenhum"
-                }
-            </strong>
-        </div>
+                                <div class="vehicle-box checklist-box">
 
-        <div class="resumo-item">
-            <span>Data</span>
-            <strong>${pedidoSelecionado.data}</strong>
-        </div>
+                                    <h2>
+                                        Ordem de Serviço
+                                    </h2>
 
-        <div class="resumo-item">
-            <span>Horário</span>
-            <strong>${pedidoSelecionado.horario}</strong>
-        </div>
 
-        <div class="resumo-total">
-            TOTAL: R$ ${pedidoSelecionado.total}
-        </div>
+                                    <p>
+                                        Pedido #${index + 1}
+                                    </p>
 
-        <hr>
 
-        <h3>Checklist do funcionário</h3>
+                                    <hr>
 
-        <div class="check-item">
-            <label>
-                <input type="checkbox">
-                Conferir estado geral do veículo
-            </label>
-        </div>
 
-        <div class="check-item">
-            <label>
-                <input type="checkbox">
-                Conferir rodas e pneus
-            </label>
-        </div>
+                                    <div class="resumo-item">
 
-        <div class="check-item">
-            <label>
-                <input type="checkbox">
-                Realizar serviços do pacote
-                ${pedidoSelecionado.pacote}
-            </label>
-        </div>
+                                        <span>Cliente</span>
 
-        ${
-            pedidoSelecionado.extras &&
-            pedidoSelecionado.extras.length > 0
-                ? pedidoSelecionado.extras.map(function (extra) {
+                                        <strong>
+                                            ${pedido.nome}
+                                        </strong>
 
-                    return `
-                        <div class="check-item">
-                            <label>
-                                <input type="checkbox">
-                                Realizar: ${extra}
-                            </label>
-                        </div>
-                    `;
+                                    </div>
 
-                }).join("")
-                : ""
-        }
 
-        <div class="check-item">
-            <label>
-                <input type="checkbox">
-                Secagem e acabamento do veículo
-            </label>
-        </div>
+                                    <div class="resumo-item">
 
-        <div class="check-item">
-            <label>
-                <input type="checkbox">
-                Conferência final
-            </label>
-        </div>
+                                        <span>WhatsApp</span>
 
-        <button
-            id="fechar-os-btn"
-            class="vehicle-btn"
-        >
-            FECHAR ORDEM DE SERVIÇO
-        </button>
+                                        <strong>
+                                            ${pedido.whatsapp}
+                                        </strong>
 
-    </div>
+                                    </div>
 
-`;
 
-document.body.appendChild(ordemServico);
+                                    <div class="resumo-item">
 
+                                        <span>Veículo</span>
 
-const fecharOS =
-    ordemServico.querySelector("#fechar-os-btn");
+                                        <strong>
+                                            ${pedido.veiculo} -
+                                            ${pedido.modelo}
+                                        </strong>
 
+                                    </div>
 
-fecharOS.addEventListener("click", function () {
 
-    const checkboxes =
-        ordemServico.querySelectorAll(
-            'input[type="checkbox"]'
-        );
+                                    <div class="resumo-item">
 
-    let todosMarcados = true;
+                                        <span>Placa</span>
 
-    checkboxes.forEach(function (checkbox) {
+                                        <strong>
+                                            ${pedido.placa}
+                                        </strong>
 
-        if (!checkbox.checked) {
-            todosMarcados = false;
-        }
+                                    </div>
 
-    });
 
-    if (!todosMarcados) {
+                                    <div class="resumo-item">
 
-        alert(
-            "Antes de finalizar a Ordem de Serviço, marque todos os itens do checklist."
-        );
+                                        <span>Pacote</span>
 
-        return;
+                                        <strong>
+                                            ${pedido.pacote}
+                                        </strong>
 
-    }
+                                    </div>
 
-    const pedidosAtualizados =
-        JSON.parse(
-            localStorage.getItem("pedidosGD")
-        ) || [];
 
-    const pedidoAtualizado =
-        pedidosAtualizados.find(function (pedido) {
+                                    <div class="resumo-item">
 
-            return pedido.id === pedidoId;
+                                        <span>Extras</span>
 
-        });
+                                        <strong>
 
-    if (pedidoAtualizado) {
+                                            ${
+                                                pedido.extras &&
+                                                pedido.extras.length > 0
+                                                    ? pedido.extras.join(", ")
+                                                    : "Nenhum"
+                                            }
 
-        pedidoAtualizado.status = "Concluído";
+                                        </strong>
 
-        localStorage.setItem(
-            "pedidosGD",
-            JSON.stringify(pedidosAtualizados)
-        );
+                                    </div>
 
-    }
 
-    alert(
-        "Ordem de Serviço finalizada com sucesso! ✅"
-    );
+                                    <div class="resumo-item">
 
-    ordemServico.remove();
+                                        <span>Data</span>
 
-    location.reload();
+                                        <strong>
+                                            ${pedido.data}
+                                        </strong>
 
-});
+                                    </div>
 
-});
+
+                                    <div class="resumo-item">
+
+                                        <span>Horário</span>
+
+                                        <strong>
+                                            ${pedido.horario}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="resumo-total">
+
+                                        TOTAL:
+                                        R$ ${pedido.total}
+
+                                    </div>
+
+
+                                    <hr>
+
+
+                                    <h3>
+                                        Checklist do funcionário
+                                    </h3>
+
+
+                                    <div class="check-item">
+
+                                        <label>
+
+                                            <input type="checkbox">
+
+                                            Conferir estado geral do veículo
+
+                                        </label>
+
+                                    </div>
+
+
+                                    <div class="check-item">
+
+                                        <label>
+
+                                            <input type="checkbox">
+
+                                            Conferir rodas e pneus
+
+                                        </label>
+
+                                    </div>
+
+
+                                    <div class="check-item">
+
+                                        <label>
+
+                                            <input type="checkbox">
+
+                                            Realizar serviços do pacote
+
+                                        </label>
+
+                                    </div>
+
+
+                                    ${
+                                        pedido.extras &&
+                                        pedido.extras.length > 0
+
+                                            ? pedido.extras.map(
+                                                function (extra) {
+
+                                                    return `
+
+                                                        <div class="check-item">
+
+                                                            <label>
+
+                                                                <input type="checkbox">
+
+                                                                Realizar:
+                                                                ${extra}
+
+                                                            </label>
+
+                                                        </div>
+
+                                                    `;
+
+                                                }
+                                            ).join("")
+
+                                            : ""
+                                    }
+
+
+                                    <div class="check-item">
+
+                                        <label>
+
+                                            <input type="checkbox">
+
+                                            Secagem e acabamento do veículo
+
+                                        </label>
+
+                                    </div>
+
+
+                                    <div class="check-item">
+
+                                        <label>
+
+                                            <input type="checkbox">
+
+                                            Conferência final
+
+                                        </label>
+
+                                    </div>
+
+
+                                    <button
+                                        class="vehicle-btn fechar-os-btn"
+                                    >
+
+                                        FECHAR ORDEM DE SERVIÇO
+
+                                    </button>
+
+                                </div>
+
+                            `;
+
+
+                            document.body.appendChild(
+                                ordemServico
+                            );
+
+
+                            const fecharOS =
+                                ordemServico.querySelector(
+                                    ".fechar-os-btn"
+                                );
+
+
+                            fecharOS.addEventListener(
+                                "click",
+                                function () {
+
+
+                                    const checkboxes =
+                                        ordemServico.querySelectorAll(
+                                            'input[type="checkbox"]'
+                                        );
+
+
+                                    let todosMarcados =
+                                        true;
+
+
+                                    checkboxes.forEach(
+                                        function (checkbox) {
+
+                                            if (
+                                                !checkbox.checked
+                                            ) {
+
+                                                todosMarcados =
+                                                    false;
+
+                                            }
+
+                                        }
+                                    );
+
+
+                                    if (!todosMarcados) {
+
+                                        alert(
+                                            "Antes de finalizar a Ordem de Serviço, marque todos os itens do checklist."
+                                        );
+
+                                        return;
+
+                                    }
+
+
+                                    pedido.status =
+                                        "Concluído";
+
+
+                                    localStorage.setItem(
+                                        "pedidosGD",
+                                        JSON.stringify(
+                                            pedidosNovos
+                                        )
+                                    );
+
+
+                                    alert(
+                                        "Ordem de Serviço finalizada com sucesso! ✅"
+                                    );
+
+
+                                    ordemServico.remove();
+
+
+                                    location.reload();
+
+                                }
+                            );
+
+                        }
+                    );
+
+
+                    /* =====================================
+                       BOTÃO ALTERAR STATUS
+                    ===================================== */
+
+                    const botaoStatus =
+                        card.querySelector(
+                            ".alterar-status-btn"
+                        );
+
+
+                    botaoStatus.addEventListener(
+                        "click",
+                        function () {
+
+
+                            if (
+                                pedido.status === "Agendado" ||
+                                !pedido.status
+                            ) {
+
+                                pedido.status =
+                                    "Em andamento";
+
+                            }
+
+                            else if (
+                                pedido.status === "Em andamento"
+                            ) {
+
+                                pedido.status =
+                                    "Concluído";
+
+                            }
+
+                            else if (
+                                pedido.status === "Concluído"
+                            ) {
+
+                                pedido.status =
+                                    "Agendado";
+
+                            }
+
+
+                            localStorage.setItem(
+                                "pedidosGD",
+                                JSON.stringify(
+                                    pedidosNovos
+                                )
+                            );
+
+
+                            location.reload();
+
+                        }
+                    );
+
+
                 }
             );
 
