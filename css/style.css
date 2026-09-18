@@ -940,3 +940,40 @@ footer p {
     }
 
 }
+
+/* =========================================
+   CHECKLIST DA ORDEM DE SERVIÇO
+========================================= */
+
+.checklist-box {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.check-item {
+    margin: 12px 0;
+    text-align: left;
+}
+
+.check-item label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #181818;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 15px;
+    color: #ddd;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.check-item label:hover {
+    border-color: #c9a227;
+}
+
+.check-item input {
+    width: 18px;
+    height: 18px;
+    accent-color: #c9a227;
+}
