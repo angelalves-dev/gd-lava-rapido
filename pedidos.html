@@ -32,11 +32,11 @@
 
         <section class="container">
 
-            <h2>Pedido recebido</h2>
+            <h2>Pedidos recebidos</h2>
 
             <div id="pedido-container">
 
-                <!-- O pedido aparecerá aqui -->
+                <!-- Os pedidos aparecerão aqui -->
 
             </div>
 
@@ -51,89 +51,131 @@
             document.querySelector("#pedido-container");
 
 
-        const pedidoContainer =
-    document.querySelector("#pedido-container");
+        const pedidosNovos =
+            JSON.parse(
+                localStorage.getItem("pedidosGD")
+            ) || [];
 
 
-const pedidosSalvos =
-    JSON.parse(localStorage.getItem("pedidosGD")) ||
-    JSON.parse(localStorage.getItem("pedidoGD")) ||
-    [];
+        const pedidoAntigo =
+            localStorage.getItem("pedidoGD");
 
 
-if (pedidosSalvos.length === 0) {
+        // Se existir um pedido antigo,
+        // adiciona ele à lista.
 
-    pedidoContainer.innerHTML = `
-        <div class="vehicle-box">
+        if (pedidoAntigo && pedidosNovos.length === 0) {
 
-            <h3>Nenhum pedido encontrado</h3>
+            pedidosNovos.push(
+                JSON.parse(pedidoAntigo)
+            );
 
-            <p>
-                Ainda não existem pedidos cadastrados.
-            </p>
+        }
 
-        </div>
-    `;
 
-} else {
+        if (pedidosNovos.length === 0) {
 
-    pedidosSalvos.forEach(function (pedido, index) {
+            pedidoContainer.innerHTML = `
 
-        const card = document.createElement("div");
+                <div class="vehicle-box">
 
-        card.classList.add("vehicle-box");
+                    <h3>Nenhum pedido encontrado</h3>
 
-        card.innerHTML = `
+                    <p>
+                        Ainda não existem pedidos cadastrados.
+                    </p>
 
-            <h3>
-                Pedido #${index + 1}
-            </h3>
+                </div>
 
-            <hr>
+            `;
 
-            <p>
-                <strong>Cliente:</strong>
-                ${pedido.nome}
-            </p>
+        } else {
 
-            <p>
-                <strong>Veículo:</strong>
-                ${pedido.veiculo} - ${pedido.modelo}
-            </p>
 
-            <p>
-                <strong>Placa:</strong>
-                ${pedido.placa}
-            </p>
+            pedidosNovos.forEach(
+                function (pedido, index) {
 
-            <p>
-                <strong>Pacote:</strong>
-                ${pedido.pacote}
-            </p>
 
-            <p>
-                <strong>Data:</strong>
-                ${pedido.data}
-            </p>
+                    const card =
+                        document.createElement("div");
 
-            <p>
-                <strong>Horário:</strong>
-                ${pedido.horario}
-            </p>
 
-            <div class="resumo-total">
+                    card.classList.add("vehicle-box");
 
-                TOTAL: R$ ${pedido.total}
 
-            </div>
+                    card.innerHTML = `
 
-        `;
+                        <h3>
+                            Pedido #${index + 1}
+                        </h3>
 
-        pedidoContainer.appendChild(card);
+                        <hr>
 
-    });
+                        <p>
+                            <strong>Cliente:</strong>
+                            ${pedido.nome}
+                        </p>
 
-}
+                        <p>
+                            <strong>WhatsApp:</strong>
+                            ${pedido.whatsapp}
+                        </p>
+
+                        <p>
+                            <strong>Veículo:</strong>
+                            ${pedido.veiculo}
+                        </p>
+
+                        <p>
+                            <strong>Modelo:</strong>
+                            ${pedido.modelo}
+                        </p>
+
+                        <p>
+                            <strong>Placa:</strong>
+                            ${pedido.placa}
+                        </p>
+
+                        <p>
+                            <strong>Pacote:</strong>
+                            ${pedido.pacote}
+                        </p>
+
+                        <p>
+                            <strong>Extras:</strong>
+                            ${
+                                pedido.extras &&
+                                pedido.extras.length > 0
+                                    ? pedido.extras.join(", ")
+                                    : "Nenhum"
+                            }
+                        </p>
+
+                        <p>
+                            <strong>Data:</strong>
+                            ${pedido.data}
+                        </p>
+
+                        <p>
+                            <strong>Horário:</strong>
+                            ${pedido.horario}
+                        </p>
+
+                        <div class="resumo-total">
+
+                            TOTAL: R$ ${pedido.total}
+
+                        </div>
+
+                    `;
+
+
+                    pedidoContainer.appendChild(card);
+
+                }
+            );
+
+        }
 
     </script>
 
