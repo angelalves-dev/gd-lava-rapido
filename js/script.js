@@ -441,18 +441,17 @@ function mostrarDadosCliente(
             // TESTE FINAL
             // =========================================
 
-            alert(
-                "Dados preenchidos com sucesso!\n\n" +
-                "Nome: " + nome +
-                "\nWhatsApp: " + whatsapp +
-                "\nVeículo: " + modelo +
-                "\nPlaca: " + placa +
-                "\n\nData: " + data +
-                "\nHorário: " + horario +
-                "\nTotal: R$ " + total
-            );
-
-        }
-    );
+            mostrarResumoPedido(
+    janela,
+    nome,
+    whatsapp,
+    modelo,
+    placa,
+    veiculo,
+    nomePacote,
+    data,
+    horario,
+    total
+);
 
 }
