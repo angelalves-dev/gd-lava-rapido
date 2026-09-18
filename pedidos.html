@@ -161,6 +161,11 @@
                             ${pedido.horario}
                         </p>
 
+                        <p>
+    <strong>Status:</strong>
+    ${pedido.status || "Agendado"}
+</p>
+
                         <div class="resumo-total">
 
                             TOTAL: R$ ${pedido.total}
