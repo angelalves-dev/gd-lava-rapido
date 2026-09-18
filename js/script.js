@@ -291,3 +291,160 @@ function mostrarAgendamento(
     horario,
     total
 );
+
+// =========================================
+// DADOS DO CLIENTE
+// =========================================
+
+function mostrarDadosCliente(
+    janela,
+    veiculo,
+    nomePacote,
+    data,
+    horario,
+    total
+) {
+
+    janela.innerHTML = `
+        <div class="vehicle-box">
+
+            <h2>Seus dados</h2>
+
+            <p>
+                Preencha seus dados para continuar.
+            </p>
+
+            <hr>
+
+            <label class="form-label">
+                Nome completo
+            </label>
+
+            <input
+                type="text"
+                id="nome-cliente"
+                class="schedule-input"
+                placeholder="Digite seu nome"
+            >
+
+            <label class="form-label">
+                WhatsApp
+            </label>
+
+            <input
+                type="tel"
+                id="whatsapp-cliente"
+                class="schedule-input"
+                placeholder="(92) 99999-9999"
+            >
+
+            <label class="form-label">
+                Modelo do veículo
+            </label>
+
+            <input
+                type="text"
+                id="modelo-veiculo"
+                class="schedule-input"
+                placeholder="Ex: Honda Civic"
+            >
+
+            <label class="form-label">
+                Placa
+            </label>
+
+            <input
+                type="text"
+                id="placa-veiculo"
+                class="schedule-input"
+                placeholder="Ex: ABC1D23"
+            >
+
+            <button
+                id="finalizar-dados-btn"
+                class="vehicle-btn"
+            >
+                CONTINUAR
+            </button>
+
+        </div>
+    `;
+
+
+    // =========================================
+    // BOTÃO CONTINUAR
+    // =========================================
+
+    const botaoFinalizar =
+        janela.querySelector("#finalizar-dados-btn");
+
+
+    botaoFinalizar.addEventListener(
+        "click",
+        function () {
+
+            const nome =
+                janela.querySelector("#nome-cliente").value.trim();
+
+            const whatsapp =
+                janela.querySelector("#whatsapp-cliente").value.trim();
+
+            const modelo =
+                janela.querySelector("#modelo-veiculo").value.trim();
+
+            const placa =
+                janela.querySelector("#placa-veiculo").value.trim();
+
+
+            // =========================================
+            // VALIDAÇÃO
+            // =========================================
+
+            if (!nome) {
+
+                alert("Digite seu nome.");
+
+                return;
+            }
+
+            if (!whatsapp) {
+
+                alert("Digite seu WhatsApp.");
+
+                return;
+            }
+
+            if (!modelo) {
+
+                alert("Digite o modelo do veículo.");
+
+                return;
+            }
+
+            if (!placa) {
+
+                alert("Digite a placa do veículo.");
+
+                return;
+            }
+
+
+            // =========================================
+            // PRÓXIMA ETAPA
+            // =========================================
+
+            alert(
+                "Dados preenchidos com sucesso!\n\n" +
+                "Nome: " + nome +
+                "\nWhatsApp: " + whatsapp +
+                "\nVeículo: " + modelo +
+                "\nPlaca: " + placa +
+                "\n\nData: " + data +
+                "\nHorário: " + horario +
+                "\nTotal: R$ " + total
+            );
+
+        }
+    );
+
+}
