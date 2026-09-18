@@ -586,7 +586,8 @@ function mostrarResumoPedido(
     function () {
 
         const pedido = {
-
+            
+            id: Date.now(),
             nome: nome,
             whatsapp: whatsapp,
             modelo: modelo,
