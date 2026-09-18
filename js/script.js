@@ -596,7 +596,7 @@ function mostrarResumoPedido(
             extras: extrasSelecionados,
             data: data,
             horario: horario,
-            total: total
+            total: total,
             status: "Agendado"
 
         };
