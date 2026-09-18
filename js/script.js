@@ -283,15 +283,11 @@ function mostrarAgendamento(
             return;
         }
 
-        alert(
-            "Agendamento selecionado!\n\n" +
-            "Veículo: " + veiculo +
-            "\nPacote: " + nomePacote +
-            "\nData: " + data +
-            "\nHorário: " + horario +
-            "\nTotal: R$ " + total
-        );
-
-    });
-
-}
+        mostrarDadosCliente(
+    janela,
+    veiculo,
+    nomePacote,
+    data,
+    horario,
+    total
+);
