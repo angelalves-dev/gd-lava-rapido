@@ -455,3 +455,107 @@ function mostrarDadosCliente(
 );
 
 }
+
+        // =========================================
+// RESUMO DO PEDIDO
+// =========================================
+
+function mostrarResumoPedido(
+    janela,
+    nome,
+    whatsapp,
+    modelo,
+    placa,
+    veiculo,
+    nomePacote,
+    data,
+    horario,
+    total
+) {
+
+    janela.innerHTML = `
+        <div class="vehicle-box resumo-box">
+
+            <h2>Resumo do pedido</h2>
+
+            <p>
+                Confira os dados antes de confirmar.
+            </p>
+
+            <hr>
+
+            <div class="resumo-item">
+                <span>Cliente</span>
+                <strong>${nome}</strong>
+            </div>
+
+            <div class="resumo-item">
+                <span>WhatsApp</span>
+                <strong>${whatsapp}</strong>
+            </div>
+
+            <div class="resumo-item">
+                <span>Veículo</span>
+                <strong>${veiculo}</strong>
+            </div>
+
+            <div class="resumo-item">
+                <span>Modelo</span>
+                <strong>${modelo}</strong>
+            </div>
+
+            <div class="resumo-item">
+                <span>Placa</span>
+                <strong>${placa}</strong>
+            </div>
+
+            <div class="resumo-item">
+                <span>Pacote</span>
+                <strong>${nomePacote}</strong>
+            </div>
+
+            <div class="resumo-item">
+                <span>Data</span>
+                <strong>${data}</strong>
+            </div>
+
+            <div class="resumo-item">
+                <span>Horário</span>
+                <strong>${horario}</strong>
+            </div>
+
+            <div class="resumo-total">
+                TOTAL: R$ ${total}
+            </div>
+
+            <button
+                id="confirmar-btn"
+                class="vehicle-btn"
+            >
+                CONFIRMAR AGENDAMENTO
+            </button>
+
+        </div>
+    `;
+
+
+    // =========================================
+    // CONFIRMAR
+    // =========================================
+
+    const confirmar =
+        janela.querySelector("#confirmar-btn");
+
+    confirmar.addEventListener(
+        "click",
+        function () {
+
+            alert(
+                "Agendamento confirmado!\n\n" +
+                "Obrigado, " + nome + "!"
+            );
+
+        }
+    );
+
+}
