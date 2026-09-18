@@ -671,47 +671,53 @@ function mostrarChecklist(
 
             <h3>Checklist do funcionário</h3>
 
-            <div class="check-item">
-                <label>
-                    <input type="checkbox">
-                    Conferir estado geral do veículo
-                </label>
-            </div>
+<div class="check-item">
+    <label>
+        <input type="checkbox">
+        Conferir estado geral do veículo
+    </label>
+</div>
 
-            <div class="check-item">
-                <label>
-                    <input type="checkbox">
-                    Conferir rodas e pneus
-                </label>
-            </div>
+<div class="check-item">
+    <label>
+        <input type="checkbox">
+        Conferir rodas e pneus
+    </label>
+</div>
 
-            <div class="check-item">
-                <label>
-                    <input type="checkbox">
-                    Lavagem externa
-                </label>
-            </div>
+<div class="check-item">
+    <label>
+        <input type="checkbox">
+        Realizar serviços do pacote ${nomePacote}
+    </label>
+</div>
 
-            <div class="check-item">
-                <label>
-                    <input type="checkbox">
-                    Limpeza interna
-                </label>
-            </div>
+${extrasSelecionados.map(function (extra) {
 
-            <div class="check-item">
-                <label>
-                    <input type="checkbox">
-                    Secagem do veículo
-                </label>
-            </div>
+    return `
+        <div class="check-item">
+            <label>
+                <input type="checkbox">
+                Realizar: ${extra}
+            </label>
+        </div>
+    `;
 
-            <div class="check-item">
-                <label>
-                    <input type="checkbox">
-                    Conferência final
-                </label>
-            </div>
+}).join("")}
+
+<div class="check-item">
+    <label>
+        <input type="checkbox">
+        Secagem e acabamento do veículo
+    </label>
+</div>
+
+<div class="check-item">
+    <label>
+        <input type="checkbox">
+        Conferência final
+    </label>
+</div>
 
         </div>
     `;
