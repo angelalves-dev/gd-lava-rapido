@@ -441,18 +441,22 @@ function mostrarDadosCliente(
             // TESTE FINAL
             // =========================================
 
-            mostrarResumoPedido(
-    janela,
-    nome,
-    whatsapp,
-    modelo,
-    placa,
-    veiculo,
-    nomePacote,
-    data,
-    horario,
-    total
-);
+               mostrarResumoPedido(
+                janela,
+                nome,
+                whatsapp,
+                modelo,
+                placa,
+                veiculo,
+                nomePacote,
+                data,
+                horario,
+                total
+            );
+
+        }
+
+    );
 
 }
 
