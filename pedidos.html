@@ -56,7 +56,9 @@
 
 
 const pedidosSalvos =
-    JSON.parse(localStorage.getItem("pedidosGD")) || [];
+    JSON.parse(localStorage.getItem("pedidosGD")) ||
+    JSON.parse(localStorage.getItem("pedidoGD")) ||
+    [];
 
 
 if (pedidosSalvos.length === 0) {
