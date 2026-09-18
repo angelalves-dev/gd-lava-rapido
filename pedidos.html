@@ -161,10 +161,9 @@
                             ${pedido.horario}
                         </p>
 
-                        <p>
-    <strong>Status:</strong>
+                        <div class="status-pedido ${pedido.status === "Concluído" ? "status-concluido" : "status-agendado"}">
     ${pedido.status || "Agendado"}
-</p>
+</div>
 
                         <div class="resumo-total">
 
