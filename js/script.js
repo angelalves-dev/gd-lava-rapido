@@ -600,11 +600,15 @@ function mostrarResumoPedido(
 
         };
 
-        localStorage.setItem(
-            "pedidoGD",
-            JSON.stringify(pedido)
-        );
+        const pedidosSalvos =
+    JSON.parse(localStorage.getItem("pedidosGD")) || [];
 
+pedidosSalvos.push(pedido);
+
+localStorage.setItem(
+    "pedidosGD",
+    JSON.stringify(pedidosSalvos)
+);
         mostrarChecklist(
             janela,
             nome,
