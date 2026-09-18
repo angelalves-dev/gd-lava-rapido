@@ -624,7 +624,74 @@
             );
 
         }
+        // =========================================
+        // FILTROS DE PEDIDOS
+        // =========================================
 
+        const botoesFiltro =
+            document.querySelectorAll(".filtro-btn");
+
+
+        botoesFiltro.forEach(function (botao) {
+
+            botao.addEventListener("click", function () {
+
+                const filtro =
+                    botao.dataset.filtro;
+
+
+                const cards =
+                    document.querySelectorAll(
+                        "#pedido-container .vehicle-box"
+                    );
+
+
+                cards.forEach(function (card, index) {
+
+                    const pedido =
+                        pedidosNovos[index];
+
+
+                    if (filtro === "Todos") {
+
+                        card.style.display = "";
+
+                    }
+
+                    else if (
+                        pedido &&
+                        (pedido.status || "Agendado") === filtro
+                    ) {
+
+                        card.style.display = "";
+
+                    }
+
+                    else {
+
+                        card.style.display = "none";
+
+                    }
+
+                });
+
+
+                // Remove o destaque dos outros botões
+
+                botoesFiltro.forEach(function (outroBotao) {
+
+                    outroBotao.classList.remove("ativo");
+
+                });
+
+
+                // Destaca o botão selecionado
+
+                botao.classList.add("ativo");
+
+            });
+
+        });
     </script>
 
 </body>
