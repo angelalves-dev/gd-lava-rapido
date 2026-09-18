@@ -18,7 +18,10 @@ botoes.forEach(function (botao) {
             precoTexto.replace("A partir de R$", "").replace(",", ".")
         );
 
-        // Criar janela de escolha do veículo
+        // =========================================
+        // ESCOLHA DO VEÍCULO
+        // =========================================
+
         const escolhaVeiculo = document.createElement("div");
 
         escolhaVeiculo.classList.add("vehicle-selection");
@@ -53,7 +56,10 @@ botoes.forEach(function (botao) {
 
         document.body.appendChild(escolhaVeiculo);
 
-        // Botões Carro e Moto
+        // =========================================
+        // BOTÕES CARRO / MOTO
+        // =========================================
+
         const botoesVeiculo =
             escolhaVeiculo.querySelectorAll(".vehicle-btn");
 
@@ -63,13 +69,11 @@ botoes.forEach(function (botao) {
 
                 const veiculo = botaoVeiculo.dataset.veiculo;
 
-                alert(
-                    "Veículo escolhido: " +
-                    veiculo +
-                    "\n\nPacote: " +
-                    nome +
-                    "\nValor inicial: R$ " +
-                    preco.toFixed(2).replace(".", ",")
+                mostrarServicosExtras(
+                    escolhaVeiculo,
+                    veiculo,
+                    nome,
+                    preco
                 );
 
             });
@@ -79,3 +83,155 @@ botoes.forEach(function (botao) {
     });
 
 });
+
+
+// =========================================
+// SERVIÇOS EXTRAS
+// =========================================
+
+function mostrarServicosExtras(
+    janela,
+    veiculo,
+    nomePacote,
+    precoPacote
+) {
+
+    janela.innerHTML = `
+        <div class="vehicle-box">
+
+            <h2>Personalize seu serviço</h2>
+
+            <p>
+                Veículo: <strong>${veiculo}</strong>
+            </p>
+
+            <p>
+                Pacote: <strong>${nomePacote}</strong>
+            </p>
+
+            <hr>
+
+            <h3>Serviços adicionais</h3>
+
+            <div class="extra-service">
+
+                <label>
+                    <input type="checkbox"
+                           class="extra-checkbox"
+                           data-preco="30">
+                    Lavagem externa — R$ 30,00
+                </label>
+
+            </div>
+
+            <div class="extra-service">
+
+                <label>
+                    <input type="checkbox"
+                           class="extra-checkbox"
+                           data-preco="50">
+                    Higienização interna — R$ 50,00
+                </label>
+
+            </div>
+
+            <div class="extra-service">
+
+                <label>
+                    <input type="checkbox"
+                           class="extra-checkbox"
+                           data-preco="40">
+                    Enceramento — R$ 40,00
+                </label>
+
+            </div>
+
+            <div class="extra-service">
+
+                <label>
+                    <input type="checkbox"
+                           class="extra-checkbox"
+                           data-preco="100">
+                    Polimento — R$ 100,00
+                </label>
+
+            </div>
+
+            <div class="total-box">
+
+                <strong>
+                    Total: R$ <span id="total">${precoPacote.toFixed(2).replace(".", ",")}</span>
+                </strong>
+
+            </div>
+
+            <button id="continuar-btn" class="vehicle-btn">
+                CONTINUAR
+            </button>
+
+        </div>
+    `;
+
+
+    // =========================================
+    // CALCULAR TOTAL
+    // =========================================
+
+    const checkboxes =
+        janela.querySelectorAll(".extra-checkbox");
+
+    const totalElemento =
+        janela.querySelector("#total");
+
+    function atualizarTotal() {
+
+        let total = precoPacote;
+
+        checkboxes.forEach(function (checkbox) {
+
+            if (checkbox.checked) {
+
+                total += parseFloat(
+                    checkbox.dataset.preco
+                );
+
+            }
+
+        });
+
+        totalElemento.textContent =
+            total.toFixed(2).replace(".", ",");
+
+    }
+
+
+    checkboxes.forEach(function (checkbox) {
+
+        checkbox.addEventListener(
+            "change",
+            atualizarTotal
+        );
+
+    });
+
+
+    // =========================================
+    // CONTINUAR
+    // =========================================
+
+    const continuar =
+        janela.querySelector("#continuar-btn");
+
+    continuar.addEventListener("click", function () {
+
+        alert(
+            "Pedido iniciado!\n\n" +
+            "Veículo: " + veiculo +
+            "\nPacote: " + nomePacote +
+            "\nTotal: R$ " +
+            totalElemento.textContent
+        );
+
+    });
+
+}
