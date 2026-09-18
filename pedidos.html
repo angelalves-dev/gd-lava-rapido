@@ -51,104 +51,87 @@
             document.querySelector("#pedido-container");
 
 
-        const pedidoSalvo =
-            localStorage.getItem("pedidoGD");
+        const pedidoContainer =
+    document.querySelector("#pedido-container");
 
 
-        if (!pedidoSalvo) {
-
-            pedidoContainer.innerHTML = `
-                <div class="vehicle-box">
-
-                    <h3>Nenhum pedido encontrado</h3>
-
-                    <p>
-                        Ainda não existe um pedido salvo neste navegador.
-                    </p>
-
-                </div>
-            `;
-
-        } else {
-
-            const pedido =
-                JSON.parse(pedidoSalvo);
+const pedidosSalvos =
+    JSON.parse(localStorage.getItem("pedidosGD")) || [];
 
 
-            pedidoContainer.innerHTML = `
+if (pedidosSalvos.length === 0) {
 
-                <div class="vehicle-box">
+    pedidoContainer.innerHTML = `
+        <div class="vehicle-box">
 
-                    <h3>Dados do cliente</h3>
+            <h3>Nenhum pedido encontrado</h3>
 
-                    <p>
-                        <strong>Nome:</strong>
-                        ${pedido.nome}
-                    </p>
+            <p>
+                Ainda não existem pedidos cadastrados.
+            </p>
 
-                    <p>
-                        <strong>WhatsApp:</strong>
-                        ${pedido.whatsapp}
-                    </p>
+        </div>
+    `;
 
-                    <hr>
+} else {
 
-                    <h3>Veículo</h3>
+    pedidosSalvos.forEach(function (pedido, index) {
 
-                    <p>
-                        <strong>Tipo:</strong>
-                        ${pedido.veiculo}
-                    </p>
+        const card = document.createElement("div");
 
-                    <p>
-                        <strong>Modelo:</strong>
-                        ${pedido.modelo}
-                    </p>
+        card.classList.add("vehicle-box");
 
-                    <p>
-                        <strong>Placa:</strong>
-                        ${pedido.placa}
-                    </p>
+        card.innerHTML = `
 
-                    <hr>
+            <h3>
+                Pedido #${index + 1}
+            </h3>
 
-                    <h3>Serviço</h3>
+            <hr>
 
-                    <p>
-                        <strong>Pacote:</strong>
-                        ${pedido.pacote}
-                    </p>
+            <p>
+                <strong>Cliente:</strong>
+                ${pedido.nome}
+            </p>
 
-                    <p>
-                        <strong>Extras:</strong>
-                        ${
-                            pedido.extras.length > 0
-                                ? pedido.extras.join(", ")
-                                : "Nenhum"
-                        }
-                    </p>
+            <p>
+                <strong>Veículo:</strong>
+                ${pedido.veiculo} - ${pedido.modelo}
+            </p>
 
-                    <p>
-                        <strong>Data:</strong>
-                        ${pedido.data}
-                    </p>
+            <p>
+                <strong>Placa:</strong>
+                ${pedido.placa}
+            </p>
 
-                    <p>
-                        <strong>Horário:</strong>
-                        ${pedido.horario}
-                    </p>
+            <p>
+                <strong>Pacote:</strong>
+                ${pedido.pacote}
+            </p>
 
-                    <div class="resumo-total">
+            <p>
+                <strong>Data:</strong>
+                ${pedido.data}
+            </p>
 
-                        TOTAL: R$ ${pedido.total}
+            <p>
+                <strong>Horário:</strong>
+                ${pedido.horario}
+            </p>
 
-                    </div>
+            <div class="resumo-total">
 
-                </div>
+                TOTAL: R$ ${pedido.total}
 
-            `;
+            </div>
 
-        }
+        `;
+
+        pedidoContainer.appendChild(card);
+
+    });
+
+}
 
     </script>
 
