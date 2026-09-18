@@ -582,15 +582,137 @@ function mostrarResumoPedido(
         janela.querySelector("#confirmar-btn");
 
     confirmar.addEventListener(
-        "click",
-        function () {
+    "click",
+    function () {
 
-            alert(
-                "Agendamento confirmado!\n\n" +
-                "Obrigado, " + nome + "!"
-            );
+        mostrarChecklist(
+            janela,
+            nome,
+            whatsapp,
+            modelo,
+            placa,
+            veiculo,
+            nomePacote,
+            extrasSelecionados,
+            data,
+            horario,
+            total
+        );
 
-        }
-    );
+    }
+);
 
+}
+
+// =========================================
+// CHECKLIST DO SERVIÇO
+// =========================================
+
+function mostrarChecklist(
+    janela,
+    nome,
+    whatsapp,
+    modelo,
+    placa,
+    veiculo,
+    nomePacote,
+    extrasSelecionados,
+    data,
+    horario,
+    total
+) {
+
+    janela.innerHTML = `
+        <div class="vehicle-box checklist-box">
+
+            <h2>Ordem de Serviço</h2>
+
+            <p>
+                Serviço do cliente
+            </p>
+
+            <hr>
+
+            <div class="resumo-item">
+                <span>Cliente</span>
+                <strong>${nome}</strong>
+            </div>
+
+            <div class="resumo-item">
+                <span>Veículo</span>
+                <strong>${veiculo} - ${modelo}</strong>
+            </div>
+
+            <div class="resumo-item">
+                <span>Placa</span>
+                <strong>${placa}</strong>
+            </div>
+
+            <div class="resumo-item">
+                <span>Pacote</span>
+                <strong>${nomePacote}</strong>
+            </div>
+
+            <div class="resumo-item">
+                <span>Data</span>
+                <strong>${data}</strong>
+            </div>
+
+            <div class="resumo-item">
+                <span>Horário</span>
+                <strong>${horario}</strong>
+            </div>
+
+            <div class="resumo-total">
+                TOTAL: R$ ${total}
+            </div>
+
+            <hr>
+
+            <h3>Checklist do funcionário</h3>
+
+            <div class="check-item">
+                <label>
+                    <input type="checkbox">
+                    Conferir estado geral do veículo
+                </label>
+            </div>
+
+            <div class="check-item">
+                <label>
+                    <input type="checkbox">
+                    Conferir rodas e pneus
+                </label>
+            </div>
+
+            <div class="check-item">
+                <label>
+                    <input type="checkbox">
+                    Lavagem externa
+                </label>
+            </div>
+
+            <div class="check-item">
+                <label>
+                    <input type="checkbox">
+                    Limpeza interna
+                </label>
+            </div>
+
+            <div class="check-item">
+                <label>
+                    <input type="checkbox">
+                    Secagem do veículo
+                </label>
+            </div>
+
+            <div class="check-item">
+                <label>
+                    <input type="checkbox">
+                    Conferência final
+                </label>
+            </div>
+
+        </div>
+    `;
 }
