@@ -719,6 +719,12 @@ ${extrasSelecionados.map(function (extra) {
     </label>
 </div>
 
+<button
+    id="finalizar-servico-btn"
+    class="vehicle-btn"
+>
+    FINALIZAR SERVIÇO
+</button>
         </div>
     `;
 }
