@@ -173,14 +173,30 @@ function mostrarServicosExtras(
 
     continuar.addEventListener("click", function () {
 
-        mostrarAgendamento(
-            janela,
-            veiculo,
-            nomePacote,
-            totalElemento.textContent
-        );
+    const extrasSelecionados = [];
+
+    checkboxes.forEach(function (checkbox) {
+
+        if (checkbox.checked) {
+
+            const nomeExtra =
+                checkbox.parentElement.textContent.trim();
+
+            extrasSelecionados.push(nomeExtra);
+
+        }
 
     });
+
+    mostrarAgendamento(
+        janela,
+        veiculo,
+        nomePacote,
+        totalElemento.textContent,
+        extrasSelecionados
+    );
+
+});
 
 }
 
