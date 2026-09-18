@@ -1,0 +1,449 @@
+/* =========================================
+   RESET
+   ========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #0b0b0b;
+    color: #f5f5f5;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   CABEÇALHO
+   ========================================= */
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+
+    background: rgba(5, 5, 5, 0.95);
+
+    border-bottom: 1px solid #333;
+}
+
+.navbar {
+    max-width: 1200px;
+    margin: auto;
+
+    padding: 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.logo span {
+    color: #c9a227;
+}
+
+.nav-links {
+    list-style: none;
+
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #c9a227;
+}
+
+
+/* =========================================
+   HERO
+   ========================================= */
+
+.hero {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.9),
+            rgba(0, 0, 0, 0.45)
+        ),
+        linear-gradient(
+            135deg,
+            #111,
+            #222
+        );
+}
+
+.hero-content {
+    max-width: 700px;
+
+    margin-left: 8%;
+
+    padding-top: 80px;
+}
+
+.subtitle {
+    color: #c9a227;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 15px;
+}
+
+.hero h1 {
+    font-size: clamp(45px, 7vw, 82px);
+
+    line-height: 1.05;
+
+    margin-bottom: 25px;
+}
+
+.hero p:not(.subtitle) {
+    color: #ddd;
+
+    font-size: 18px;
+
+    max-width: 550px;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================================
+   BOTÕES
+   ========================================= */
+
+.btn {
+    display: inline-block;
+
+    background: #c9a227;
+
+    color: #111;
+
+    padding: 14px 28px;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    border-radius: 4px;
+
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #e1bd3b;
+
+    transform: translateY(-3px);
+}
+
+
+/* =========================================
+   SEÇÕES
+   ========================================= */
+
+section {
+    padding: 100px 20px;
+}
+
+.section-title {
+    text-align: center;
+
+    max-width: 700px;
+
+    margin: 0 auto 50px;
+}
+
+.section-title h2 {
+    font-size: 40px;
+
+    margin-bottom: 15px;
+}
+
+.section-title > p:last-child {
+    color: #aaa;
+}
+
+
+/* =========================================
+   SERVIÇOS
+   ========================================= */
+
+.services {
+    background: #111;
+}
+
+.services-container {
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.service-card {
+    background: #181818;
+
+    padding: 30px;
+
+    border: 1px solid #292929;
+
+    border-radius: 8px;
+
+    transition: 0.3s;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+
+    border-color: #c9a227;
+}
+
+.service-card h3 {
+    color: #c9a227;
+
+    margin-bottom: 15px;
+
+    font-size: 24px;
+}
+
+.service-card p {
+    color: #bbb;
+
+    min-height: 80px;
+}
+
+.service-card strong {
+    display: block;
+
+    margin-top: 20px;
+
+    color: #c9a227;
+
+    font-size: 20px;
+}
+
+
+/* =========================================
+   BOTÃO ESCOLHER
+   ========================================= */
+
+.select-btn {
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 12px;
+
+    background: transparent;
+
+    color: #c9a227;
+
+    border: 1px solid #c9a227;
+
+    border-radius: 4px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.select-btn:hover {
+    background: #c9a227;
+
+    color: #111;
+}
+
+
+/* =========================================
+   COMO FUNCIONA
+   ========================================= */
+
+.how-it-works {
+    background: #0b0b0b;
+}
+
+.steps {
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+}
+
+.step {
+    padding: 30px;
+
+    border-top: 2px solid #c9a227;
+
+    background: #151515;
+}
+
+.step span {
+    color: #c9a227;
+
+    font-size: 30px;
+
+    font-weight: bold;
+}
+
+.step h3 {
+    margin: 15px 0 10px;
+}
+
+.step p {
+    color: #aaa;
+}
+
+
+/* =========================================
+   CONTATO
+   ========================================= */
+
+.contact {
+    text-align: center;
+
+    background: #111;
+}
+
+.contact-content {
+    max-width: 700px;
+
+    margin: auto;
+}
+
+.contact h2 {
+    font-size: 42px;
+
+    margin-bottom: 20px;
+}
+
+.contact p:not(.subtitle) {
+    color: #ccc;
+}
+
+
+/* =========================================
+   RODAPÉ
+   ========================================= */
+
+footer {
+    background: #050505;
+
+    text-align: center;
+
+    padding: 25px 20px;
+
+    border-top: 1px solid #222;
+}
+
+footer p {
+    color: #888;
+}
+
+
+/* =========================================
+   RESPONSIVIDADE
+   ========================================= */
+
+@media (max-width: 900px) {
+
+    .services-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .steps {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .navbar {
+        padding: 15px 20px;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    .hero-content {
+        margin-left: 0;
+
+        padding: 100px 25px 40px;
+
+        text-align: center;
+    }
+
+    .hero p:not(.subtitle) {
+        margin-left: auto;
+
+        margin-right: auto;
+    }
+
+    .services-container {
+        grid-template-columns: 1fr;
+    }
+
+    .steps {
+        grid-template-columns: 1fr;
+    }
+
+    .contact h2 {
+        font-size: 32px;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .nav-links {
+        display: none;
+    }
+
+    .logo {
+        margin: auto;
+    }
+
+}
