@@ -305,13 +305,14 @@ function mostrarAgendamento(
     }
 
     mostrarDadosCliente(
-        janela,
-        veiculo,
-        nomePacote,
-        data,
-        horario,
-        total
-    );
+    janela,
+    veiculo,
+    nomePacote,
+    data,
+    horario,
+    total,
+    extrasSelecionados
+);
 
 });
 }
