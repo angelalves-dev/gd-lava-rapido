@@ -597,6 +597,7 @@ function mostrarResumoPedido(
             data: data,
             horario: horario,
             total: total
+            status: "Agendado"
 
         };
 
