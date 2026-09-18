@@ -172,6 +172,180 @@ function mostrarServicosExtras(
         </div>
     `;
 
+    // =========================================
+// AGENDAMENTO
+// =========================================
+
+function mostrarAgendamento(
+    janela,
+    veiculo,
+    nomePacote,
+    total
+) {
+
+    janela.innerHTML = `
+        <div class="vehicle-box">
+
+            <h2>Agende seu atendimento</h2>
+
+            <p>
+                Veículo: <strong>${veiculo}</strong>
+            </p>
+
+            <p>
+                Pacote: <strong>${nomePacote}</strong>
+            </p>
+
+            <p>
+                Total: <strong>R$ ${total}</strong>
+            </p>
+
+            <hr>
+
+            <h3>Escolha a data</h3>
+
+            <input
+                type="date"
+                id="data-agendamento"
+                class="schedule-input"
+            >
+
+            <h3>Escolha o horário</h3>
+
+            <select
+                id="horario-agendamento"
+                class="schedule-input"
+            >
+
+                <option value="">
+                    Selecione um horário
+                </option>
+
+                <option value="08:00">
+                    08:00
+                </option>
+
+                <option value="09:00">
+                    09:00
+                </option>
+
+                <option value="10:00">
+                    10:00
+                </option>
+
+                <option value="11:00">
+                    11:00
+                </option>
+
+                <option value="13:00">
+                    13:00
+                </option>
+
+                <option value="14:00">
+                    14:00
+                </option>
+
+                <option value="15:00">
+                    15:00
+                </option>
+
+                <option value="16:00">
+                    16:00
+                </option>
+
+                <option value="17:00">
+                    17:00
+                </option>
+
+            </select>
+
+            <button
+                id="agendar-btn"
+                class="vehicle-btn"
+            >
+                CONTINUAR
+            </button>
+
+        </div>
+    `;
+
+
+    // =========================================
+    // IMPEDIR DATA PASSADA
+    // =========================================
+
+    const campoData =
+        janela.querySelector("#data-agendamento");
+
+    const hoje = new Date();
+
+    const ano = hoje.getFullYear();
+
+    const mes = String(
+        hoje.getMonth() + 1
+    ).padStart(2, "0");
+
+    const dia = String(
+        hoje.getDate()
+    ).padStart(2, "0");
+
+    campoData.min =
+        `${ano}-${mes}-${dia}`;
+
+
+    // =========================================
+    // BOTÃO AGENDAR
+    // =========================================
+
+    const botaoAgendar =
+        janela.querySelector("#agendar-btn");
+
+    botaoAgendar.addEventListener(
+        "click",
+        function () {
+
+            const data =
+                campoData.value;
+
+            const horario =
+                janela.querySelector(
+                    "#horario-agendamento"
+                ).value;
+
+
+            if (!data) {
+
+                alert(
+                    "Por favor, escolha uma data."
+                );
+
+                return;
+            }
+
+
+            if (!horario) {
+
+                alert(
+                    "Por favor, escolha um horário."
+                );
+
+                return;
+            }
+
+
+            alert(
+                "Agendamento selecionado!\n\n" +
+                "Veículo: " + veiculo +
+                "\nPacote: " + nomePacote +
+                "\nData: " + data +
+                "\nHorário: " + horario +
+                "\nTotal: R$ " + total
+            );
+
+        }
+    );
+
+}
 
     // =========================================
     // CALCULAR TOTAL
