@@ -792,14 +792,20 @@ const pedidosSalvos =
 const pedidoEncontrado =
     pedidosSalvos.find(function (pedido) {
 
-        return (
-            pedido.nome === nome &&
-            pedido.placa === placa &&
-            pedido.data === data &&
-            pedido.horario === horario
-        );
+        return pedido.id === pedidoId;
 
     });
+
+if (pedidoEncontrado) {
+
+    pedidoEncontrado.status = "Concluído";
+
+    localStorage.setItem(
+        "pedidosGD",
+        JSON.stringify(pedidosSalvos)
+    );
+
+}
 
 if (pedidoEncontrado) {
 
