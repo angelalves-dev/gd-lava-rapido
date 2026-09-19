@@ -855,7 +855,11 @@
         pedidosNovos.forEach(
             function (pedido) {
 
-                faturamentoTotal += Number(pedido.total) || 0;
+                const valorPedido = parseFloat(
+    String(pedido.total).replace(",", ".")
+) || 0;
+
+faturamentoTotal += valorPedido;
                 
                 const status =
                     pedido.status ||
