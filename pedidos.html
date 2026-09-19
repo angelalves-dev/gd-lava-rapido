@@ -849,10 +849,14 @@
 
         let totalConcluidos = 0;
 
+        let faturamentoTotal = 0;
+
 
         pedidosNovos.forEach(
             function (pedido) {
 
+                faturamentoTotal += Number(pedido.total) || 0;
+                
                 const status =
                     pedido.status ||
                     "Agendado";
