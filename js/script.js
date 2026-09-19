@@ -1,43 +1,40 @@
+```javascript
+/* =========================================
+   GD LAVA RÁPIDO
+   SISTEMA DE PEDIDOS E AGENDAMENTOS
+========================================= */
+
+
 /* =========================================
    CONFIGURAÇÃO SUPABASE
 ========================================= */
 
-const SUPABASE_URL = "https://ljswwokxcgglqluzwctq.supabase.co";
+const SUPABASE_URL =
+    "https://ljswwokxcgglqluzwctq.supabase.co";
 
-const SUPABASE_KEY = "sb_publishable_CS4rdWdRC9iVrHNvXXCzHA_6kH6WRlG";
+const SUPABASE_KEY =
+    "COLE_AQUI_SUA_CHAVE_PUBLISHABLE";
 
-window.supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+
+window.supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =========================================
+   INICIAR SISTEMA
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        iniciarSelecaoPacotes();
+
+    }
 );
-
-
-/* =========================================
-   CONFIGURAÇÕES DO SISTEMA
-========================================= */
-
-const horariosDisponiveis = [
-    "08:00",
-    "09:00",
-    "10:00",
-    "11:00",
-    "13:00",
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00"
-];
-
-
-/* =========================================
-   INICIALIZAÇÃO
-========================================= */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    iniciarSelecaoPacotes();
-
-});
 
 
 /* =========================================
@@ -46,126 +43,183 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function iniciarSelecaoPacotes() {
 
-    const botoes = document.querySelectorAll(".select-btn");
-
-    botoes.forEach(function (botao) {
-
-        botao.addEventListener("click", function () {
-
-            const card = botao.parentElement;
-
-            const nome = card.querySelector("h3").textContent.trim();
-
-            const precoTexto =
-                card.querySelector("strong").textContent;
-
-            const preco = parseFloat(
-                precoTexto
-                    .replace("A partir de R$", "")
-                    .replace("R$", "")
-                    .replace(/\./g, "")
-                    .replace(",", ".")
-                    .trim()
-            );
-
-            mostrarEscolhaVeiculo(
-                nome,
-                preco
-            );
-
-        });
-
-    });
-
-}
-
-
-/* =========================================
-   ESCOLHA DO VEÍCULO
-========================================= */
-
-function mostrarEscolhaVeiculo(
-    nomePacote,
-    precoPacote
-) {
-
-    const escolhaVeiculo =
-        document.createElement("div");
-
-    escolhaVeiculo.classList.add(
-        "vehicle-selection"
-    );
-
-    escolhaVeiculo.innerHTML = `
-
-        <div class="vehicle-box">
-
-            <h2>Escolha seu veículo</h2>
-
-            <p>
-                Você escolheu o pacote
-                <strong>${nomePacote}</strong>.
-            </p>
-
-            <p>
-                Agora informe o tipo de veículo:
-            </p>
-
-            <div class="vehicle-buttons">
-
-                <button
-                    class="vehicle-btn"
-                    data-veiculo="Carro"
-                    type="button"
-                >
-                    🚗 Carro
-                </button>
-
-                <button
-                    class="vehicle-btn"
-                    data-veiculo="Moto"
-                    type="button"
-                >
-                    🏍️ Moto
-                </button>
-
-            </div>
-
-        </div>
-
-    `;
-
-    document.body.appendChild(
-        escolhaVeiculo
-    );
-
-
-    const botoesVeiculo =
-        escolhaVeiculo.querySelectorAll(
-            ".vehicle-btn"
+    const botoes =
+        document.querySelectorAll(
+            ".select-btn"
         );
 
 
-    botoesVeiculo.forEach(function (botaoVeiculo) {
+    botoes.forEach(
+        function (botao) {
 
-        botaoVeiculo.addEventListener(
-            "click",
-            function () {
+            botao.addEventListener(
+                "click",
+                function () {
 
-                const veiculo =
-                    botaoVeiculo.dataset.veiculo;
+                    const card =
+                        botao.parentElement;
 
-                mostrarServicosExtras(
-                    escolhaVeiculo,
-                    veiculo,
-                    nomePacote,
-                    precoPacote
-                );
 
-            }
-        );
+                    const titulo =
+                        card.querySelector(
+                            "h3"
+                        );
 
-    });
+
+                    const precoElemento =
+                        card.querySelector(
+                            "strong"
+                        );
+
+
+                    if (
+                        !titulo ||
+                        !precoElemento
+                    ) {
+                        return;
+                    }
+
+
+                    const nome =
+                        titulo.textContent.trim();
+
+
+                    const precoTexto =
+                        precoElemento.textContent;
+
+
+                    const preco =
+                        parseFloat(
+                            precoTexto
+                                .replace(
+                                    "A partir de R$",
+                                    ""
+                                )
+                                .replace(
+                                    "R$",
+                                    ""
+                                )
+                                .replace(
+                                    /\./g,
+                                    ""
+                                )
+                                .replace(
+                                    ",",
+                                    "."
+                                )
+                                .trim()
+                        );
+
+
+                    if (
+                        isNaN(preco)
+                    ) {
+
+                        alert(
+                            "Não foi possível identificar o preço do pacote."
+                        );
+
+                        return;
+                    }
+
+
+                    const escolhaVeiculo =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    escolhaVeiculo.classList.add(
+                        "vehicle-selection"
+                    );
+
+
+                    escolhaVeiculo.innerHTML = `
+
+                        <div class="vehicle-box">
+
+                            <h2>
+                                Escolha seu veículo
+                            </h2>
+
+                            <p>
+                                Você escolheu o pacote
+                                <strong>
+                                    ${nome}
+                                </strong>.
+                            </p>
+
+                            <p>
+                                Agora informe o tipo de veículo:
+                            </p>
+
+                            <div class="vehicle-buttons">
+
+                                <button
+                                    type="button"
+                                    class="vehicle-btn"
+                                    data-veiculo="Carro"
+                                >
+                                    🚗 Carro
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="vehicle-btn"
+                                    data-veiculo="Moto"
+                                >
+                                    🏍️ Moto
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+
+                    document.body.appendChild(
+                        escolhaVeiculo
+                    );
+
+
+                    const botoesVeiculo =
+                        escolhaVeiculo.querySelectorAll(
+                            ".vehicle-btn"
+                        );
+
+
+                    botoesVeiculo.forEach(
+                        function (
+                            botaoVeiculo
+                        ) {
+
+                            botaoVeiculo.addEventListener(
+                                "click",
+                                function () {
+
+                                    const veiculo =
+                                        botaoVeiculo.dataset.veiculo;
+
+
+                                    mostrarServicosExtras(
+                                        escolhaVeiculo,
+                                        veiculo,
+                                        nome,
+                                        preco
+                                    );
+
+                                }
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+    );
 
 }
 
@@ -185,18 +239,23 @@ function mostrarServicosExtras(
 
         <div class="vehicle-box">
 
-            <h2>Personalize seu serviço</h2>
+            <h2>
+                Personalize seu serviço
+            </h2>
 
             <p>
                 Veículo:
-                <strong>${veiculo}</strong>
+                <strong>
+                    ${veiculo}
+                </strong>
             </p>
 
             <p>
                 Pacote:
-                <strong>${nomePacote}</strong>
+                <strong>
+                    ${nomePacote}
+                </strong>
             </p>
-
 
             <div class="extras-container">
 
@@ -296,9 +355,9 @@ function mostrarServicosExtras(
 
 
             <button
+                type="button"
                 class="select-btn"
                 id="continuar-extras"
-                type="button"
             >
                 CONTINUAR
             </button>
@@ -320,38 +379,43 @@ function mostrarServicosExtras(
         );
 
 
-    checkboxes.forEach(function (checkbox) {
+    checkboxes.forEach(
+        function (checkbox) {
 
-        checkbox.addEventListener(
-            "change",
-            function () {
+            checkbox.addEventListener(
+                "change",
+                function () {
 
-                let total =
-                    precoPacote;
+                    let total =
+                        precoPacote;
 
 
-                checkboxes.forEach(
-                    function (item) {
+                    checkboxes.forEach(
+                        function (item) {
 
-                        if (item.checked) {
+                            if (
+                                item.checked
+                            ) {
 
-                            total += parseFloat(
-                                item.dataset.preco
-                            );
+                                total +=
+                                    parseFloat(
+                                        item.dataset.preco
+                                    );
+
+                            }
 
                         }
-
-                    }
-                );
+                    );
 
 
-                totalElemento.textContent =
-                    formatarMoeda(total);
+                    totalElemento.textContent =
+                        formatarMoeda(total);
 
-            }
-        );
+                }
+            );
 
-    });
+        }
+    );
 
 
     const botaoContinuar =
@@ -364,13 +428,16 @@ function mostrarServicosExtras(
         "click",
         function () {
 
-            const extrasSelecionados = [];
+            const extrasSelecionados =
+                [];
 
 
             checkboxes.forEach(
                 function (checkbox) {
 
-                    if (checkbox.checked) {
+                    if (
+                        checkbox.checked
+                    ) {
 
                         extrasSelecionados.push({
 
@@ -397,7 +464,8 @@ function mostrarServicosExtras(
             extrasSelecionados.forEach(
                 function (extra) {
 
-                    total += extra.preco;
+                    total +=
+                        extra.preco;
 
                 }
             );
@@ -475,9 +543,9 @@ function mostrarAgendamento(
 
 
             <button
+                type="button"
                 class="select-btn"
                 id="continuar-agendamento"
-                type="button"
             >
                 CONTINUAR
             </button>
@@ -516,13 +584,19 @@ function mostrarAgendamento(
     const mes =
         String(
             hoje.getMonth() + 1
-        ).padStart(2, "0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 
     const dia =
         String(
             hoje.getDate()
-        ).padStart(2, "0");
+        ).padStart(
+            2,
+            "0"
+        );
 
 
     const dataAtual =
@@ -533,37 +607,68 @@ function mostrarAgendamento(
         dataAtual;
 
 
-    let horarioSelecionado = "";
+    const horarios = [
+
+        "08:00",
+        "09:00",
+        "10:00",
+        "11:00",
+        "13:00",
+        "14:00",
+        "15:00",
+        "16:00",
+        "17:00"
+
+    ];
 
 
-    async function carregarHorarios(dataSelecionada) {
+    let horarioSelecionado =
+        "";
 
-        horariosContainer.innerHTML = "";
 
-        horarioSelecionado = "";
+    function carregarHorarios(
+        dataSelecionada
+    ) {
+
+        horariosContainer.innerHTML =
+            "";
+
+
+        horarioSelecionado =
+            "";
 
 
         if (!dataSelecionada) {
-
             return;
-
         }
 
 
-        horariosContainer.innerHTML =
-            "<p>Verificando horários...</p>";
+        const pedidosSalvos =
+            obterPedidosLocais();
 
 
         const horariosOcupados =
-            await buscarHorariosOcupados(
-                dataSelecionada
-            );
+            pedidosSalvos
+                .filter(
+                    function (pedido) {
+
+                        return (
+                            pedido.data ===
+                            dataSelecionada
+                        );
+
+                    }
+                )
+                .map(
+                    function (pedido) {
+
+                        return pedido.horario;
+
+                    }
+                );
 
 
-        horariosContainer.innerHTML = "";
-
-
-        horariosDisponiveis.forEach(
+        horarios.forEach(
             function (horario) {
 
                 const botaoHorario =
@@ -594,11 +699,14 @@ function mostrarAgendamento(
                     botaoHorario.disabled =
                         true;
 
+
                     botaoHorario.textContent =
                         `${horario} - Ocupado`;
 
+
                     botaoHorario.style.opacity =
                         "0.4";
+
 
                     botaoHorario.style.cursor =
                         "not-allowed";
@@ -614,19 +722,19 @@ function mostrarAgendamento(
 
 
                             const botoes =
-                                horariosContainer
-                                    .querySelectorAll(
-                                        ".vehicle-btn"
-                                    );
+                                horariosContainer.querySelectorAll(
+                                    ".vehicle-btn"
+                                );
 
 
                             botoes.forEach(
-                                function (botao) {
+                                function (
+                                    botao
+                                ) {
 
-                                    botao.classList
-                                        .remove(
-                                            "horario-selecionado"
-                                        );
+                                    botao.classList.remove(
+                                        "horario-selecionado"
+                                    );
 
                                 }
                             );
@@ -666,7 +774,7 @@ function mostrarAgendamento(
 
     botaoContinuar.addEventListener(
         "click",
-        async function () {
+        function () {
 
             const data =
                 inputData.value;
@@ -679,7 +787,6 @@ function mostrarAgendamento(
                 );
 
                 return;
-
             }
 
 
@@ -690,47 +797,38 @@ function mostrarAgendamento(
                 );
 
                 return;
-
             }
 
 
-            botaoContinuar.disabled =
-                true;
-
-
-            botaoContinuar.textContent =
-                "VERIFICANDO...";
-
-
             const horarioJaOcupado =
-                await verificarHorarioOcupado(
-                    data,
-                    horarioSelecionado
-                );
+                obterPedidosLocais()
+                    .some(
+                        function (pedido) {
+
+                            return (
+                                pedido.data ===
+                                data &&
+                                pedido.horario ===
+                                horarioSelecionado
+                            );
+
+                        }
+                    );
 
 
             if (horarioJaOcupado) {
 
                 alert(
-                    "Esse horário acabou de ser ocupado. Escolha outro horário."
+                    "Esse horário já foi ocupado. Escolha outro."
                 );
 
 
-                botaoContinuar.disabled =
-                    false;
-
-
-                botaoContinuar.textContent =
-                    "CONTINUAR";
-
-
-                await carregarHorarios(
+                carregarHorarios(
                     data
                 );
 
 
                 return;
-
             }
 
 
@@ -746,109 +844,6 @@ function mostrarAgendamento(
 
         }
     );
-
-}
-
-
-/* =========================================
-   BUSCAR HORÁRIOS OCUPADOS
-========================================= */
-
-async function buscarHorariosOcupados(
-    data
-) {
-
-    try {
-
-        const resultado =
-            await window.supabaseClient
-                .from("pedidos")
-                .select("horario")
-                .eq("data", data);
-
-
-        if (resultado.error) {
-
-            console.error(
-                "Erro ao buscar horários:",
-                resultado.error
-            );
-
-
-            return [];
-
-        }
-
-
-        return resultado.data.map(
-            function (pedido) {
-
-                return pedido.horario;
-
-            }
-        );
-
-    } catch (erro) {
-
-        console.error(
-            "Erro inesperado:",
-            erro
-        );
-
-
-        return [];
-
-    }
-
-}
-
-
-/* =========================================
-   VERIFICAR HORÁRIO
-========================================= */
-
-async function verificarHorarioOcupado(
-    data,
-    horario
-) {
-
-    try {
-
-        const resultado =
-            await window.supabaseClient
-                .from("pedidos")
-                .select("id")
-                .eq("data", data)
-                .eq("horario", horario)
-                .limit(1);
-
-
-        if (resultado.error) {
-
-            console.error(
-                "Erro ao verificar horário:",
-                resultado.error
-            );
-
-
-            return false;
-
-        }
-
-
-        return resultado.data.length > 0;
-
-    } catch (erro) {
-
-        console.error(
-            "Erro inesperado:",
-            erro
-        );
-
-
-        return false;
-
-    }
 
 }
 
@@ -942,9 +937,9 @@ function mostrarDadosCliente(
 
 
             <button
+                type="button"
                 class="select-btn"
                 id="continuar-dados"
-                type="button"
             >
                 CONTINUAR
             </button>
@@ -1016,7 +1011,6 @@ function mostrarDadosCliente(
                 );
 
                 return;
-
             }
 
 
@@ -1058,11 +1052,13 @@ function mostrarResumoPedido(
     total
 ) {
 
-    let listaExtras = "";
+    let listaExtras =
+        "";
 
 
     if (
-        extrasSelecionados.length === 0
+        extrasSelecionados.length ===
+        0
     ) {
 
         listaExtras =
@@ -1072,19 +1068,25 @@ function mostrarResumoPedido(
 
         listaExtras =
             extrasSelecionados
-                .map(function (extra) {
+                .map(
+                    function (extra) {
 
-                    return `
-                        <p>
-                            ${extra.nome}
-                            -
-                            ${formatarMoeda(
-                                extra.preco
-                            )}
-                        </p>
-                    `;
+                        return `
 
-                })
+                            <p>
+                                <strong>
+                                    ${extra.nome}
+                                </strong>
+                                -
+                                ${formatarMoeda(
+                                    extra.preco
+                                )}
+                            </p>
+
+                        `;
+
+                    }
+                )
                 .join("");
 
     }
@@ -1106,12 +1108,16 @@ function mostrarResumoPedido(
                 </h3>
 
                 <p>
-                    <strong>Nome:</strong>
+                    <strong>
+                        Nome:
+                    </strong>
                     ${nome}
                 </p>
 
                 <p>
-                    <strong>WhatsApp:</strong>
+                    <strong>
+                        WhatsApp:
+                    </strong>
                     ${whatsapp}
                 </p>
 
@@ -1121,17 +1127,23 @@ function mostrarResumoPedido(
                 </h3>
 
                 <p>
-                    <strong>Tipo:</strong>
+                    <strong>
+                        Tipo:
+                    </strong>
                     ${veiculo}
                 </p>
 
                 <p>
-                    <strong>Modelo:</strong>
+                    <strong>
+                        Modelo:
+                    </strong>
                     ${modelo}
                 </p>
 
                 <p>
-                    <strong>Placa:</strong>
+                    <strong>
+                        Placa:
+                    </strong>
                     ${placa}
                 </p>
 
@@ -1141,7 +1153,9 @@ function mostrarResumoPedido(
                 </h3>
 
                 <p>
-                    <strong>Pacote:</strong>
+                    <strong>
+                        Pacote:
+                    </strong>
                     ${nomePacote}
                 </p>
 
@@ -1158,12 +1172,16 @@ function mostrarResumoPedido(
                 </h3>
 
                 <p>
-                    <strong>Data:</strong>
+                    <strong>
+                        Data:
+                    </strong>
                     ${formatarData(data)}
                 </p>
 
                 <p>
-                    <strong>Horário:</strong>
+                    <strong>
+                        Horário:
+                    </strong>
                     ${horario}
                 </p>
 
@@ -1184,9 +1202,9 @@ function mostrarResumoPedido(
 
 
             <button
+                type="button"
                 class="select-btn"
                 id="confirmar-pedido"
-                type="button"
             >
                 CONFIRMAR PEDIDO
             </button>
@@ -1214,17 +1232,30 @@ function mostrarResumoPedido(
                 "SALVANDO...";
 
 
+            /* =========================================
+               VERIFICAR HORÁRIO LOCAL
+            ========================================= */
+
             const horarioJaOcupado =
-                await verificarHorarioOcupado(
-                    data,
-                    horario
-                );
+                obterPedidosLocais()
+                    .some(
+                        function (pedido) {
+
+                            return (
+                                pedido.data ===
+                                data &&
+                                pedido.horario ===
+                                horario
+                            );
+
+                        }
+                    );
 
 
             if (horarioJaOcupado) {
 
                 alert(
-                    "Esse horário já foi reservado. Por favor, escolha outro horário."
+                    "Esse horário já foi reservado. Escolha outro."
                 );
 
 
@@ -1237,9 +1268,12 @@ function mostrarResumoPedido(
 
 
                 return;
-
             }
 
+
+            /* =========================================
+               CRIAR PEDIDO
+            ========================================= */
 
             const pedido = {
 
@@ -1279,19 +1313,87 @@ function mostrarResumoPedido(
             };
 
 
-            const resultado =
-                await window.supabaseClient
-                    .from("pedidos")
-                    .insert(pedido)
-                    .select()
-                    .single();
+            /* =========================================
+               SALVAR NO SUPABASE
+               
+               IMPORTANTE:
+               NÃO usamos .select()
+               porque não existe SELECT público.
+            ========================================= */
+
+            try {
+
+                const resultado =
+                    await window.supabaseClient
+                        .from("pedidos")
+                        .insert(
+                            pedido
+                        );
 
 
-            if (resultado.error) {
+                if (
+                    resultado.error
+                ) {
+
+                    console.error(
+                        "Erro ao salvar pedido:",
+                        resultado.error
+                    );
+
+
+                    alert(
+                        "Não foi possível salvar o pedido. Verifique a conexão com o sistema."
+                    );
+
+
+                    botaoConfirmar.disabled =
+                        false;
+
+
+                    botaoConfirmar.textContent =
+                        "CONFIRMAR PEDIDO";
+
+
+                    return;
+                }
+
+
+                /* =========================================
+                   BACKUP LOCAL
+                ========================================= */
+
+                const pedidoLocal = {
+
+                    id:
+                        Date.now(),
+
+                    ...pedido
+
+                };
+
+
+                salvarBackupLocal(
+                    pedidoLocal
+                );
+
+
+                /* =========================================
+                   MOSTRAR CHECKLIST
+                ========================================= */
+
+                mostrarChecklist(
+                    janela,
+                    pedidoLocal
+                );
+
+
+            } catch (
+                erro
+            ) {
 
                 console.error(
-                    "Erro ao salvar pedido:",
-                    resultado.error
+                    "Erro inesperado ao salvar pedido:",
+                    erro
                 );
 
 
@@ -1307,29 +1409,7 @@ function mostrarResumoPedido(
                 botaoConfirmar.textContent =
                     "CONFIRMAR PEDIDO";
 
-
-                return;
-
             }
-
-
-            const pedidoSalvo =
-                resultado.data;
-
-
-            /* =========================================
-               BACKUP LOCAL
-            ========================================= */
-
-            salvarBackupLocal(
-                pedidoSalvo
-            );
-
-
-            mostrarChecklist(
-                janela,
-                pedidoSalvo
-            );
 
         }
     );
@@ -1346,11 +1426,7 @@ function salvarBackupLocal(
 ) {
 
     const pedidosSalvos =
-        JSON.parse(
-            localStorage.getItem(
-                "pedidosGD"
-            )
-        ) || [];
+        obterPedidosLocais();
 
 
     pedidosSalvos.push(
@@ -1369,6 +1445,39 @@ function salvarBackupLocal(
 
 
 /* =========================================
+   OBTER PEDIDOS LOCAIS
+========================================= */
+
+function obterPedidosLocais() {
+
+    try {
+
+        return (
+            JSON.parse(
+                localStorage.getItem(
+                    "pedidosGD"
+                )
+            ) || []
+        );
+
+    } catch (
+        erro
+    ) {
+
+        console.error(
+            "Erro ao ler pedidos locais:",
+            erro
+        );
+
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================
    CHECKLIST
 ========================================= */
 
@@ -1377,7 +1486,8 @@ function mostrarChecklist(
     pedido
 ) {
 
-    let checklistExtras = "";
+    let checklistExtras =
+        "";
 
 
     if (
@@ -1420,7 +1530,6 @@ function mostrarChecklist(
                 Ordem de serviço
             </h2>
 
-
             <p>
                 Pedido criado com sucesso.
             </p>
@@ -1429,49 +1538,71 @@ function mostrarChecklist(
             <div class="resumo-pedido">
 
                 <p>
-                    <strong>Cliente:</strong>
+                    <strong>
+                        Cliente:
+                    </strong>
                     ${pedido.nome}
                 </p>
 
                 <p>
-                    <strong>WhatsApp:</strong>
+                    <strong>
+                        WhatsApp:
+                    </strong>
                     ${pedido.whatsapp}
                 </p>
 
                 <p>
-                    <strong>Veículo:</strong>
+                    <strong>
+                        Veículo:
+                    </strong>
                     ${pedido.veiculo}
                 </p>
 
                 <p>
-                    <strong>Modelo:</strong>
+                    <strong>
+                        Modelo:
+                    </strong>
                     ${pedido.modelo}
                 </p>
 
                 <p>
-                    <strong>Placa:</strong>
+                    <strong>
+                        Placa:
+                    </strong>
                     ${pedido.placa}
                 </p>
 
                 <p>
-                    <strong>Pacote:</strong>
+                    <strong>
+                        Pacote:
+                    </strong>
                     ${pedido.pacote}
                 </p>
 
                 <p>
-                    <strong>Data:</strong>
-                    ${formatarData(pedido.data)}
+                    <strong>
+                        Data:
+                    </strong>
+                    ${formatarData(
+                        pedido.data
+                    )}
                 </p>
 
                 <p>
-                    <strong>Horário:</strong>
+                    <strong>
+                        Horário:
+                    </strong>
                     ${pedido.horario}
                 </p>
 
                 <p>
-                    <strong>Total:</strong>
+                    <strong>
+                        Total:
+                    </strong>
                     ${formatarMoeda(
-                        Number(pedido.total)
+                        Number(
+                            pedido.total
+                        )
                     )}
                 </p>
 
@@ -1561,9 +1692,9 @@ function mostrarChecklist(
 
 
             <button
+                type="button"
                 class="select-btn"
                 id="finalizar-servico"
-                type="button"
             >
                 FINALIZAR SERVIÇO
             </button>
@@ -1587,7 +1718,7 @@ function mostrarChecklist(
 
     botaoFinalizar.addEventListener(
         "click",
-        async function () {
+        function () {
 
             let todosMarcados =
                 true;
@@ -1596,7 +1727,9 @@ function mostrarChecklist(
             checkboxes.forEach(
                 function (checkbox) {
 
-                    if (!checkbox.checked) {
+                    if (
+                        !checkbox.checked
+                    ) {
 
                         todosMarcados =
                             false;
@@ -1607,70 +1740,30 @@ function mostrarChecklist(
             );
 
 
-            if (!todosMarcados) {
+            if (
+                !todosMarcados
+            ) {
 
                 alert(
                     "Marque todos os itens do checklist antes de finalizar."
                 );
 
                 return;
-
-            }
-
-
-            botaoFinalizar.disabled =
-                true;
-
-
-            botaoFinalizar.textContent =
-                "FINALIZANDO...";
-
-
-            const resultado =
-                await window.supabaseClient
-                    .from("pedidos")
-                    .update({
-                        status: "Concluído"
-                    })
-                    .eq("id", pedido.id);
-
-
-            if (resultado.error) {
-
-                console.error(
-                    "Erro ao atualizar pedido:",
-                    resultado.error
-                );
-
-
-                alert(
-                    "Não foi possível finalizar o serviço no banco de dados."
-                );
-
-
-                botaoFinalizar.disabled =
-                    false;
-
-
-                botaoFinalizar.textContent =
-                    "FINALIZAR SERVIÇO";
-
-
-                return;
-
             }
 
 
             /* =========================================
                ATUALIZAR BACKUP LOCAL
+               
+               O UPDATE NO SUPABASE NÃO É FEITO
+               AQUI, porque o UPDATE público ainda
+               não foi liberado. Isso será protegido
+               quando criarmos o painel administrativo
+               com autenticação.
             ========================================= */
 
             const pedidosSalvos =
-                JSON.parse(
-                    localStorage.getItem(
-                        "pedidosGD"
-                    )
-                ) || [];
+                obterPedidosLocais();
 
 
             const pedidoEncontrado =
@@ -1678,15 +1771,21 @@ function mostrarChecklist(
                     function (item) {
 
                         return (
-                            String(item.id) ===
-                            String(pedido.id)
+                            String(
+                                item.id
+                            ) ===
+                            String(
+                                pedido.id
+                            )
                         );
 
                     }
                 );
 
 
-            if (pedidoEncontrado) {
+            if (
+                pedidoEncontrado
+            ) {
 
                 pedidoEncontrado.status =
                     "Concluído";
@@ -1723,11 +1822,16 @@ function formatarMoeda(
     valor
 ) {
 
-    return Number(valor).toLocaleString(
+    return Number(
+        valor
+    ).toLocaleString(
         "pt-BR",
         {
-            style: "currency",
-            currency: "BRL"
+            style:
+                "currency",
+
+            currency:
+                "BRL"
         }
     );
 
@@ -1753,15 +1857,48 @@ function formatarData(
         data.split("-");
 
 
-    if (partes.length !== 3) {
+    if (
+        partes.length !== 3
+    ) {
 
         return data;
 
     }
 
 
-    return `
-        ${partes[2]}/${partes[1]}/${partes[0]}
-    `;
+    return (
+        `${partes[2]}/${partes[1]}/${partes[0]}`
+    );
 
 }
+```
+
+**Importante:** no começo do arquivo, mantenha a sua **chave Publishable real** no lugar de:
+
+```javascript
+"COLE_AQUI_SUA_CHAVE_PUBLISHABLE"
+```
+
+Não coloque a chave `secret` ou `service_role`.
+
+### Depois de salvar
+
+Faça exatamente nesta ordem:
+
+1. Salve o `script.js`.
+2. Faça o **Commit changes** no GitHub.
+3. Espere o GitHub Pages atualizar.
+4. Abra o site.
+5. Faça novamente o pedido de teste.
+6. Use:
+
+   * Nome: `Cliente Teste`
+   * WhatsApp: `92999999999`
+   * Modelo: `Honda Civic`
+   * Placa: `TEST123`
+
+O resultado que queremos agora é:
+
+**“Pedido criado com sucesso.”** → e depois o pedido deve aparecer na tabela `pedidos` do Supabase.
+
+Esta versão deliberadamente **não libera SELECT nem UPDATE público**. Isso é importante porque a tabela contém nome, WhatsApp e dados do veículo dos clientes. O painel administrativo será conectado ao Supabase de maneira protegida na próxima etapa.
