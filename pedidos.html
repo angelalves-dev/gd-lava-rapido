@@ -33,49 +33,95 @@
         <section class="container">
 
             <h2>Pedidos recebidos</h2>
-<div class="filtros-pedidos">
 
-    <button class="filtro-btn ativo" data-filtro="Todos">
-        TODOS
-    </button>
 
-    <button class="filtro-btn" data-filtro="Agendado">
-        AGENDADOS
-    </button>
+            <!-- FILTROS -->
 
-    <button class="filtro-btn" data-filtro="Em andamento">
-        EM ANDAMENTO
-    </button>
+            <div class="filtros-pedidos">
 
-    <button class="filtro-btn" data-filtro="Concluído">
-        CONCLUÍDOS
-    </button>
+                <button
+                    class="filtro-btn ativo"
+                    data-filtro="Todos"
+                >
+                    TODOS
+                </button>
 
-</div>
+                <button
+                    class="filtro-btn"
+                    data-filtro="Agendado"
+                >
+                    AGENDADOS
+                </button>
+
+                <button
+                    class="filtro-btn"
+                    data-filtro="Em andamento"
+                >
+                    EM ANDAMENTO
+                </button>
+
+                <button
+                    class="filtro-btn"
+                    data-filtro="Concluído"
+                >
+                    CONCLUÍDOS
+                </button>
+
+            </div>
+
+
+            <!-- CONTADORES -->
 
             <div class="contador-pedidos">
 
-    <div class="contador-box">
-        <span>Todos</span>
-        <strong id="contador-todos">0</strong>
-    </div>
+                <div class="contador-box">
 
-    <div class="contador-box">
-        <span>Agendados</span>
-        <strong id="contador-agendados">0</strong>
-    </div>
+                    <span>Todos</span>
 
-    <div class="contador-box">
-        <span>Em andamento</span>
-        <strong id="contador-andamento">0</strong>
-    </div>
+                    <strong id="contador-todos">
+                        0
+                    </strong>
 
-    <div class="contador-box">
-        <span>Concluídos</span>
-        <strong id="contador-concluidos">0</strong>
-    </div>
+                </div>
 
-</div>
+
+                <div class="contador-box">
+
+                    <span>Agendados</span>
+
+                    <strong id="contador-agendados">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="contador-box">
+
+                    <span>Em andamento</span>
+
+                    <strong id="contador-andamento">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="contador-box">
+
+                    <span>Concluídos</span>
+
+                    <strong id="contador-concluidos">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- PEDIDOS -->
+
             <div id="pedido-container">
 
                 <!-- Os pedidos aparecerão aqui -->
@@ -86,68 +132,12 @@
 
     </main>
 
-    // =========================================
-// CONTADORES DE PEDIDOS
-// =========================================
-
-const contadorTodos =
-    document.querySelector("#contador-todos");
-
-const contadorAgendados =
-    document.querySelector("#contador-agendados");
-
-const contadorAndamento =
-    document.querySelector("#contador-andamento");
-
-const contadorConcluidos =
-    document.querySelector("#contador-concluidos");
-
-
-let totalAgendados = 0;
-let totalAndamento = 0;
-let totalConcluidos = 0;
-
-
-pedidosNovos.forEach(function (pedido) {
-
-    const status =
-        pedido.status || "Agendado";
-
-
-    if (status === "Agendado") {
-
-        totalAgendados++;
-
-    }
-
-    else if (status === "Em andamento") {
-
-        totalAndamento++;
-
-    }
-
-    else if (status === "Concluído") {
-
-        totalConcluidos++;
-
-    }
-
-});
-
-
-contadorTodos.textContent =
-    pedidosNovos.length;
-
-contadorAgendados.textContent =
-    totalAgendados;
-
-contadorAndamento.textContent =
-    totalAndamento;
-
-contadorConcluidos.textContent =
-    totalConcluidos;
 
     <script>
+
+        /* =========================================
+           PEDIDOS SALVOS
+        ========================================= */
 
         const pedidoContainer =
             document.querySelector("#pedido-container");
@@ -163,7 +153,10 @@ contadorConcluidos.textContent =
             localStorage.getItem("pedidoGD");
 
 
-        if (pedidoAntigo && pedidosNovos.length === 0) {
+        if (
+            pedidoAntigo &&
+            pedidosNovos.length === 0
+        ) {
 
             pedidosNovos.push(
                 JSON.parse(pedidoAntigo)
@@ -172,13 +165,19 @@ contadorConcluidos.textContent =
         }
 
 
+        /* =========================================
+           MOSTRAR PEDIDOS
+        ========================================= */
+
         if (pedidosNovos.length === 0) {
 
             pedidoContainer.innerHTML = `
 
                 <div class="vehicle-box">
 
-                    <h3>Nenhum pedido encontrado</h3>
+                    <h3>
+                        Nenhum pedido encontrado
+                    </h3>
 
                     <p>
                         Ainda não existem pedidos cadastrados.
@@ -188,7 +187,9 @@ contadorConcluidos.textContent =
 
             `;
 
-        } else {
+        }
+
+        else {
 
 
             pedidosNovos.forEach(
@@ -199,7 +200,9 @@ contadorConcluidos.textContent =
                         document.createElement("div");
 
 
-                    card.classList.add("vehicle-box");
+                    card.classList.add(
+                        "vehicle-box"
+                    );
 
 
                     card.innerHTML = `
@@ -208,65 +211,129 @@ contadorConcluidos.textContent =
                             Pedido #${index + 1}
                         </h3>
 
+
                         <hr>
 
+
                         <p>
-                            <strong>Cliente:</strong>
+
+                            <strong>
+                                Cliente:
+                            </strong>
+
                             ${pedido.nome}
+
                         </p>
 
+
                         <p>
-                            <strong>WhatsApp:</strong>
+
+                            <strong>
+                                WhatsApp:
+                            </strong>
+
                             ${pedido.whatsapp}
+
                         </p>
 
+
                         <p>
-                            <strong>Veículo:</strong>
+
+                            <strong>
+                                Veículo:
+                            </strong>
+
                             ${pedido.veiculo}
+
                         </p>
 
+
                         <p>
-                            <strong>Modelo:</strong>
+
+                            <strong>
+                                Modelo:
+                            </strong>
+
                             ${pedido.modelo}
+
                         </p>
 
+
                         <p>
-                            <strong>Placa:</strong>
+
+                            <strong>
+                                Placa:
+                            </strong>
+
                             ${pedido.placa}
+
                         </p>
 
+
                         <p>
-                            <strong>Pacote:</strong>
+
+                            <strong>
+                                Pacote:
+                            </strong>
+
                             ${pedido.pacote}
+
                         </p>
 
+
                         <p>
-                            <strong>Extras:</strong>
+
+                            <strong>
+                                Extras:
+                            </strong>
+
                             ${
                                 pedido.extras &&
                                 pedido.extras.length > 0
+
                                     ? pedido.extras.join(", ")
+
                                     : "Nenhum"
                             }
+
                         </p>
 
+
                         <p>
-                            <strong>Data:</strong>
+
+                            <strong>
+                                Data:
+                            </strong>
+
                             ${pedido.data}
+
                         </p>
+
 
                         <p>
-                            <strong>Horário:</strong>
+
+                            <strong>
+                                Horário:
+                            </strong>
+
                             ${pedido.horario}
+
                         </p>
 
+
+                        <!-- STATUS -->
 
                         <div class="status-pedido ${
                             pedido.status === "Concluído"
+
                                 ? "status-concluido"
+
                                 : pedido.status === "Em andamento"
+
                                     ? "status-andamento"
+
                                     : "status-agendado"
+
                         }">
 
                             ${pedido.status || "Agendado"}
@@ -274,12 +341,17 @@ contadorConcluidos.textContent =
                         </div>
 
 
+                        <!-- TOTAL -->
+
                         <div class="resumo-total">
 
-                            TOTAL: R$ ${pedido.total}
+                            TOTAL:
+                            R$ ${pedido.total}
 
                         </div>
 
+
+                        <!-- BOTÃO OS -->
 
                         <button
                             class="vehicle-btn abrir-os-btn"
@@ -289,6 +361,8 @@ contadorConcluidos.textContent =
 
                         </button>
 
+
+                        <!-- BOTÃO STATUS -->
 
                         <button
                             class="vehicle-btn alterar-status-btn"
@@ -301,15 +375,19 @@ contadorConcluidos.textContent =
                     `;
 
 
-                    pedidoContainer.appendChild(card);
+                    pedidoContainer.appendChild(
+                        card
+                    );
 
 
-                    /* =====================================
-                       BOTÃO ABRIR ORDEM DE SERVIÇO
-                    ===================================== */
+                    /* =========================================
+                       ABRIR ORDEM DE SERVIÇO
+                    ========================================= */
 
                     const botaoOS =
-                        card.querySelector(".abrir-os-btn");
+                        card.querySelector(
+                            ".abrir-os-btn"
+                        );
 
 
                     botaoOS.addEventListener(
@@ -318,7 +396,9 @@ contadorConcluidos.textContent =
 
 
                             const ordemServico =
-                                document.createElement("div");
+                                document.createElement(
+                                    "div"
+                                );
 
 
                             ordemServico.classList.add(
@@ -329,6 +409,7 @@ contadorConcluidos.textContent =
                             ordemServico.innerHTML = `
 
                                 <div class="vehicle-box checklist-box">
+
 
                                     <h2>
                                         Ordem de Serviço
@@ -345,7 +426,9 @@ contadorConcluidos.textContent =
 
                                     <div class="resumo-item">
 
-                                        <span>Cliente</span>
+                                        <span>
+                                            Cliente
+                                        </span>
 
                                         <strong>
                                             ${pedido.nome}
@@ -356,7 +439,9 @@ contadorConcluidos.textContent =
 
                                     <div class="resumo-item">
 
-                                        <span>WhatsApp</span>
+                                        <span>
+                                            WhatsApp
+                                        </span>
 
                                         <strong>
                                             ${pedido.whatsapp}
@@ -367,11 +452,16 @@ contadorConcluidos.textContent =
 
                                     <div class="resumo-item">
 
-                                        <span>Veículo</span>
+                                        <span>
+                                            Veículo
+                                        </span>
 
                                         <strong>
-                                            ${pedido.veiculo} -
+
+                                            ${pedido.veiculo}
+                                            -
                                             ${pedido.modelo}
+
                                         </strong>
 
                                     </div>
@@ -379,7 +469,9 @@ contadorConcluidos.textContent =
 
                                     <div class="resumo-item">
 
-                                        <span>Placa</span>
+                                        <span>
+                                            Placa
+                                        </span>
 
                                         <strong>
                                             ${pedido.placa}
@@ -390,7 +482,9 @@ contadorConcluidos.textContent =
 
                                     <div class="resumo-item">
 
-                                        <span>Pacote</span>
+                                        <span>
+                                            Pacote
+                                        </span>
 
                                         <strong>
                                             ${pedido.pacote}
@@ -401,14 +495,18 @@ contadorConcluidos.textContent =
 
                                     <div class="resumo-item">
 
-                                        <span>Extras</span>
+                                        <span>
+                                            Extras
+                                        </span>
 
                                         <strong>
 
                                             ${
                                                 pedido.extras &&
                                                 pedido.extras.length > 0
+
                                                     ? pedido.extras.join(", ")
+
                                                     : "Nenhum"
                                             }
 
@@ -419,7 +517,9 @@ contadorConcluidos.textContent =
 
                                     <div class="resumo-item">
 
-                                        <span>Data</span>
+                                        <span>
+                                            Data
+                                        </span>
 
                                         <strong>
                                             ${pedido.data}
@@ -430,7 +530,9 @@ contadorConcluidos.textContent =
 
                                     <div class="resumo-item">
 
-                                        <span>Horário</span>
+                                        <span>
+                                            Horário
+                                        </span>
 
                                         <strong>
                                             ${pedido.horario}
@@ -459,9 +561,12 @@ contadorConcluidos.textContent =
 
                                         <label>
 
-                                            <input type="checkbox">
+                                            <input
+                                                type="checkbox"
+                                            >
 
-                                            Conferir estado geral do veículo
+                                            Conferir estado geral
+                                            do veículo
 
                                         </label>
 
@@ -472,7 +577,9 @@ contadorConcluidos.textContent =
 
                                         <label>
 
-                                            <input type="checkbox">
+                                            <input
+                                                type="checkbox"
+                                            >
 
                                             Conferir rodas e pneus
 
@@ -485,9 +592,12 @@ contadorConcluidos.textContent =
 
                                         <label>
 
-                                            <input type="checkbox">
+                                            <input
+                                                type="checkbox"
+                                            >
 
-                                            Realizar serviços do pacote
+                                            Realizar serviços
+                                            do pacote
 
                                         </label>
 
@@ -503,11 +613,15 @@ contadorConcluidos.textContent =
 
                                                     return `
 
-                                                        <div class="check-item">
+                                                        <div
+                                                            class="check-item"
+                                                        >
 
                                                             <label>
 
-                                                                <input type="checkbox">
+                                                                <input
+                                                                    type="checkbox"
+                                                                >
 
                                                                 Realizar:
                                                                 ${extra}
@@ -529,9 +643,12 @@ contadorConcluidos.textContent =
 
                                         <label>
 
-                                            <input type="checkbox">
+                                            <input
+                                                type="checkbox"
+                                            >
 
-                                            Secagem e acabamento do veículo
+                                            Secagem e acabamento
+                                            do veículo
 
                                         </label>
 
@@ -542,7 +659,9 @@ contadorConcluidos.textContent =
 
                                         <label>
 
-                                            <input type="checkbox">
+                                            <input
+                                                type="checkbox"
+                                            >
 
                                             Conferência final
 
@@ -558,6 +677,7 @@ contadorConcluidos.textContent =
                                         FECHAR ORDEM DE SERVIÇO
 
                                     </button>
+
 
                                 </div>
 
@@ -591,7 +711,9 @@ contadorConcluidos.textContent =
 
 
                                     checkboxes.forEach(
-                                        function (checkbox) {
+                                        function (
+                                            checkbox
+                                        ) {
 
                                             if (
                                                 !checkbox.checked
@@ -606,7 +728,9 @@ contadorConcluidos.textContent =
                                     );
 
 
-                                    if (!todosMarcados) {
+                                    if (
+                                        !todosMarcados
+                                    ) {
 
                                         alert(
                                             "Antes de finalizar a Ordem de Serviço, marque todos os itens do checklist."
@@ -646,9 +770,9 @@ contadorConcluidos.textContent =
                     );
 
 
-                    /* =====================================
-                       BOTÃO ALTERAR STATUS
-                    ===================================== */
+                    /* =========================================
+                       ALTERAR STATUS
+                    ========================================= */
 
                     const botaoStatus =
                         card.querySelector(
@@ -662,8 +786,8 @@ contadorConcluidos.textContent =
 
 
                             if (
-                                pedido.status === "Agendado" ||
-                                !pedido.status
+                                !pedido.status ||
+                                pedido.status === "Agendado"
                             ) {
 
                                 pedido.status =
@@ -672,7 +796,8 @@ contadorConcluidos.textContent =
                             }
 
                             else if (
-                                pedido.status === "Em andamento"
+                                pedido.status ===
+                                "Em andamento"
                             ) {
 
                                 pedido.status =
@@ -681,7 +806,8 @@ contadorConcluidos.textContent =
                             }
 
                             else if (
-                                pedido.status === "Concluído"
+                                pedido.status ===
+                                "Concluído"
                             ) {
 
                                 pedido.status =
@@ -708,74 +834,180 @@ contadorConcluidos.textContent =
             );
 
         }
-        // =========================================
-        // FILTROS DE PEDIDOS
-        // =========================================
+
+
+        /* =========================================
+           CONTADORES
+        ========================================= */
+
+        let totalAgendados = 0;
+
+        let totalAndamento = 0;
+
+        let totalConcluidos = 0;
+
+
+        pedidosNovos.forEach(
+            function (pedido) {
+
+                const status =
+                    pedido.status ||
+                    "Agendado";
+
+
+                if (
+                    status === "Agendado"
+                ) {
+
+                    totalAgendados++;
+
+                }
+
+
+                else if (
+                    status === "Em andamento"
+                ) {
+
+                    totalAndamento++;
+
+                }
+
+
+                else if (
+                    status === "Concluído"
+                ) {
+
+                    totalConcluidos++;
+
+                }
+
+            }
+        );
+
+
+        document.querySelector(
+            "#contador-todos"
+        ).textContent =
+            pedidosNovos.length;
+
+
+        document.querySelector(
+            "#contador-agendados"
+        ).textContent =
+            totalAgendados;
+
+
+        document.querySelector(
+            "#contador-andamento"
+        ).textContent =
+            totalAndamento;
+
+
+        document.querySelector(
+            "#contador-concluidos"
+        ).textContent =
+            totalConcluidos;
+
+
+        /* =========================================
+           FILTROS
+        ========================================= */
 
         const botoesFiltro =
-            document.querySelectorAll(".filtro-btn");
+            document.querySelectorAll(
+                ".filtro-btn"
+            );
 
 
-        botoesFiltro.forEach(function (botao) {
-
-            botao.addEventListener("click", function () {
-
-                const filtro =
-                    botao.dataset.filtro;
+        botoesFiltro.forEach(
+            function (botao) {
 
 
-                const cards =
-                    document.querySelectorAll(
-                        "#pedido-container .vehicle-box"
-                    );
+                botao.addEventListener(
+                    "click",
+                    function () {
 
 
-                cards.forEach(function (card, index) {
-
-                    const pedido =
-                        pedidosNovos[index];
+                        const filtro =
+                            botao.dataset.filtro;
 
 
-                    if (filtro === "Todos") {
+                        const cards =
+                            document.querySelectorAll(
+                                "#pedido-container > .vehicle-box"
+                            );
 
-                        card.style.display = "";
+
+                        cards.forEach(
+                            function (
+                                card,
+                                index
+                            ) {
+
+
+                                const pedido =
+                                    pedidosNovos[
+                                        index
+                                    ];
+
+
+                                if (
+                                    filtro ===
+                                    "Todos"
+                                ) {
+
+                                    card.style.display =
+                                        "";
+
+                                }
+
+                                else if (
+                                    pedido &&
+                                    (
+                                        pedido.status ||
+                                        "Agendado"
+                                    ) === filtro
+                                ) {
+
+                                    card.style.display =
+                                        "";
+
+                                }
+
+                                else {
+
+                                    card.style.display =
+                                        "none";
+
+                                }
+
+                            }
+                        );
+
+
+                        botoesFiltro.forEach(
+                            function (
+                                outroBotao
+                            ) {
+
+                                outroBotao.classList.remove(
+                                    "ativo"
+                                );
+
+                            }
+                        );
+
+
+                        botao.classList.add(
+                            "ativo"
+                        );
 
                     }
+                );
 
-                    else if (
-                        pedido &&
-                        (pedido.status || "Agendado") === filtro
-                    ) {
+            }
+        );
 
-                        card.style.display = "";
-
-                    }
-
-                    else {
-
-                        card.style.display = "none";
-
-                    }
-
-                });
-
-
-                // Remove o destaque dos outros botões
-
-                botoesFiltro.forEach(function (outroBotao) {
-
-                    outroBotao.classList.remove("ativo");
-
-                });
-
-
-                // Destaca o botão selecionado
-
-                botao.classList.add("ativo");
-
-            });
-
-        });
     </script>
 
 </body>
