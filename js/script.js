@@ -1,4 +1,3 @@
-```javascript
 /* =========================================
    GD LAVA RÁPIDO
    SISTEMA DE PEDIDOS E AGENDAMENTOS
@@ -15,7 +14,6 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "COLE_AQUI_SUA_CHAVE_PUBLISHABLE";
 
-
 window.supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
@@ -30,9 +28,7 @@ window.supabaseClient =
 document.addEventListener(
     "DOMContentLoaded",
     function () {
-
         iniciarSelecaoPacotes();
-
     }
 );
 
@@ -44,182 +40,136 @@ document.addEventListener(
 function iniciarSelecaoPacotes() {
 
     const botoes =
-        document.querySelectorAll(
-            ".select-btn"
-        );
+        document.querySelectorAll(".select-btn");
 
+    botoes.forEach(function (botao) {
 
-    botoes.forEach(
-        function (botao) {
+        botao.addEventListener(
+            "click",
+            function () {
 
-            botao.addEventListener(
-                "click",
-                function () {
+                const card =
+                    botao.parentElement;
 
-                    const card =
-                        botao.parentElement;
+                const titulo =
+                    card.querySelector("h3");
 
+                const precoElemento =
+                    card.querySelector("strong");
 
-                    const titulo =
-                        card.querySelector(
-                            "h3"
-                        );
+                if (!titulo || !precoElemento) {
+                    return;
+                }
 
+                const nome =
+                    titulo.textContent.trim();
 
-                    const precoElemento =
-                        card.querySelector(
-                            "strong"
-                        );
+                const precoTexto =
+                    precoElemento.textContent;
 
-
-                    if (
-                        !titulo ||
-                        !precoElemento
-                    ) {
-                        return;
-                    }
-
-
-                    const nome =
-                        titulo.textContent.trim();
-
-
-                    const precoTexto =
-                        precoElemento.textContent;
-
-
-                    const preco =
-                        parseFloat(
-                            precoTexto
-                                .replace(
-                                    "A partir de R$",
-                                    ""
-                                )
-                                .replace(
-                                    "R$",
-                                    ""
-                                )
-                                .replace(
-                                    /\./g,
-                                    ""
-                                )
-                                .replace(
-                                    ",",
-                                    "."
-                                )
-                                .trim()
-                        );
-
-
-                    if (
-                        isNaN(preco)
-                    ) {
-
-                        alert(
-                            "Não foi possível identificar o preço do pacote."
-                        );
-
-                        return;
-                    }
-
-
-                    const escolhaVeiculo =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    escolhaVeiculo.classList.add(
-                        "vehicle-selection"
+                const preco =
+                    parseFloat(
+                        precoTexto
+                            .replace("A partir de R$", "")
+                            .replace("R$", "")
+                            .replace(/\./g, "")
+                            .replace(",", ".")
+                            .trim()
                     );
 
+                if (isNaN(preco)) {
 
-                    escolhaVeiculo.innerHTML = `
+                    alert(
+                        "Não foi possível identificar o preço do pacote."
+                    );
 
-                        <div class="vehicle-box">
+                    return;
+                }
 
-                            <h2>
-                                Escolha seu veículo
-                            </h2>
+                const escolhaVeiculo =
+                    document.createElement("div");
 
-                            <p>
-                                Você escolheu o pacote
-                                <strong>
-                                    ${nome}
-                                </strong>.
-                            </p>
+                escolhaVeiculo.classList.add(
+                    "vehicle-selection"
+                );
 
-                            <p>
-                                Agora informe o tipo de veículo:
-                            </p>
+                escolhaVeiculo.innerHTML = `
 
-                            <div class="vehicle-buttons">
+                    <div class="vehicle-box">
 
-                                <button
-                                    type="button"
-                                    class="vehicle-btn"
-                                    data-veiculo="Carro"
-                                >
-                                    🚗 Carro
-                                </button>
+                        <h2>
+                            Escolha seu veículo
+                        </h2>
 
-                                <button
-                                    type="button"
-                                    class="vehicle-btn"
-                                    data-veiculo="Moto"
-                                >
-                                    🏍️ Moto
-                                </button>
+                        <p>
+                            Você escolheu o pacote
+                            <strong>${nome}</strong>.
+                        </p>
 
-                            </div>
+                        <p>
+                            Agora informe o tipo de veículo:
+                        </p>
+
+                        <div class="vehicle-buttons">
+
+                            <button
+                                type="button"
+                                class="vehicle-btn"
+                                data-veiculo="Carro"
+                            >
+                                🚗 Carro
+                            </button>
+
+                            <button
+                                type="button"
+                                class="vehicle-btn"
+                                data-veiculo="Moto"
+                            >
+                                🏍️ Moto
+                            </button>
 
                         </div>
 
-                    `;
+                    </div>
 
+                `;
 
-                    document.body.appendChild(
-                        escolhaVeiculo
+                document.body.appendChild(
+                    escolhaVeiculo
+                );
+
+                const botoesVeiculo =
+                    escolhaVeiculo.querySelectorAll(
+                        ".vehicle-btn"
                     );
 
+                botoesVeiculo.forEach(
+                    function (botaoVeiculo) {
 
-                    const botoesVeiculo =
-                        escolhaVeiculo.querySelectorAll(
-                            ".vehicle-btn"
+                        botaoVeiculo.addEventListener(
+                            "click",
+                            function () {
+
+                                const veiculo =
+                                    botaoVeiculo.dataset.veiculo;
+
+                                mostrarServicosExtras(
+                                    escolhaVeiculo,
+                                    veiculo,
+                                    nome,
+                                    preco
+                                );
+
+                            }
                         );
 
+                    }
+                );
 
-                    botoesVeiculo.forEach(
-                        function (
-                            botaoVeiculo
-                        ) {
+            }
+        );
 
-                            botaoVeiculo.addEventListener(
-                                "click",
-                                function () {
-
-                                    const veiculo =
-                                        botaoVeiculo.dataset.veiculo;
-
-
-                                    mostrarServicosExtras(
-                                        escolhaVeiculo,
-                                        veiculo,
-                                        nome,
-                                        preco
-                                    );
-
-                                }
-                            );
-
-                        }
-                    );
-
-                }
-            );
-
-        }
-    );
+    });
 
 }
 
@@ -245,16 +195,12 @@ function mostrarServicosExtras(
 
             <p>
                 Veículo:
-                <strong>
-                    ${veiculo}
-                </strong>
+                <strong>${veiculo}</strong>
             </p>
 
             <p>
                 Pacote:
-                <strong>
-                    ${nomePacote}
-                </strong>
+                <strong>${nomePacote}</strong>
             </p>
 
             <div class="extras-container">
@@ -366,18 +312,15 @@ function mostrarServicosExtras(
 
     `;
 
-
     const checkboxes =
         janela.querySelectorAll(
             ".extra-checkbox"
         );
 
-
     const totalElemento =
         janela.querySelector(
             "#total-servico"
         );
-
 
     checkboxes.forEach(
         function (checkbox) {
@@ -389,13 +332,10 @@ function mostrarServicosExtras(
                     let total =
                         precoPacote;
 
-
                     checkboxes.forEach(
                         function (item) {
 
-                            if (
-                                item.checked
-                            ) {
+                            if (item.checked) {
 
                                 total +=
                                     parseFloat(
@@ -407,7 +347,6 @@ function mostrarServicosExtras(
                         }
                     );
 
-
                     totalElemento.textContent =
                         formatarMoeda(total);
 
@@ -417,12 +356,10 @@ function mostrarServicosExtras(
         }
     );
 
-
     const botaoContinuar =
         janela.querySelector(
             "#continuar-extras"
         );
-
 
     botaoContinuar.addEventListener(
         "click",
@@ -431,13 +368,10 @@ function mostrarServicosExtras(
             const extrasSelecionados =
                 [];
 
-
             checkboxes.forEach(
                 function (checkbox) {
 
-                    if (
-                        checkbox.checked
-                    ) {
+                    if (checkbox.checked) {
 
                         extrasSelecionados.push({
 
@@ -456,20 +390,16 @@ function mostrarServicosExtras(
                 }
             );
 
-
             let total =
                 precoPacote;
-
 
             extrasSelecionados.forEach(
                 function (extra) {
 
-                    total +=
-                        extra.preco;
+                    total += extra.preco;
 
                 }
             );
-
 
             mostrarAgendamento(
                 janela,
@@ -512,7 +442,6 @@ function mostrarAgendamento(
                 o serviço.
             </p>
 
-
             <div class="form-group">
 
                 <label>
@@ -525,7 +454,6 @@ function mostrarAgendamento(
                 >
 
             </div>
-
 
             <div class="form-group">
 
@@ -541,7 +469,6 @@ function mostrarAgendamento(
 
             </div>
 
-
             <button
                 type="button"
                 class="select-btn"
@@ -554,58 +481,42 @@ function mostrarAgendamento(
 
     `;
 
-
     const inputData =
         janela.querySelector(
             "#data-agendamento"
         );
-
 
     const horariosContainer =
         janela.querySelector(
             "#horarios-container"
         );
 
-
     const botaoContinuar =
         janela.querySelector(
             "#continuar-agendamento"
         );
 
-
     const hoje =
         new Date();
-
 
     const ano =
         hoje.getFullYear();
 
-
     const mes =
         String(
             hoje.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        );
-
+        ).padStart(2, "0");
 
     const dia =
         String(
             hoje.getDate()
-        ).padStart(
-            2,
-            "0"
-        );
-
+        ).padStart(2, "0");
 
     const dataAtual =
         `${ano}-${mes}-${dia}`;
 
-
     inputData.min =
         dataAtual;
-
 
     const horarios = [
 
@@ -621,10 +532,8 @@ function mostrarAgendamento(
 
     ];
 
-
     let horarioSelecionado =
         "";
-
 
     function carregarHorarios(
         dataSelecionada
@@ -633,19 +542,15 @@ function mostrarAgendamento(
         horariosContainer.innerHTML =
             "";
 
-
         horarioSelecionado =
             "";
-
 
         if (!dataSelecionada) {
             return;
         }
 
-
         const pedidosSalvos =
             obterPedidosLocais();
-
 
         const horariosOcupados =
             pedidosSalvos
@@ -667,7 +572,6 @@ function mostrarAgendamento(
                     }
                 );
 
-
         horarios.forEach(
             function (horario) {
 
@@ -676,19 +580,15 @@ function mostrarAgendamento(
                         "button"
                     );
 
-
                 botaoHorario.type =
                     "button";
-
 
                 botaoHorario.classList.add(
                     "vehicle-btn"
                 );
 
-
                 botaoHorario.textContent =
                     horario;
-
 
                 if (
                     horariosOcupados.includes(
@@ -699,14 +599,11 @@ function mostrarAgendamento(
                     botaoHorario.disabled =
                         true;
 
-
                     botaoHorario.textContent =
                         `${horario} - Ocupado`;
 
-
                     botaoHorario.style.opacity =
                         "0.4";
-
 
                     botaoHorario.style.cursor =
                         "not-allowed";
@@ -720,17 +617,13 @@ function mostrarAgendamento(
                             horarioSelecionado =
                                 horario;
 
-
                             const botoes =
                                 horariosContainer.querySelectorAll(
                                     ".vehicle-btn"
                                 );
 
-
                             botoes.forEach(
-                                function (
-                                    botao
-                                ) {
+                                function (botao) {
 
                                     botao.classList.remove(
                                         "horario-selecionado"
@@ -738,7 +631,6 @@ function mostrarAgendamento(
 
                                 }
                             );
-
 
                             botaoHorario.classList.add(
                                 "horario-selecionado"
@@ -749,7 +641,6 @@ function mostrarAgendamento(
 
                 }
 
-
                 horariosContainer.appendChild(
                     botaoHorario
                 );
@@ -758,7 +649,6 @@ function mostrarAgendamento(
         );
 
     }
-
 
     inputData.addEventListener(
         "change",
@@ -771,14 +661,12 @@ function mostrarAgendamento(
         }
     );
 
-
     botaoContinuar.addEventListener(
         "click",
         function () {
 
             const data =
                 inputData.value;
-
 
             if (!data) {
 
@@ -789,7 +677,6 @@ function mostrarAgendamento(
                 return;
             }
 
-
             if (!horarioSelecionado) {
 
                 alert(
@@ -798,7 +685,6 @@ function mostrarAgendamento(
 
                 return;
             }
-
 
             const horarioJaOcupado =
                 obterPedidosLocais()
@@ -815,22 +701,18 @@ function mostrarAgendamento(
                         }
                     );
 
-
             if (horarioJaOcupado) {
 
                 alert(
                     "Esse horário já foi ocupado. Escolha outro."
                 );
 
-
                 carregarHorarios(
                     data
                 );
 
-
                 return;
             }
-
 
             mostrarDadosCliente(
                 janela,
@@ -875,7 +757,6 @@ function mostrarDadosCliente(
                 finalizar o agendamento.
             </p>
 
-
             <div class="form-group">
 
                 <label>
@@ -889,7 +770,6 @@ function mostrarDadosCliente(
                 >
 
             </div>
-
 
             <div class="form-group">
 
@@ -905,7 +785,6 @@ function mostrarDadosCliente(
 
             </div>
 
-
             <div class="form-group">
 
                 <label>
@@ -919,7 +798,6 @@ function mostrarDadosCliente(
                 >
 
             </div>
-
 
             <div class="form-group">
 
@@ -935,7 +813,6 @@ function mostrarDadosCliente(
 
             </div>
 
-
             <button
                 type="button"
                 class="select-btn"
@@ -948,36 +825,30 @@ function mostrarDadosCliente(
 
     `;
 
-
     const nomeInput =
         janela.querySelector(
             "#nome-cliente"
         );
-
 
     const whatsappInput =
         janela.querySelector(
             "#whatsapp-cliente"
         );
 
-
     const modeloInput =
         janela.querySelector(
             "#modelo-veiculo"
         );
-
 
     const placaInput =
         janela.querySelector(
             "#placa-veiculo"
         );
 
-
     const botaoContinuar =
         janela.querySelector(
             "#continuar-dados"
         );
-
 
     botaoContinuar.addEventListener(
         "click",
@@ -986,18 +857,14 @@ function mostrarDadosCliente(
             const nome =
                 nomeInput.value.trim();
 
-
             const whatsapp =
                 whatsappInput.value.trim();
-
 
             const modelo =
                 modeloInput.value.trim();
 
-
             const placa =
                 placaInput.value.trim();
-
 
             if (
                 !nome ||
@@ -1012,7 +879,6 @@ function mostrarDadosCliente(
 
                 return;
             }
-
 
             mostrarResumoPedido(
                 janela,
@@ -1055,7 +921,6 @@ function mostrarResumoPedido(
     let listaExtras =
         "";
 
-
     if (
         extrasSelecionados.length ===
         0
@@ -1091,7 +956,6 @@ function mostrarResumoPedido(
 
     }
 
-
     janela.innerHTML = `
 
         <div class="vehicle-box">
@@ -1099,7 +963,6 @@ function mostrarResumoPedido(
             <h2>
                 Confirme seu pedido
             </h2>
-
 
             <div class="resumo-pedido">
 
@@ -1120,7 +983,6 @@ function mostrarResumoPedido(
                     </strong>
                     ${whatsapp}
                 </p>
-
 
                 <h3>
                     Veículo
@@ -1147,7 +1009,6 @@ function mostrarResumoPedido(
                     ${placa}
                 </p>
 
-
                 <h3>
                     Serviço
                 </h3>
@@ -1159,13 +1020,11 @@ function mostrarResumoPedido(
                     ${nomePacote}
                 </p>
 
-
                 <h3>
                     Serviços extras
                 </h3>
 
                 ${listaExtras}
-
 
                 <h3>
                     Agendamento
@@ -1185,7 +1044,6 @@ function mostrarResumoPedido(
                     ${horario}
                 </p>
 
-
                 <div class="total-box">
 
                     <span>
@@ -1200,7 +1058,6 @@ function mostrarResumoPedido(
 
             </div>
 
-
             <button
                 type="button"
                 class="select-btn"
@@ -1213,12 +1070,10 @@ function mostrarResumoPedido(
 
     `;
 
-
     const botaoConfirmar =
         janela.querySelector(
             "#confirmar-pedido"
         );
-
 
     botaoConfirmar.addEventListener(
         "click",
@@ -1227,14 +1082,8 @@ function mostrarResumoPedido(
             botaoConfirmar.disabled =
                 true;
 
-
             botaoConfirmar.textContent =
                 "SALVANDO...";
-
-
-            /* =========================================
-               VERIFICAR HORÁRIO LOCAL
-            ========================================= */
 
             const horarioJaOcupado =
                 obterPedidosLocais()
@@ -1251,29 +1100,20 @@ function mostrarResumoPedido(
                         }
                     );
 
-
             if (horarioJaOcupado) {
 
                 alert(
                     "Esse horário já foi reservado. Escolha outro."
                 );
 
-
                 botaoConfirmar.disabled =
                     false;
-
 
                 botaoConfirmar.textContent =
                     "CONFIRMAR PEDIDO";
 
-
                 return;
             }
-
-
-            /* =========================================
-               CRIAR PEDIDO
-            ========================================= */
 
             const pedido = {
 
@@ -1312,24 +1152,25 @@ function mostrarResumoPedido(
 
             };
 
-
-            /* =========================================
-               SALVAR NO SUPABASE
-               
-               IMPORTANTE:
-               NÃO usamos .select()
-               porque não existe SELECT público.
-            ========================================= */
-
             try {
+
+                /*
+                    IMPORTANTE:
+
+                    Não usamos:
+                    .select()
+                    .single()
+
+                    porque a tabela não possui
+                    SELECT público.
+
+                    O pedido será apenas inserido.
+                */
 
                 const resultado =
                     await window.supabaseClient
                         .from("pedidos")
-                        .insert(
-                            pedido
-                        );
-
+                        .insert(pedido);
 
                 if (
                     resultado.error
@@ -1340,27 +1181,22 @@ function mostrarResumoPedido(
                         resultado.error
                     );
 
-
                     alert(
                         "Não foi possível salvar o pedido. Verifique a conexão com o sistema."
                     );
 
-
                     botaoConfirmar.disabled =
                         false;
-
 
                     botaoConfirmar.textContent =
                         "CONFIRMAR PEDIDO";
 
-
                     return;
                 }
 
-
-                /* =========================================
-                   BACKUP LOCAL
-                ========================================= */
+                /*
+                    BACKUP LOCAL
+                */
 
                 const pedidoLocal = {
 
@@ -1371,40 +1207,32 @@ function mostrarResumoPedido(
 
                 };
 
-
                 salvarBackupLocal(
                     pedidoLocal
                 );
 
-
-                /* =========================================
-                   MOSTRAR CHECKLIST
-                ========================================= */
+                /*
+                    MOSTRAR CHECKLIST
+                */
 
                 mostrarChecklist(
                     janela,
                     pedidoLocal
                 );
 
-
-            } catch (
-                erro
-            ) {
+            } catch (erro) {
 
                 console.error(
                     "Erro inesperado ao salvar pedido:",
                     erro
                 );
 
-
                 alert(
                     "Não foi possível salvar o pedido. Verifique a conexão com o sistema."
                 );
 
-
                 botaoConfirmar.disabled =
                     false;
-
 
                 botaoConfirmar.textContent =
                     "CONFIRMAR PEDIDO";
@@ -1428,11 +1256,9 @@ function salvarBackupLocal(
     const pedidosSalvos =
         obterPedidosLocais();
 
-
     pedidosSalvos.push(
         pedido
     );
-
 
     localStorage.setItem(
         "pedidosGD",
@@ -1460,15 +1286,12 @@ function obterPedidosLocais() {
             ) || []
         );
 
-    } catch (
-        erro
-    ) {
+    } catch (erro) {
 
         console.error(
             "Erro ao ler pedidos locais:",
             erro
         );
-
 
         return [];
 
@@ -1488,7 +1311,6 @@ function mostrarChecklist(
 
     let checklistExtras =
         "";
-
 
     if (
         pedido.extras &&
@@ -1521,7 +1343,6 @@ function mostrarChecklist(
 
     }
 
-
     janela.innerHTML = `
 
         <div class="vehicle-box">
@@ -1533,7 +1354,6 @@ function mostrarChecklist(
             <p>
                 Pedido criado com sucesso.
             </p>
-
 
             <div class="resumo-pedido">
 
@@ -1608,11 +1428,9 @@ function mostrarChecklist(
 
             </div>
 
-
             <h3>
                 Checklist do serviço
             </h3>
-
 
             <div class="checklist">
 
@@ -1629,7 +1447,6 @@ function mostrarChecklist(
 
                 </label>
 
-
                 <label class="checklist-item">
 
                     <input
@@ -1642,7 +1459,6 @@ function mostrarChecklist(
                     </span>
 
                 </label>
-
 
                 <label class="checklist-item">
 
@@ -1657,9 +1473,7 @@ function mostrarChecklist(
 
                 </label>
 
-
                 ${checklistExtras}
-
 
                 <label class="checklist-item">
 
@@ -1673,7 +1487,6 @@ function mostrarChecklist(
                     </span>
 
                 </label>
-
 
                 <label class="checklist-item">
 
@@ -1690,7 +1503,6 @@ function mostrarChecklist(
 
             </div>
 
-
             <button
                 type="button"
                 class="select-btn"
@@ -1703,18 +1515,15 @@ function mostrarChecklist(
 
     `;
 
-
     const checkboxes =
         janela.querySelectorAll(
             ".check-item"
         );
 
-
     const botaoFinalizar =
         janela.querySelector(
             "#finalizar-servico"
         );
-
 
     botaoFinalizar.addEventListener(
         "click",
@@ -1722,7 +1531,6 @@ function mostrarChecklist(
 
             let todosMarcados =
                 true;
-
 
             checkboxes.forEach(
                 function (checkbox) {
@@ -1739,10 +1547,7 @@ function mostrarChecklist(
                 }
             );
 
-
-            if (
-                !todosMarcados
-            ) {
+            if (!todosMarcados) {
 
                 alert(
                     "Marque todos os itens do checklist antes de finalizar."
@@ -1751,45 +1556,34 @@ function mostrarChecklist(
                 return;
             }
 
+            /*
+                Por enquanto o status é atualizado
+                no backup local.
 
-            /* =========================================
-               ATUALIZAR BACKUP LOCAL
-               
-               O UPDATE NO SUPABASE NÃO É FEITO
-               AQUI, porque o UPDATE público ainda
-               não foi liberado. Isso será protegido
-               quando criarmos o painel administrativo
-               com autenticação.
-            ========================================= */
+                O UPDATE no Supabase será protegido
+                quando criarmos a autenticação
+                do painel administrativo.
+            */
 
             const pedidosSalvos =
                 obterPedidosLocais();
-
 
             const pedidoEncontrado =
                 pedidosSalvos.find(
                     function (item) {
 
                         return (
-                            String(
-                                item.id
-                            ) ===
-                            String(
-                                pedido.id
-                            )
+                            String(item.id) ===
+                            String(pedido.id)
                         );
 
                     }
                 );
 
-
-            if (
-                pedidoEncontrado
-            ) {
+            if (pedidoEncontrado) {
 
                 pedidoEncontrado.status =
                     "Concluído";
-
 
                 localStorage.setItem(
                     "pedidosGD",
@@ -1800,11 +1594,9 @@ function mostrarChecklist(
 
             }
 
-
             alert(
                 "Serviço finalizado com sucesso!"
             );
-
 
             janela.remove();
 
@@ -1847,15 +1639,11 @@ function formatarData(
 ) {
 
     if (!data) {
-
         return "";
-
     }
-
 
     const partes =
         data.split("-");
-
 
     if (
         partes.length !== 3
@@ -1865,40 +1653,8 @@ function formatarData(
 
     }
 
-
     return (
         `${partes[2]}/${partes[1]}/${partes[0]}`
     );
 
 }
-```
-
-**Importante:** no começo do arquivo, mantenha a sua **chave Publishable real** no lugar de:
-
-```javascript
-"COLE_AQUI_SUA_CHAVE_PUBLISHABLE"
-```
-
-Não coloque a chave `secret` ou `service_role`.
-
-### Depois de salvar
-
-Faça exatamente nesta ordem:
-
-1. Salve o `script.js`.
-2. Faça o **Commit changes** no GitHub.
-3. Espere o GitHub Pages atualizar.
-4. Abra o site.
-5. Faça novamente o pedido de teste.
-6. Use:
-
-   * Nome: `Cliente Teste`
-   * WhatsApp: `92999999999`
-   * Modelo: `Honda Civic`
-   * Placa: `TEST123`
-
-O resultado que queremos agora é:
-
-**“Pedido criado com sucesso.”** → e depois o pedido deve aparecer na tabela `pedidos` do Supabase.
-
-Esta versão deliberadamente **não libera SELECT nem UPDATE público**. Isso é importante porque a tabela contém nome, WhatsApp e dados do veículo dos clientes. O painel administrativo será conectado ao Supabase de maneira protegida na próxima etapa.
