@@ -915,6 +915,12 @@
         ).textContent =
             totalConcluidos;
 
+        document.querySelector("#faturamento-total").textContent =
+    faturamentoTotal.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+
 
         /* =========================================
            FILTROS
