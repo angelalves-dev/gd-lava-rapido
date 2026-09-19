@@ -11,8 +11,14 @@
 const SUPABASE_URL =
     "https://ljswwokxcgglqluzwctq.supabase.co";
 
+/*
+    COLOQUE AQUI A MESMA PUBLISHABLE KEY
+    QUE VOCÊ JÁ USA ATUALMENTE.
+*/
+
 const SUPABASE_KEY =
     "sb_publishable_CS4rdWdRC9iVrHNvXXCzHA_6kH6WRlG";
+
 
 window.supabaseClient =
     window.supabase.createClient(
@@ -116,6 +122,10 @@ function iniciarSelecaoPacotes() {
 
                     <div class="vehicle-box">
 
+                        <p class="subtitle">
+                            ETAPA 1 DE 5
+                        </p>
+
                         <h2>
                             Escolha seu veículo
                         </h2>
@@ -208,17 +218,16 @@ function mostrarServicosExtras(
 
         <div class="vehicle-box">
 
+            <p class="subtitle">
+                ETAPA 2 DE 5
+            </p>
+
             <h2>
                 Personalize seu serviço
             </h2>
 
             <p>
-                Veículo:
-                <strong>${veiculo}</strong>
-            </p>
-
-            <p>
-                Pacote:
+                ${veiculo} •
                 <strong>${nomePacote}</strong>
             </p>
 
@@ -305,7 +314,7 @@ function mostrarServicosExtras(
             <div class="total-box">
 
                 <span>
-                    Total:
+                    Total estimado
                 </span>
 
                 <strong id="total-servico">
@@ -447,24 +456,28 @@ function mostrarAgendamento(
 
         <div class="vehicle-box">
 
+            <p class="subtitle">
+                ETAPA 3 DE 5
+            </p>
+
             <h2>
                 Escolha o dia e horário
             </h2>
 
             <p>
-                Escolha quando deseja realizar
-                o serviço.
+                Selecione quando deseja realizar o serviço.
             </p>
 
             <div class="form-group">
 
                 <label>
-                    Data:
+                    Data
                 </label>
 
                 <input
                     type="date"
                     id="data-agendamento"
+                    class="schedule-input"
                 >
 
             </div>
@@ -472,7 +485,7 @@ function mostrarAgendamento(
             <div class="form-group">
 
                 <label>
-                    Horário:
+                    Horário disponível
                 </label>
 
                 <div
@@ -615,12 +628,6 @@ function mostrarAgendamento(
                     botaoHorario.textContent =
                         `${horario} - Ocupado`;
 
-                    botaoHorario.style.opacity =
-                        "0.4";
-
-                    botaoHorario.style.cursor =
-                        "not-allowed";
-
                 } else {
 
                     botaoHorario.addEventListener(
@@ -761,19 +768,22 @@ function mostrarDadosCliente(
 
         <div class="vehicle-box">
 
+            <p class="subtitle">
+                ETAPA 4 DE 5
+            </p>
+
             <h2>
                 Seus dados
             </h2>
 
             <p>
-                Preencha os dados para
-                finalizar o agendamento.
+                Preencha os dados para finalizar o agendamento.
             </p>
 
             <div class="form-group">
 
                 <label>
-                    Nome:
+                    Nome
                 </label>
 
                 <input
@@ -787,7 +797,7 @@ function mostrarDadosCliente(
             <div class="form-group">
 
                 <label>
-                    WhatsApp:
+                    WhatsApp
                 </label>
 
                 <input
@@ -801,7 +811,7 @@ function mostrarDadosCliente(
             <div class="form-group">
 
                 <label>
-                    Modelo do veículo:
+                    Modelo do veículo
                 </label>
 
                 <input
@@ -815,7 +825,7 @@ function mostrarDadosCliente(
             <div class="form-group">
 
                 <label>
-                    Placa:
+                    Placa
                 </label>
 
                 <input
@@ -831,7 +841,7 @@ function mostrarDadosCliente(
                 class="select-btn"
                 id="continuar-dados"
             >
-                CONTINUAR
+                REVISAR PEDIDO
             </button>
 
         </div>
@@ -914,7 +924,7 @@ function mostrarDadosCliente(
 
 
 /* =========================================
-   RESUMO DO PEDIDO
+   RESUMO MODERNO DO PEDIDO
 ========================================= */
 
 function mostrarResumoPedido(
@@ -931,16 +941,20 @@ function mostrarResumoPedido(
     total
 ) {
 
-    let listaExtras =
-        "";
+    let listaExtras = "";
 
     if (
         extrasSelecionados.length ===
         0
     ) {
 
-        listaExtras =
-            "<p>Nenhum serviço extra.</p>";
+        listaExtras = `
+
+            <div class="resumo-sem-extra">
+                Nenhum serviço adicional selecionado.
+            </div>
+
+        `;
 
     } else {
 
@@ -951,15 +965,19 @@ function mostrarResumoPedido(
 
                         return `
 
-                            <p>
-                                <strong>
+                            <div class="resumo-extra">
+
+                                <span>
                                     ${extra.nome}
+                                </span>
+
+                                <strong>
+                                    ${formatarMoeda(
+                                        extra.preco
+                                    )}
                                 </strong>
-                                -
-                                ${formatarMoeda(
-                                    extra.preco
-                                )}
-                            </p>
+
+                            </div>
 
                         `;
 
@@ -971,96 +989,178 @@ function mostrarResumoPedido(
 
     janela.innerHTML = `
 
-        <div class="vehicle-box">
+        <div class="vehicle-box resumo-box">
+
+            <p class="subtitle">
+                ETAPA 5 DE 5
+            </p>
 
             <h2>
-                Confirme seu pedido
+                Revise seu pedido
             </h2>
+
+            <p>
+                Confira todos os detalhes antes de confirmar.
+            </p>
 
             <div class="resumo-pedido">
 
-                <h3>
-                    Cliente
-                </h3>
+                <div class="resumo-section">
 
-                <p>
-                    <strong>
-                        Nome:
-                    </strong>
-                    ${nome}
-                </p>
+                    <div class="resumo-section-title">
+                        <span>👤</span>
+                        Cliente
+                    </div>
 
-                <p>
-                    <strong>
-                        WhatsApp:
-                    </strong>
-                    ${whatsapp}
-                </p>
+                    <div class="resumo-item">
 
-                <h3>
-                    Veículo
-                </h3>
+                        <span>
+                            Nome
+                        </span>
 
-                <p>
-                    <strong>
-                        Tipo:
-                    </strong>
-                    ${veiculo}
-                </p>
+                        <strong>
+                            ${nome}
+                        </strong>
 
-                <p>
-                    <strong>
-                        Modelo:
-                    </strong>
-                    ${modelo}
-                </p>
+                    </div>
 
-                <p>
-                    <strong>
-                        Placa:
-                    </strong>
-                    ${placa}
-                </p>
+                    <div class="resumo-item">
 
-                <h3>
-                    Serviço
-                </h3>
+                        <span>
+                            WhatsApp
+                        </span>
 
-                <p>
-                    <strong>
-                        Pacote:
-                    </strong>
-                    ${nomePacote}
-                </p>
+                        <strong>
+                            ${whatsapp}
+                        </strong>
 
-                <h3>
-                    Serviços extras
-                </h3>
+                    </div>
 
-                ${listaExtras}
+                </div>
 
-                <h3>
-                    Agendamento
-                </h3>
 
-                <p>
-                    <strong>
-                        Data:
-                    </strong>
-                    ${formatarData(data)}
-                </p>
+                <div class="resumo-section">
 
-                <p>
-                    <strong>
-                        Horário:
-                    </strong>
-                    ${horario}
-                </p>
+                    <div class="resumo-section-title">
+                        <span>🚗</span>
+                        Veículo
+                    </div>
 
-                <div class="total-box">
+                    <div class="resumo-item">
+
+                        <span>
+                            Tipo
+                        </span>
+
+                        <strong>
+                            ${veiculo}
+                        </strong>
+
+                    </div>
+
+                    <div class="resumo-item">
+
+                        <span>
+                            Modelo
+                        </span>
+
+                        <strong>
+                            ${modelo}
+                        </strong>
+
+                    </div>
+
+                    <div class="resumo-item">
+
+                        <span>
+                            Placa
+                        </span>
+
+                        <strong>
+                            ${placa}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="resumo-section">
+
+                    <div class="resumo-section-title">
+                        <span>✨</span>
+                        Serviço
+                    </div>
+
+                    <div class="resumo-item">
+
+                        <span>
+                            Pacote
+                        </span>
+
+                        <strong>
+                            ${nomePacote}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="resumo-section">
+
+                    <div class="resumo-section-title">
+                        <span>➕</span>
+                        Serviços adicionais
+                    </div>
+
+                    <div class="resumo-extras">
+
+                        ${listaExtras}
+
+                    </div>
+
+                </div>
+
+
+                <div class="resumo-section">
+
+                    <div class="resumo-section-title">
+                        <span>📅</span>
+                        Agendamento
+                    </div>
+
+                    <div class="resumo-item">
+
+                        <span>
+                            Data
+                        </span>
+
+                        <strong>
+                            ${formatarData(data)}
+                        </strong>
+
+                    </div>
+
+                    <div class="resumo-item">
+
+                        <span>
+                            Horário
+                        </span>
+
+                        <strong>
+                            ${horario}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="resumo-total-final">
 
                     <span>
-                        Total:
+                        Total do serviço
                     </span>
 
                     <strong>
@@ -1071,12 +1171,13 @@ function mostrarResumoPedido(
 
             </div>
 
+
             <button
                 type="button"
                 class="select-btn"
                 id="confirmar-pedido"
             >
-                CONFIRMAR PEDIDO
+                ✓ CONFIRMAR AGENDAMENTO
             </button>
 
         </div>
@@ -1096,7 +1197,7 @@ function mostrarResumoPedido(
                 true;
 
             botaoConfirmar.textContent =
-                "SALVANDO...";
+                "SALVANDO AGENDAMENTO...";
 
             const horarioJaOcupado =
                 obterPedidosLocais()
@@ -1123,7 +1224,7 @@ function mostrarResumoPedido(
                     false;
 
                 botaoConfirmar.textContent =
-                    "CONFIRMAR PEDIDO";
+                    "✓ CONFIRMAR AGENDAMENTO";
 
                 return;
             }
@@ -1189,7 +1290,7 @@ function mostrarResumoPedido(
                         false;
 
                     botaoConfirmar.textContent =
-                        "CONFIRMAR PEDIDO";
+                        "✓ CONFIRMAR AGENDAMENTO";
 
                     return;
                 }
@@ -1207,7 +1308,7 @@ function mostrarResumoPedido(
                     pedidoLocal
                 );
 
-                mostrarChecklist(
+                mostrarSucessoAgendamento(
                     janela,
                     pedidoLocal
                 );
@@ -1227,9 +1328,140 @@ function mostrarResumoPedido(
                     false;
 
                 botaoConfirmar.textContent =
-                    "CONFIRMAR PEDIDO";
+                    "✓ CONFIRMAR AGENDAMENTO";
 
             }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   SUCESSO DO AGENDAMENTO
+========================================= */
+
+function mostrarSucessoAgendamento(
+    janela,
+    pedido
+) {
+
+    janela.innerHTML = `
+
+        <div class="vehicle-box">
+
+            <div class="sucesso-icon">
+                ✓
+            </div>
+
+            <h2 class="sucesso-titulo">
+                Agendamento confirmado!
+            </h2>
+
+            <p class="sucesso-texto">
+                Seu pedido foi registrado com sucesso.
+            </p>
+
+            <div class="sucesso-destaque">
+
+                <span>
+                    DATA E HORÁRIO
+                </span>
+
+                <strong>
+                    ${formatarData(pedido.data)}
+                    às
+                    ${pedido.horario}
+                </strong>
+
+            </div>
+
+            <div class="resumo-section">
+
+                <div class="resumo-section-title">
+                    <span>🚗</span>
+                    Resumo
+                </div>
+
+                <div class="resumo-item">
+
+                    <span>
+                        Veículo
+                    </span>
+
+                    <strong>
+                        ${pedido.veiculo}
+                    </strong>
+
+                </div>
+
+                <div class="resumo-item">
+
+                    <span>
+                        Modelo
+                    </span>
+
+                    <strong>
+                        ${pedido.modelo}
+                    </strong>
+
+                </div>
+
+                <div class="resumo-item">
+
+                    <span>
+                        Pacote
+                    </span>
+
+                    <strong>
+                        ${pedido.pacote}
+                    </strong>
+
+                </div>
+
+                <div class="resumo-item">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong>
+                        ${formatarMoeda(
+                            Number(pedido.total)
+                        )}
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <p class="sucesso-texto">
+                A GD Lava Rápido já recebeu seu pedido.
+            </p>
+
+            <button
+                type="button"
+                class="select-btn"
+                id="fechar-sucesso"
+            >
+                CONCLUIR
+            </button>
+
+        </div>
+
+    `;
+
+    const botaoFechar =
+        janela.querySelector(
+            "#fechar-sucesso"
+        );
+
+    botaoFechar.addEventListener(
+        "click",
+        function () {
+
+            janela.remove();
 
         }
     );
@@ -1288,303 +1520,6 @@ function obterPedidosLocais() {
         return [];
 
     }
-
-}
-
-
-/* =========================================
-   CHECKLIST
-========================================= */
-
-function mostrarChecklist(
-    janela,
-    pedido
-) {
-
-    let checklistExtras =
-        "";
-
-    if (
-        pedido.extras &&
-        pedido.extras.length > 0
-    ) {
-
-        pedido.extras.forEach(
-            function (extra) {
-
-                checklistExtras += `
-
-                    <label class="checklist-item">
-
-                        <input
-                            type="checkbox"
-                            class="check-item"
-                        >
-
-                        <span>
-                            Realizar:
-                            ${extra.nome}
-                        </span>
-
-                    </label>
-
-                `;
-
-            }
-        );
-
-    }
-
-    janela.innerHTML = `
-
-        <div class="vehicle-box">
-
-            <h2>
-                Ordem de serviço
-            </h2>
-
-            <p>
-                Pedido criado com sucesso.
-            </p>
-
-            <div class="resumo-pedido">
-
-                <p>
-                    <strong>
-                        Cliente:
-                    </strong>
-                    ${pedido.nome}
-                </p>
-
-                <p>
-                    <strong>
-                        WhatsApp:
-                    </strong>
-                    ${pedido.whatsapp}
-                </p>
-
-                <p>
-                    <strong>
-                        Veículo:
-                    </strong>
-                    ${pedido.veiculo}
-                </p>
-
-                <p>
-                    <strong>
-                        Modelo:
-                    </strong>
-                    ${pedido.modelo}
-                </p>
-
-                <p>
-                    <strong>
-                        Placa:
-                    </strong>
-                    ${pedido.placa}
-                </p>
-
-                <p>
-                    <strong>
-                        Pacote:
-                    </strong>
-                    ${pedido.pacote}
-                </p>
-
-                <p>
-                    <strong>
-                        Data:
-                    </strong>
-                    ${formatarData(
-                        pedido.data
-                    )}
-                </p>
-
-                <p>
-                    <strong>
-                        Horário:
-                    </strong>
-                    ${pedido.horario}
-                </p>
-
-                <p>
-                    <strong>
-                        Total:
-                    </strong>
-                    ${formatarMoeda(
-                        Number(
-                            pedido.total
-                        )
-                    )}
-                </p>
-
-            </div>
-
-            <h3>
-                Checklist do serviço
-            </h3>
-
-            <div class="checklist">
-
-                <label class="checklist-item">
-
-                    <input
-                        type="checkbox"
-                        class="check-item"
-                    >
-
-                    <span>
-                        Conferir estado geral do veículo
-                    </span>
-
-                </label>
-
-                <label class="checklist-item">
-
-                    <input
-                        type="checkbox"
-                        class="check-item"
-                    >
-
-                    <span>
-                        Conferir rodas e pneus
-                    </span>
-
-                </label>
-
-                <label class="checklist-item">
-
-                    <input
-                        type="checkbox"
-                        class="check-item"
-                    >
-
-                    <span>
-                        Realizar serviços do pacote
-                    </span>
-
-                </label>
-
-                ${checklistExtras}
-
-                <label class="checklist-item">
-
-                    <input
-                        type="checkbox"
-                        class="check-item"
-                    >
-
-                    <span>
-                        Secagem e acabamento
-                    </span>
-
-                </label>
-
-                <label class="checklist-item">
-
-                    <input
-                        type="checkbox"
-                        class="check-item"
-                    >
-
-                    <span>
-                        Conferência final
-                    </span>
-
-                </label>
-
-            </div>
-
-            <button
-                type="button"
-                class="select-btn"
-                id="finalizar-servico"
-            >
-                FINALIZAR SERVIÇO
-            </button>
-
-        </div>
-
-    `;
-
-    const checkboxes =
-        janela.querySelectorAll(
-            ".check-item"
-        );
-
-    const botaoFinalizar =
-        janela.querySelector(
-            "#finalizar-servico"
-        );
-
-    botaoFinalizar.addEventListener(
-        "click",
-        function () {
-
-            let todosMarcados =
-                true;
-
-            checkboxes.forEach(
-                function (checkbox) {
-
-                    if (
-                        !checkbox.checked
-                    ) {
-
-                        todosMarcados =
-                            false;
-
-                    }
-
-                }
-            );
-
-            if (!todosMarcados) {
-
-                alert(
-                    "Marque todos os itens do checklist antes de finalizar."
-                );
-
-                return;
-            }
-
-            const pedidosSalvos =
-                obterPedidosLocais();
-
-            const pedidoEncontrado =
-                pedidosSalvos.find(
-                    function (item) {
-
-                        return (
-                            String(item.id) ===
-                            String(pedido.id)
-                        );
-
-                    }
-                );
-
-            if (pedidoEncontrado) {
-
-                pedidoEncontrado.status =
-                    "Concluído";
-
-                localStorage.setItem(
-                    "pedidosGD",
-                    JSON.stringify(
-                        pedidosSalvos
-                    )
-                );
-
-            }
-
-            alert(
-                "Serviço finalizado com sucesso!"
-            );
-
-            janela.remove();
-
-        }
-    );
 
 }
 
