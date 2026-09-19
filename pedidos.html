@@ -936,7 +936,11 @@ faturamentoTotal += valorPedido;
         style: "currency",
         currency: "BRL"
     });
-
+document.querySelector("#faturamento-concluido").textContent =
+    faturamentoConcluido.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
 
         /* =========================================
            FILTROS
