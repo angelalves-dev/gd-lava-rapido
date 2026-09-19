@@ -116,16 +116,29 @@
                     </strong>
 
                 </div>
-<div class="contador-box">
-    <span>Faturamento total</span>
-    <strong id="faturamento-total">R$ 0,00</strong>
-</div>
+
 
                 <div class="contador-box">
-    <span>Faturamento concluído</span>
-    <strong id="faturamento-concluido">R$ 0,00</strong>
-</div>
-                
+
+                    <span>Faturamento total</span>
+
+                    <strong id="faturamento-total">
+                        R$ 0,00
+                    </strong>
+
+                </div>
+
+
+                <div class="contador-box">
+
+                    <span>Faturamento concluído</span>
+
+                    <strong id="faturamento-concluido">
+                        R$ 0,00
+                    </strong>
+
+                </div>
+
             </div>
 
 
@@ -200,10 +213,8 @@
 
         else {
 
-
             pedidosNovos.forEach(
                 function (pedido, index) {
-
 
                     const card =
                         document.createElement("div");
@@ -219,7 +230,6 @@
                         <h3>
                             Pedido #${index + 1}
                         </h3>
-
 
                         <hr>
 
@@ -403,7 +413,6 @@
                         "click",
                         function () {
 
-
                             const ordemServico =
                                 document.createElement(
                                     "div"
@@ -418,7 +427,6 @@
                             ordemServico.innerHTML = `
 
                                 <div class="vehicle-box checklist-box">
-
 
                                     <h2>
                                         Ordem de Serviço
@@ -687,7 +695,6 @@
 
                                     </button>
 
-
                                 </div>
 
                             `;
@@ -707,7 +714,6 @@
                             fecharOS.addEventListener(
                                 "click",
                                 function () {
-
 
                                     const checkboxes =
                                         ordemServico.querySelectorAll(
@@ -793,7 +799,6 @@
                         "click",
                         function () {
 
-
                             if (
                                 !pedido.status ||
                                 pedido.status === "Agendado"
@@ -863,20 +868,38 @@
         pedidosNovos.forEach(
             function (pedido) {
 
-                const valorPedido = parseFloat(
-    String(pedido.total).replace(",", ".")
-) || 0;
+                /*
+                    Converte valores como:
 
-faturamentoTotal += valorPedido;
+                    50
+                    "50"
+                    "50,00"
+                    "R$ 50,00"
+                    "1.250,00"
+                */
 
-                if (status === "Concluído") {
-    faturamentoConcluido += valorPedido;
-}
-                
+                const valorPedido =
+                    parseFloat(
+                        String(pedido.total)
+                            .replace("R$", "")
+                            .replace(/\s/g, "")
+                            .replace(/\./g, "")
+                            .replace(",", ".")
+                    ) || 0;
+
+
                 const status =
                     pedido.status ||
                     "Agendado";
 
+
+                /* FATURAMENTO TOTAL */
+
+                faturamentoTotal +=
+                    valorPedido;
+
+
+                /* CONTAGEM POR STATUS */
 
                 if (
                     status === "Agendado"
@@ -902,11 +925,21 @@ faturamentoTotal += valorPedido;
 
                     totalConcluidos++;
 
+
+                    /* FATURAMENTO CONCLUÍDO */
+
+                    faturamentoConcluido +=
+                        valorPedido;
+
                 }
 
             }
         );
 
+
+        /* =========================================
+           MOSTRAR CONTADORES
+        ========================================= */
 
         document.querySelector(
             "#contador-todos"
@@ -931,16 +964,40 @@ faturamentoTotal += valorPedido;
         ).textContent =
             totalConcluidos;
 
-        document.querySelector("#faturamento-total").textContent =
-    faturamentoTotal.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL"
-    });
-document.querySelector("#faturamento-concluido").textContent =
-    faturamentoConcluido.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL"
-    });
+
+        /* =========================================
+           MOSTRAR FATURAMENTO TOTAL
+        ========================================= */
+
+        document.querySelector(
+            "#faturamento-total"
+        ).textContent =
+
+            faturamentoTotal.toLocaleString(
+                "pt-BR",
+                {
+                    style: "currency",
+                    currency: "BRL"
+                }
+            );
+
+
+        /* =========================================
+           MOSTRAR FATURAMENTO CONCLUÍDO
+        ========================================= */
+
+        document.querySelector(
+            "#faturamento-concluido"
+        ).textContent =
+
+            faturamentoConcluido.toLocaleString(
+                "pt-BR",
+                {
+                    style: "currency",
+                    currency: "BRL"
+                }
+            );
+
 
         /* =========================================
            FILTROS
@@ -955,11 +1012,9 @@ document.querySelector("#faturamento-concluido").textContent =
         botoesFiltro.forEach(
             function (botao) {
 
-
                 botao.addEventListener(
                     "click",
                     function () {
-
 
                         const filtro =
                             botao.dataset.filtro;
@@ -977,7 +1032,6 @@ document.querySelector("#faturamento-concluido").textContent =
                                 index
                             ) {
 
-
                                 const pedido =
                                     pedidosNovos[
                                         index
@@ -994,6 +1048,7 @@ document.querySelector("#faturamento-concluido").textContent =
 
                                 }
 
+
                                 else if (
                                     pedido &&
                                     (
@@ -1006,6 +1061,7 @@ document.querySelector("#faturamento-concluido").textContent =
                                         "";
 
                                 }
+
 
                                 else {
 
