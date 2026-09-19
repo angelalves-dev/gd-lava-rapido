@@ -857,6 +857,8 @@
 
         let faturamentoTotal = 0;
 
+        let faturamentoConcluido = 0;
+
 
         pedidosNovos.forEach(
             function (pedido) {
@@ -866,6 +868,10 @@
 ) || 0;
 
 faturamentoTotal += valorPedido;
+
+                if (status === "Concluído") {
+    faturamentoConcluido += valorPedido;
+}
                 
                 const status =
                     pedido.status ||
