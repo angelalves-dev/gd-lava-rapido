@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -10,12 +8,9 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>
-        Painel Administrativo | GD Lava Rápido
-    </title>
+    <title>GD Lava Rápido | Painel Administrativo</title>
 
     <style>
-
         * {
             margin: 0;
             padding: 0;
@@ -24,208 +19,204 @@
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background: #111;
-            color: #fff;
+            background: #0b0b0b;
+            color: #f5f5f5;
             min-height: 100vh;
         }
 
-
-        /* =========================================
-           CABEÇALHO
-        ========================================= */
+        /* =========================
+           HEADER
+        ========================= */
 
         header {
-            background: #171717;
-            border-bottom: 1px solid #333;
+            background: #111;
+            border-bottom: 1px solid #2a2a2a;
             padding: 20px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
-        .header-content {
+        .header-container {
             max-width: 1200px;
             margin: auto;
 
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             gap: 20px;
         }
 
         .logo h1 {
-            color: #c9a227;
+            color: #d4af37;
             font-size: 24px;
         }
 
         .logo p {
-            color: #aaa;
+            color: #999;
             font-size: 13px;
-            margin-top: 5px;
+            margin-top: 4px;
         }
 
-        .voltar-btn {
+        .voltar {
+            color: #d4af37;
             text-decoration: none;
-            color: #111;
-            background: #c9a227;
-            padding: 11px 18px;
-            border-radius: 8px;
-            font-weight: bold;
+            border: 1px solid #d4af37;
+            padding: 10px 16px;
+            border-radius: 6px;
             transition: 0.3s;
         }
 
-        .voltar-btn:hover {
-            background: #e0b82f;
-            transform: translateY(-2px);
+        .voltar:hover {
+            background: #d4af37;
+            color: #111;
         }
 
-
-        /* =========================================
+        /* =========================
            CONTAINER
-        ========================================= */
+        ========================= */
 
         .container {
             max-width: 1200px;
-            margin: auto;
-            padding: 30px 20px 60px;
+            margin: 30px auto;
+            padding: 0 20px;
         }
 
-        .titulo-pagina {
+        /* =========================
+           TITULO
+        ========================= */
+
+        .titulo {
             margin-bottom: 25px;
         }
 
-        .titulo-pagina h2 {
-            font-size: 30px;
+        .titulo h2 {
+            font-size: 28px;
             margin-bottom: 8px;
         }
 
-        .titulo-pagina p {
+        .titulo p {
             color: #999;
         }
 
+        /* =========================
+           CARDS DE ESTATISTICAS
+        ========================= */
 
-        /* =========================================
-           CONTADORES
-        ========================================= */
-
-        .contador-pedidos {
+        .estatisticas {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 15px;
             margin-bottom: 30px;
         }
 
-        .contador-box {
-            background: #1b1b1b;
-            border: 1px solid #333;
-            border-radius: 12px;
+        .estatistica {
+            background: #151515;
+            border: 1px solid #292929;
+            border-radius: 10px;
             padding: 20px;
-            min-height: 105px;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
 
-        .contador-box span {
+        .estatistica span {
+            display: block;
             color: #999;
             font-size: 13px;
             margin-bottom: 10px;
         }
 
-        .contador-box strong {
-            color: #c9a227;
-            font-size: 24px;
+        .estatistica strong {
+            font-size: 25px;
+            color: #d4af37;
         }
 
-
-        /* =========================================
+        /* =========================
            FILTROS
-        ========================================= */
+        ========================= */
 
         .filtros {
-            background: #1b1b1b;
-            border: 1px solid #333;
-            border-radius: 12px;
-            padding: 18px;
-            margin-bottom: 25px;
-
             display: flex;
-            flex-wrap: wrap;
             gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
         }
 
-        .filtro-btn {
-            border: 1px solid #444;
-            background: #242424;
+        .filtro {
+            background: #151515;
             color: #ddd;
+            border: 1px solid #333;
             padding: 10px 18px;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            font-weight: bold;
             transition: 0.3s;
         }
 
-        .filtro-btn:hover {
-            border-color: #c9a227;
-            color: #c9a227;
+        .filtro:hover {
+            border-color: #d4af37;
         }
 
-        .filtro-btn.ativo {
-            background: #c9a227;
+        .filtro.ativo {
+            background: #d4af37;
             color: #111;
-            border-color: #c9a227;
+            border-color: #d4af37;
+            font-weight: bold;
         }
 
+        /* =========================
+           CARREGANDO
+        ========================= */
 
-        /* =========================================
+        .carregando {
+            text-align: center;
+            padding: 50px 20px;
+            color: #999;
+        }
+
+        .carregando strong {
+            display: block;
+            color: #d4af37;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        /* =========================
            PEDIDOS
-        ========================================= */
+        ========================= */
 
-        #pedido-container {
+        #listaPedidos {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
 
-        .pedido-card {
-            background: #1b1b1b;
-            border: 1px solid #333;
-            border-radius: 14px;
+        .pedido {
+            background: #151515;
+            border: 1px solid #292929;
+            border-radius: 12px;
             padding: 22px;
-            transition: 0.3s;
-        }
-
-        .pedido-card:hover {
-            border-color: #c9a227;
-            transform: translateY(-2px);
         }
 
         .pedido-topo {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            gap: 15px;
-            margin-bottom: 18px;
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
-        .pedido-numero {
-            color: #888;
-            font-size: 12px;
+        .pedido-topo h3 {
+            color: #fff;
+            font-size: 20px;
             margin-bottom: 5px;
         }
 
-        .pedido-nome {
-            font-size: 21px;
+        .pedido-id {
+            color: #777;
+            font-size: 12px;
         }
 
-        .status-pedido {
+        .status {
             display: inline-block;
-            padding: 7px 12px;
+            padding: 8px 13px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: bold;
-            white-space: nowrap;
         }
 
         .status-agendado {
@@ -235,8 +226,8 @@
         }
 
         .status-andamento {
-            background: #173b5c;
-            color: #66bfff;
+            background: #153d5c;
+            color: #66c7ff;
             border: 1px solid #2980b9;
         }
 
@@ -246,170 +237,138 @@
             border: 1px solid #2ecc71;
         }
 
-
-        /* =========================================
-           INFORMAÇÕES
-        ========================================= */
-
-        .info-grid {
+        .pedido-info {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
             margin-bottom: 20px;
         }
 
-        .info-box {
-            background: #242424;
+        .info {
+            background: #101010;
             border-radius: 8px;
-            padding: 12px;
+            padding: 14px;
         }
 
-        .info-box span {
+        .info span {
             display: block;
-            color: #888;
+            color: #777;
             font-size: 11px;
-            margin-bottom: 5px;
             text-transform: uppercase;
+            margin-bottom: 7px;
         }
 
-        .info-box strong {
+        .info strong {
             color: #eee;
             font-size: 14px;
         }
 
-
-        /* =========================================
-           SERVIÇOS EXTRAS
-        ========================================= */
-
-        .extras-box {
-            background: #242424;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
+        .pedido-servicos {
+            border-top: 1px solid #292929;
+            padding-top: 18px;
+            margin-bottom: 18px;
         }
 
-        .extras-box h4 {
-            color: #c9a227;
+        .pedido-servicos h4 {
+            color: #d4af37;
             margin-bottom: 10px;
         }
 
-        .extra-linha {
-            color: #ccc;
-            font-size: 13px;
-            padding: 4px 0;
+        .extras-lista {
+            color: #bbb;
+            line-height: 1.7;
         }
 
+        .sem-extras {
+            color: #777;
+        }
 
-        /* =========================================
-           TOTAL
-        ========================================= */
-
-        .pedido-total {
-            border-top: 1px solid #333;
-            padding-top: 15px;
-            margin-bottom: 18px;
+        .pedido-rodape {
+            border-top: 1px solid #292929;
+            padding-top: 18px;
 
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 15px;
         }
 
-        .pedido-total span {
-            color: #aaa;
+        .total {
+            font-size: 22px;
+            font-weight: bold;
+            color: #d4af37;
         }
-
-        .pedido-total strong {
-            color: #c9a227;
-            font-size: 24px;
-        }
-
-
-        /* =========================================
-           BOTÕES
-        ========================================= */
 
         .acoes {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
-        .acao-btn {
+        .btn {
             border: none;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 10px 15px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
             transition: 0.3s;
         }
 
-        .os-btn {
-            background: #c9a227;
+        .btn-os {
+            background: #d4af37;
             color: #111;
         }
 
-        .status-btn {
-            background: #292929;
-            color: #fff;
+        .btn-os:hover {
+            background: #f0d05c;
+        }
+
+        .btn-status {
+            background: #222;
             border: 1px solid #444;
+            color: #ddd;
         }
 
-        .acao-btn:hover {
-            transform: translateY(-2px);
+        .btn-status:hover {
+            border-color: #d4af37;
+            color: #d4af37;
         }
 
-
-        /* =========================================
-           SEM PEDIDOS
-        ========================================= */
-
-        .sem-pedidos {
-            grid-column: 1 / -1;
-            text-align: center;
-            background: #1b1b1b;
-            border: 1px dashed #444;
-            border-radius: 14px;
-            padding: 60px 20px;
-        }
-
-        .sem-pedidos h3 {
-            margin-bottom: 10px;
-            color: #c9a227;
-        }
-
-        .sem-pedidos p {
-            color: #888;
-        }
-
-
-        /* =========================================
+        /* =========================
            MODAL
-        ========================================= */
+        ========================= */
 
         .modal {
+            display: none;
+
             position: fixed;
             inset: 0;
+
             background: rgba(0, 0, 0, 0.82);
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            z-index: 9999;
 
             padding: 20px;
-            z-index: 1000;
+
+            overflow-y: auto;
+        }
+
+        .modal.ativo {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
 
         .modal-conteudo {
-            background: #1b1b1b;
-            border: 1px solid #444;
-            border-radius: 14px;
-
             width: 100%;
-            max-width: 650px;
-            max-height: 90vh;
+            max-width: 700px;
 
-            overflow-y: auto;
+            background: #151515;
+
+            border: 1px solid #333;
+            border-radius: 12px;
+
+            margin: 40px auto;
             padding: 25px;
         }
 
@@ -418,1366 +377,1380 @@
             justify-content: space-between;
             align-items: center;
 
-            margin-bottom: 20px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 15px;
+            margin-bottom: 25px;
         }
 
         .modal-topo h2 {
-            color: #c9a227;
+            color: #d4af37;
         }
 
-        .fechar-modal {
+        .fechar {
             background: transparent;
             border: none;
-            color: #fff;
+            color: #aaa;
             font-size: 28px;
             cursor: pointer;
         }
 
-
-        /* =========================================
-           CHECKLIST
-        ========================================= */
-
-        .checklist {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin: 20px 0;
+        .fechar:hover {
+            color: #fff;
         }
 
-        .checklist-item {
+        .checklist {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .check-item {
+            background: #101010;
+            border: 1px solid #292929;
+            border-radius: 8px;
+            padding: 14px;
+
             display: flex;
             align-items: center;
             gap: 12px;
 
-            background: #242424;
-            padding: 13px;
-            border-radius: 8px;
-
             cursor: pointer;
         }
 
-        .checklist-item input {
-            width: 18px;
-            height: 18px;
-            accent-color: #c9a227;
+        .check-item:hover {
+            border-color: #555;
         }
 
-        .checklist-item span {
+        .check-item input {
+            width: 18px;
+            height: 18px;
+            accent-color: #d4af37;
+        }
+
+        .check-item span {
             color: #ddd;
             font-size: 14px;
         }
 
-        .finalizar-os {
+        .btn-concluir {
             width: 100%;
-            background: #2ecc71;
-            color: #111;
-            border: none;
             padding: 14px;
-            border-radius: 8px;
-            cursor: pointer;
+
+            background: #2ecc71;
+            color: #07140c;
+
+            border: none;
+            border-radius: 7px;
+
             font-weight: bold;
-            font-size: 15px;
+            cursor: pointer;
         }
 
+        .btn-concluir:hover {
+            background: #48e083;
+        }
 
-        /* =========================================
+        .btn-concluir:disabled {
+            background: #333;
+            color: #777;
+            cursor: not-allowed;
+        }
+
+        /* =========================
+           MENSAGEM
+        ========================= */
+
+        .mensagem {
+            text-align: center;
+            background: #151515;
+            border: 1px solid #292929;
+            border-radius: 10px;
+            padding: 35px;
+            color: #999;
+        }
+
+        .mensagem strong {
+            display: block;
+            color: #d4af37;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        /* =========================
            RESPONSIVO
-        ========================================= */
+        ========================= */
 
         @media (max-width: 1000px) {
 
-            .contador-pedidos {
+            .estatisticas {
                 grid-template-columns: repeat(3, 1fr);
             }
 
-            #pedido-container {
-                grid-template-columns: 1fr;
+            .pedido-info {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
+        @media (max-width: 700px) {
 
-        @media (max-width: 650px) {
-
-            .header-content {
+            .header-container {
                 flex-direction: column;
                 align-items: flex-start;
             }
 
-            .contador-pedidos {
+            .estatisticas {
                 grid-template-columns: repeat(2, 1fr);
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
             }
 
             .pedido-topo {
                 flex-direction: column;
             }
 
+            .pedido-rodape {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
             .acoes {
-                grid-template-columns: 1fr;
+                width: 100%;
+            }
+
+            .btn {
+                flex: 1;
             }
         }
 
+        @media (max-width: 500px) {
 
-        @media (max-width: 450px) {
+            .estatisticas {
+                grid-template-columns: 1fr;
+            }
+
+            .pedido-info {
+                grid-template-columns: 1fr;
+            }
 
             .container {
-                padding: 20px 12px 40px;
+                padding: 0 12px;
             }
 
-            .contador-pedidos {
-                grid-template-columns: 1fr;
-            }
-
-            .titulo-pagina h2 {
-                font-size: 24px;
-            }
-
-            .pedido-card {
-                padding: 16px;
+            .modal-conteudo {
+                padding: 18px;
             }
         }
-
     </style>
-
 </head>
-
 
 <body>
 
+<header>
 
-    <!-- =========================================
-         CABEÇALHO
-    ========================================== -->
+    <div class="header-container">
 
-    <header>
+        <div class="logo">
 
-        <div class="header-content">
+            <h1>GD Lava Rápido</h1>
 
-            <div class="logo">
-
-                <h1>
-                    GD Lava Rápido
-                </h1>
-
-                <p>
-                    Painel Administrativo
-                </p>
-
-            </div>
-
-
-            <a
-                href="index.html"
-                class="voltar-btn"
-            >
-                ← Voltar para o site
-            </a>
+            <p>Painel Administrativo</p>
 
         </div>
 
-    </header>
+        <a
+            href="index.html"
+            class="voltar"
+        >
+            ← Voltar para o site
+        </a>
+
+    </div>
+
+</header>
 
 
-    <!-- =========================================
-         CONTEÚDO
-    ========================================== -->
+<main class="container">
 
-    <main class="container">
+    <div class="titulo">
+
+        <h2>Pedidos e Agendamentos</h2>
+
+        <p>
+            Gerencie os pedidos recebidos pelos clientes.
+        </p>
+
+    </div>
 
 
-        <div class="titulo-pagina">
+    <!-- ESTATÍSTICAS -->
 
-            <h2>
-                Central de Pedidos
-            </h2>
+    <section class="estatisticas">
 
-            <p>
-                Gerencie os agendamentos e ordens de serviço.
-            </p>
+        <div class="estatistica">
+            <span>Total de pedidos</span>
+            <strong id="totalPedidos">0</strong>
+        </div>
+
+        <div class="estatistica">
+            <span>Agendados</span>
+            <strong id="totalAgendados">0</strong>
+        </div>
+
+        <div class="estatistica">
+            <span>Em andamento</span>
+            <strong id="totalAndamento">0</strong>
+        </div>
+
+        <div class="estatistica">
+            <span>Concluídos</span>
+            <strong id="totalConcluidos">0</strong>
+        </div>
+
+        <div class="estatistica">
+            <span>Faturamento</span>
+            <strong id="faturamento">R$ 0,00</strong>
+        </div>
+
+    </section>
+
+
+    <!-- FILTROS -->
+
+    <div class="filtros">
+
+        <button
+            class="filtro ativo"
+            data-filtro="Todos"
+        >
+            Todos
+        </button>
+
+        <button
+            class="filtro"
+            data-filtro="Agendado"
+        >
+            Agendados
+        </button>
+
+        <button
+            class="filtro"
+            data-filtro="Em andamento"
+        >
+            Em andamento
+        </button>
+
+        <button
+            class="filtro"
+            data-filtro="Concluído"
+        >
+            Concluídos
+        </button>
+
+    </div>
+
+
+    <!-- LISTA -->
+
+    <div id="listaPedidos">
+
+        <div class="carregando">
+
+            <strong>Carregando pedidos...</strong>
+
+            <span>
+                Buscando informações no banco de dados.
+            </span>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- MODAL ORDEM DE SERVIÇO -->
+
+<div
+    id="modalOS"
+    class="modal"
+>
+
+    <div class="modal-conteudo">
+
+        <div class="modal-topo">
+
+            <h2>Ordem de Serviço</h2>
+
+            <button
+                class="fechar"
+                onclick="fecharOS()"
+            >
+                ×
+            </button>
 
         </div>
 
 
-        <!-- =========================================
-             CONTADORES
-        ========================================== -->
-
-        <section class="contador-pedidos">
+        <div id="informacoesOS"></div>
 
 
-            <div class="contador-box">
-
-                <span>
-                    Todos os pedidos
-                </span>
-
-                <strong id="contador-todos">
-                    0
-                </strong>
-
-            </div>
+        <h3
+            style="
+                color:#d4af37;
+                margin-bottom:15px;
+            "
+        >
+            Checklist do serviço
+        </h3>
 
 
-            <div class="contador-box">
-
-                <span>
-                    Agendados
-                </span>
-
-                <strong id="contador-agendados">
-                    0
-                </strong>
-
-            </div>
+        <div
+            id="checklist"
+            class="checklist"
+        ></div>
 
 
-            <div class="contador-box">
+        <button
+            id="btnConcluir"
+            class="btn-concluir"
+            disabled
+            onclick="concluirOS()"
+        >
+            Concluir Ordem de Serviço
+        </button>
 
-                <span>
-                    Em andamento
-                </span>
+    </div>
 
-                <strong id="contador-andamento">
-                    0
-                </strong>
-
-            </div>
-
-
-            <div class="contador-box">
-
-                <span>
-                    Concluídos
-                </span>
-
-                <strong id="contador-concluidos">
-                    0
-                </strong>
-
-            </div>
+</div>
 
 
-            <div class="contador-box">
+<!-- SUPABASE -->
 
-                <span>
-                    Faturamento total
-                </span>
-
-                <strong id="faturamento-total">
-                    R$ 0,00
-                </strong>
-
-            </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-            <div class="contador-box">
+<script>
 
-                <span>
-                    Faturamento concluído
-                </span>
+    /* =====================================================
+       CONFIGURAÇÃO SUPABASE
+    ===================================================== */
 
-                <strong id="faturamento-concluido">
-                    R$ 0,00
-                </strong>
-
-            </div>
-
-        </section>
+    const SUPABASE_URL =
+        "https://ljswwokxcgglqluzwctq.supabase.co";
 
 
-        <!-- =========================================
-             FILTROS
-        ========================================== -->
+    /*
+       IMPORTANTE:
 
-        <section class="filtros">
+       COLE A MESMA CHAVE PUBLISHABLE
+       QUE VOCÊ JÁ USOU NO script.js
+    */
 
-            <button
-                class="filtro-btn ativo"
-                data-filtro="Todos"
-            >
-                Todos
-            </button>
+    const SUPABASE_KEY =
+        "COLE_AQUI_SUA_CHAVE_PUBLISHABLE";
 
 
-            <button
-                class="filtro-btn"
-                data-filtro="Agendado"
-            >
-                Agendados
-            </button>
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
 
 
-            <button
-                class="filtro-btn"
-                data-filtro="Em andamento"
-            >
-                Em andamento
-            </button>
+    /* =====================================================
+       VARIÁVEIS
+    ===================================================== */
+
+    let todosPedidos = [];
+
+    let filtroAtual = "Todos";
+
+    let pedidoOSAtual = null;
 
 
-            <button
-                class="filtro-btn"
-                data-filtro="Concluído"
-            >
-                Concluídos
-            </button>
+    /* =====================================================
+       FORMATAÇÃO
+    ===================================================== */
 
-        </section>
+    function formatarMoeda(valor) {
 
+        return Number(valor || 0).toLocaleString(
+            "pt-BR",
+            {
+                style: "currency",
+                currency: "BRL"
+            }
+        );
 
-        <!-- =========================================
-             PEDIDOS
-        ========================================== -->
-
-        <section id="pedido-container">
-
-        </section>
-
-    </main>
+    }
 
 
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================== -->
+    function formatarData(data) {
 
-    <script>
-
-        const pedidoContainer =
-            document.querySelector(
-                "#pedido-container"
-            );
-
-
-        let pedidosNovos =
-            JSON.parse(
-                localStorage.getItem(
-                    "pedidosGD"
-                )
-            ) || [];
-
-
-        /* =========================================
-           COMPATIBILIDADE COM PEDIDO ANTIGO
-        ========================================== */
-
-        const pedidoAntigo =
-            localStorage.getItem(
-                "pedidoGD"
-            );
-
-
-        if (
-            pedidoAntigo &&
-            pedidosNovos.length === 0
-        ) {
-
-            pedidosNovos.push(
-                JSON.parse(
-                    pedidoAntigo
-                )
-            );
-
-            localStorage.setItem(
-                "pedidosGD",
-                JSON.stringify(
-                    pedidosNovos
-                )
-            );
+        if (!data) {
+            return "-";
         }
 
+        const partes = data.split("-");
 
-        /* =========================================
-           FORMATAR MOEDA
-        ========================================== */
-
-        function formatarMoeda(valor) {
-
-            return Number(valor).toLocaleString(
-                "pt-BR",
-                {
-                    style: "currency",
-                    currency: "BRL"
-                }
-            );
+        if (partes.length !== 3) {
+            return data;
         }
 
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
 
-        /* =========================================
-           FORMATAR DATA
-        ========================================== */
+    }
 
-        function formatarData(data) {
 
-            if (!data) {
-                return "-";
-            }
+    function escaparHTML(texto) {
 
-            const partes =
-                data.split("-");
+        if (texto === null || texto === undefined) {
+            return "";
+        }
 
-            if (
-                partes.length !== 3
-            ) {
-                return data;
-            }
+        return String(texto)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
 
-            return `
-                ${partes[2]}/${partes[1]}/${partes[0]}
+    }
+
+
+    /* =====================================================
+       CARREGAR PEDIDOS DO SUPABASE
+    ===================================================== */
+
+    async function carregarPedidos() {
+
+        const lista =
+            document.getElementById("listaPedidos");
+
+
+        lista.innerHTML = `
+            <div class="carregando">
+
+                <strong>Carregando pedidos...</strong>
+
+                <span>
+                    Buscando informações no banco de dados.
+                </span>
+
+            </div>
+        `;
+
+
+        const resultado =
+            await supabaseClient
+                .from("pedidos")
+                .select("*")
+                .order("created_at", {
+                    ascending: false
+                });
+
+
+        if (resultado.error) {
+
+            console.error(
+                "Erro ao carregar pedidos:",
+                resultado.error
+            );
+
+
+            lista.innerHTML = `
+                <div class="mensagem">
+
+                    <strong>Não foi possível carregar os pedidos.</strong>
+
+                    <span>
+                        ${escaparHTML(resultado.error.message)}
+                    </span>
+
+                </div>
             `;
+
+            return;
         }
 
 
-        /* =========================================
-           STATUS
-        ========================================== */
-
-        function obterClasseStatus(status) {
-
-            if (
-                status === "Concluído"
-            ) {
-
-                return "status-concluido";
-            }
+        todosPedidos =
+            resultado.data || [];
 
 
-            if (
-                status === "Em andamento"
-            ) {
+        atualizarEstatisticas();
 
-                return "status-andamento";
-            }
+        mostrarPedidos();
+
+    }
 
 
-            return "status-agendado";
+    /* =====================================================
+       ESTATÍSTICAS
+    ===================================================== */
+
+    function atualizarEstatisticas() {
+
+        const total =
+            todosPedidos.length;
+
+
+        const agendados =
+            todosPedidos.filter(
+                pedido =>
+                    pedido.status === "Agendado"
+            ).length;
+
+
+        const andamento =
+            todosPedidos.filter(
+                pedido =>
+                    pedido.status === "Em andamento"
+            ).length;
+
+
+        const concluidos =
+            todosPedidos.filter(
+                pedido =>
+                    pedido.status === "Concluído"
+            ).length;
+
+
+        const faturamento =
+            todosPedidos.reduce(
+                (soma, pedido) =>
+                    soma + Number(pedido.total || 0),
+                0
+            );
+
+
+        document.getElementById(
+            "totalPedidos"
+        ).textContent = total;
+
+
+        document.getElementById(
+            "totalAgendados"
+        ).textContent = agendados;
+
+
+        document.getElementById(
+            "totalAndamento"
+        ).textContent = andamento;
+
+
+        document.getElementById(
+            "totalConcluidos"
+        ).textContent = concluidos;
+
+
+        document.getElementById(
+            "faturamento"
+        ).textContent =
+            formatarMoeda(faturamento);
+
+    }
+
+
+    /* =====================================================
+       MOSTRAR PEDIDOS
+    ===================================================== */
+
+    function mostrarPedidos() {
+
+        const lista =
+            document.getElementById("listaPedidos");
+
+
+        let pedidosFiltrados =
+            todosPedidos;
+
+
+        if (filtroAtual !== "Todos") {
+
+            pedidosFiltrados =
+                todosPedidos.filter(
+                    pedido =>
+                        pedido.status === filtroAtual
+                );
+
         }
 
 
-        /* =========================================
-           RENDERIZAR PEDIDOS
-        ========================================== */
+        if (pedidosFiltrados.length === 0) {
 
-        function renderizarPedidos() {
+            lista.innerHTML = `
+                <div class="mensagem">
 
-            pedidoContainer.innerHTML = "";
+                    <strong>Nenhum pedido encontrado.</strong>
+
+                    <span>
+                        Não existem pedidos neste filtro.
+                    </span>
+
+                </div>
+            `;
+
+            return;
+        }
 
 
-            if (
-                pedidosNovos.length === 0
-            ) {
+        lista.innerHTML =
+            pedidosFiltrados
+                .map(criarCardPedido)
+                .join("");
 
-                pedidoContainer.innerHTML = `
+    }
 
-                    <div class="sem-pedidos">
+
+    /* =====================================================
+       CRIAR CARD
+    ===================================================== */
+
+    function criarCardPedido(pedido) {
+
+        const extras =
+            Array.isArray(pedido.extras)
+                ? pedido.extras
+                : [];
+
+
+        let extrasHTML =
+            `<span class="sem-extras">
+                Nenhum serviço adicional.
+             </span>`;
+
+
+        if (extras.length > 0) {
+
+            extrasHTML =
+                `
+                <div class="extras-lista">
+
+                    ${extras.map(extra => {
+
+                        if (
+                            typeof extra === "string"
+                        ) {
+                            return `
+                                • ${escaparHTML(extra)}
+                            `;
+                        }
+
+
+                        const nome =
+                            extra.nome ||
+                            extra.servico ||
+                            extra.name ||
+                            "Serviço adicional";
+
+
+                        const preco =
+                            extra.preco !== undefined
+                                ? ` — ${formatarMoeda(extra.preco)}`
+                                : "";
+
+
+                        return `
+                            • ${escaparHTML(nome)}
+                            ${preco}
+                        `;
+
+                    }).join("<br>")}
+
+                </div>
+                `;
+
+        }
+
+
+        const status =
+            pedido.status || "Agendado";
+
+
+        let classeStatus =
+            "status-agendado";
+
+
+        if (status === "Em andamento") {
+
+            classeStatus =
+                "status-andamento";
+
+        }
+
+
+        if (status === "Concluído") {
+
+            classeStatus =
+                "status-concluido";
+
+        }
+
+
+        return `
+            <article class="pedido">
+
+                <div class="pedido-topo">
+
+                    <div>
 
                         <h3>
-                            Nenhum pedido encontrado
+                            ${escaparHTML(
+                                pedido.nome || "Cliente"
+                            )}
                         </h3>
 
-                        <p>
-                            Os novos agendamentos aparecerão aqui.
-                        </p>
+                        <span class="pedido-id">
+                            Pedido #${pedido.id}
+                        </span>
 
                     </div>
 
-                `;
 
-                atualizarContadores();
+                    <span class="status ${classeStatus}">
+                        ${escaparHTML(status)}
+                    </span>
 
-                return;
-            }
+                </div>
 
 
-            pedidosNovos.forEach(
-                function (pedido, index) {
+                <div class="pedido-info">
 
-                    const status =
-                        pedido.status ||
-                        "Agendado";
+                    <div class="info">
 
+                        <span>WhatsApp</span>
 
-                    let extrasHTML =
-                        "";
+                        <strong>
+                            ${escaparHTML(
+                                pedido.whatsapp || "-"
+                            )}
+                        </strong>
 
+                    </div>
 
-                    if (
-                        pedido.extras &&
-                        pedido.extras.length > 0
-                    ) {
 
-                        pedido.extras.forEach(
-                            function (extra) {
+                    <div class="info">
 
-                                extrasHTML += `
+                        <span>Veículo</span>
 
-                                    <div class="extra-linha">
+                        <strong>
+                            ${escaparHTML(
+                                pedido.veiculo || "-"
+                            )}
+                        </strong>
 
-                                        • ${extra.nome}
-                                        -
-                                        ${formatarMoeda(
-                                            extra.preco
-                                        )}
+                    </div>
 
-                                    </div>
 
-                                `;
-                            }
-                        );
+                    <div class="info">
 
-                    } else {
+                        <span>Modelo</span>
 
-                        extrasHTML = `
+                        <strong>
+                            ${escaparHTML(
+                                pedido.modelo || "-"
+                            )}
+                        </strong>
 
-                            <div class="extra-linha">
+                    </div>
 
-                                Nenhum serviço extra.
 
-                            </div>
+                    <div class="info">
 
-                        `;
-                    }
+                        <span>Placa</span>
 
+                        <strong>
+                            ${escaparHTML(
+                                pedido.placa || "-"
+                            )}
+                        </strong>
 
-                    const card =
-                        document.createElement(
-                            "article"
-                        );
+                    </div>
 
 
-                    card.classList.add(
-                        "pedido-card"
-                    );
+                    <div class="info">
 
+                        <span>Data</span>
 
-                    card.dataset.status =
-                        status;
+                        <strong>
+                            ${formatarData(
+                                pedido.data
+                            )}
+                        </strong>
 
+                    </div>
 
-                    card.innerHTML = `
 
-                        <div class="pedido-topo">
+                    <div class="info">
 
-                            <div>
+                        <span>Horário</span>
 
-                                <div class="pedido-numero">
+                        <strong>
+                            ${escaparHTML(
+                                pedido.horario || "-"
+                            )}
+                        </strong>
 
-                                    PEDIDO #${index + 1}
+                    </div>
 
-                                </div>
 
-                                <div class="pedido-nome">
+                    <div class="info">
 
-                                    ${pedido.nome}
+                        <span>Pacote</span>
 
-                                </div>
+                        <strong>
+                            ${escaparHTML(
+                                pedido.pacote || "-"
+                            )}
+                        </strong>
 
-                            </div>
+                    </div>
 
 
-                            <span
-                                class="status-pedido ${obterClasseStatus(status)}"
-                            >
-                                ${status}
-                            </span>
+                    <div class="info">
 
-                        </div>
+                        <span>Veículo</span>
 
+                        <strong>
+                            ${escaparHTML(
+                                pedido.veiculo || "-"
+                            )}
+                        </strong>
 
-                        <div class="info-grid">
+                    </div>
 
+                </div>
 
-                            <div class="info-box">
 
-                                <span>
-                                    Veículo
-                                </span>
+                <div class="pedido-servicos">
 
-                                <strong>
-                                    ${pedido.veiculo || "-"}
-                                </strong>
+                    <h4>
+                        Serviços adicionais
+                    </h4>
 
-                            </div>
+                    ${extrasHTML}
 
+                </div>
 
-                            <div class="info-box">
 
-                                <span>
-                                    Modelo
-                                </span>
+                <div class="pedido-rodape">
 
-                                <strong>
-                                    ${pedido.modelo || "-"}
-                                </strong>
+                    <div class="total">
 
-                            </div>
-
-
-                            <div class="info-box">
-
-                                <span>
-                                    Placa
-                                </span>
-
-                                <strong>
-                                    ${pedido.placa || "-"}
-                                </strong>
-
-                            </div>
-
-
-                            <div class="info-box">
-
-                                <span>
-                                    WhatsApp
-                                </span>
-
-                                <strong>
-                                    ${pedido.whatsapp || "-"}
-                                </strong>
-
-                            </div>
-
-
-                            <div class="info-box">
-
-                                <span>
-                                    Data
-                                </span>
-
-                                <strong>
-                                    ${formatarData(
-                                        pedido.data
-                                    )}
-                                </strong>
-
-                            </div>
-
-
-                            <div class="info-box">
-
-                                <span>
-                                    Horário
-                                </span>
-
-                                <strong>
-                                    ${pedido.horario || "-"}
-                                </strong>
-
-                            </div>
-
-
-                            <div class="info-box">
-
-                                <span>
-                                    Pacote
-                                </span>
-
-                                <strong>
-                                    ${pedido.pacote || "-"}
-                                </strong>
-
-                            </div>
-
-
-                        </div>
-
-
-                        <div class="extras-box">
-
-                            <h4>
-                                Serviços extras
-                            </h4>
-
-                            ${extrasHTML}
-
-                        </div>
-
-
-                        <div class="pedido-total">
-
-                            <span>
-                                Valor do pedido
-                            </span>
-
-                            <strong>
-                                ${formatarMoeda(
-                                    pedido.total || 0
-                                )}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="acoes">
-
-                            <button
-                                class="acao-btn os-btn"
-                                onclick="abrirOrdemServico(${pedido.id})"
-                            >
-                                📋 ORDEM DE SERVIÇO
-                            </button>
-
-
-                            <button
-                                class="acao-btn status-btn"
-                                onclick="alterarStatus(${pedido.id})"
-                            >
-                                🔄 ALTERAR STATUS
-                            </button>
-
-                        </div>
-
-                    `;
-
-
-                    pedidoContainer.appendChild(
-                        card
-                    );
-
-                }
-            );
-
-
-            atualizarContadores();
-        }
-
-
-        /* =========================================
-           CONTADORES
-        ========================================== */
-
-        function atualizarContadores() {
-
-            let totalAgendados = 0;
-
-            let totalAndamento = 0;
-
-            let totalConcluidos = 0;
-
-            let faturamentoTotal = 0;
-
-            let faturamentoConcluido = 0;
-
-
-            pedidosNovos.forEach(
-                function (pedido) {
-
-                    const valorPedido =
-                        Number(
+                        ${formatarMoeda(
                             pedido.total
-                        ) || 0;
+                        )}
 
+                    </div>
 
-                    const status =
-                        pedido.status ||
-                        "Agendado";
 
+                    <div class="acoes">
 
-                    faturamentoTotal +=
-                        valorPedido;
-
-
-                    if (
-                        status ===
-                        "Agendado"
-                    ) {
-
-                        totalAgendados++;
-
-                    } else if (
-                        status ===
-                        "Em andamento"
-                    ) {
-
-                        totalAndamento++;
-
-                    } else if (
-                        status ===
-                        "Concluído"
-                    ) {
-
-                        totalConcluidos++;
-
-                        faturamentoConcluido +=
-                            valorPedido;
-                    }
-
-                }
-            );
-
-
-            document.querySelector(
-                "#contador-todos"
-            ).textContent =
-                pedidosNovos.length;
-
-
-            document.querySelector(
-                "#contador-agendados"
-            ).textContent =
-                totalAgendados;
-
-
-            document.querySelector(
-                "#contador-andamento"
-            ).textContent =
-                totalAndamento;
-
-
-            document.querySelector(
-                "#contador-concluidos"
-            ).textContent =
-                totalConcluidos;
-
-
-            document.querySelector(
-                "#faturamento-total"
-            ).textContent =
-                formatarMoeda(
-                    faturamentoTotal
-                );
-
-
-            document.querySelector(
-                "#faturamento-concluido"
-            ).textContent =
-                formatarMoeda(
-                    faturamentoConcluido
-                );
-        }
-
-
-        /* =========================================
-           ALTERAR STATUS
-        ========================================== */
-
-        function alterarStatus(
-            pedidoId
-        ) {
-
-            const pedido =
-                pedidosNovos.find(
-                    function (item) {
-
-                        return (
-                            item.id ===
-                            pedidoId
-                        );
-                    }
-                );
-
-
-            if (!pedido) {
-                return;
-            }
-
-
-            const statusAtual =
-                pedido.status ||
-                "Agendado";
-
-
-            if (
-                statusAtual ===
-                "Agendado"
-            ) {
-
-                pedido.status =
-                    "Em andamento";
-
-            } else if (
-                statusAtual ===
-                "Em andamento"
-            ) {
-
-                pedido.status =
-                    "Concluído";
-
-            } else {
-
-                pedido.status =
-                    "Agendado";
-            }
-
-
-            localStorage.setItem(
-                "pedidosGD",
-                JSON.stringify(
-                    pedidosNovos
-                )
-            );
-
-
-            renderizarPedidos();
-        }
-
-
-        /* =========================================
-           ABRIR ORDEM DE SERVIÇO
-        ========================================== */
-
-        function abrirOrdemServico(
-            pedidoId
-        ) {
-
-            const pedido =
-                pedidosNovos.find(
-                    function (item) {
-
-                        return (
-                            item.id ===
-                            pedidoId
-                        );
-                    }
-                );
-
-
-            if (!pedido) {
-                return;
-            }
-
-
-            let checklistExtras =
-                "";
-
-
-            if (
-                pedido.extras &&
-                pedido.extras.length > 0
-            ) {
-
-                pedido.extras.forEach(
-                    function (extra) {
-
-                        checklistExtras += `
-
-                            <label class="checklist-item">
-
-                                <input
-                                    type="checkbox"
-                                    class="check-os"
-                                >
-
-                                <span>
-                                    Realizar:
-                                    ${extra.nome}
-                                </span>
-
-                            </label>
-
-                        `;
-                    }
-                );
-            }
-
-
-            const modal =
-                document.createElement(
-                    "div"
-                );
-
-
-            modal.classList.add(
-                "modal"
-            );
-
-
-            modal.innerHTML = `
-
-                <div class="modal-conteudo">
-
-
-                    <div class="modal-topo">
-
-                        <h2>
+                        <button
+                            class="btn btn-os"
+                            onclick="abrirOS(${pedido.id})"
+                        >
                             Ordem de Serviço
-                        </h2>
+                        </button>
 
 
                         <button
-                            class="fechar-modal"
-                            onclick="this.closest('.modal').remove()"
+                            class="btn btn-status"
+                            onclick="alterarStatus(${pedido.id})"
                         >
-                            ×
+                            Alterar Status
                         </button>
 
                     </div>
 
-
-                    <div class="info-grid">
-
-
-                        <div class="info-box">
-
-                            <span>
-                                Cliente
-                            </span>
-
-                            <strong>
-                                ${pedido.nome}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="info-box">
-
-                            <span>
-                                WhatsApp
-                            </span>
-
-                            <strong>
-                                ${pedido.whatsapp || "-"}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="info-box">
-
-                            <span>
-                                Veículo
-                            </span>
-
-                            <strong>
-                                ${pedido.veiculo || "-"}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="info-box">
-
-                            <span>
-                                Modelo
-                            </span>
-
-                            <strong>
-                                ${pedido.modelo || "-"}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="info-box">
-
-                            <span>
-                                Placa
-                            </span>
-
-                            <strong>
-                                ${pedido.placa || "-"}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="info-box">
-
-                            <span>
-                                Pacote
-                            </span>
-
-                            <strong>
-                                ${pedido.pacote || "-"}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="info-box">
-
-                            <span>
-                                Data
-                            </span>
-
-                            <strong>
-                                ${formatarData(
-                                    pedido.data
-                                )}
-                            </strong>
-
-                        </div>
-
-
-                        <div class="info-box">
-
-                            <span>
-                                Horário
-                            </span>
-
-                            <strong>
-                                ${pedido.horario || "-"}
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    <h3>
-                        Checklist
-                    </h3>
-
-
-                    <div class="checklist">
-
-
-                        <label class="checklist-item">
-
-                            <input
-                                type="checkbox"
-                                class="check-os"
-                            >
-
-                            <span>
-                                Conferir estado geral do veículo
-                            </span>
-
-                        </label>
-
-
-                        <label class="checklist-item">
-
-                            <input
-                                type="checkbox"
-                                class="check-os"
-                            >
-
-                            <span>
-                                Conferir rodas e pneus
-                            </span>
-
-                        </label>
-
-
-                        <label class="checklist-item">
-
-                            <input
-                                type="checkbox"
-                                class="check-os"
-                            >
-
-                            <span>
-                                Realizar serviços do pacote
-                            </span>
-
-                        </label>
-
-
-                        ${checklistExtras}
-
-
-                        <label class="checklist-item">
-
-                            <input
-                                type="checkbox"
-                                class="check-os"
-                            >
-
-                            <span>
-                                Secagem e acabamento
-                            </span>
-
-                        </label>
-
-
-                        <label class="checklist-item">
-
-                            <input
-                                type="checkbox"
-                                class="check-os"
-                            >
-
-                            <span>
-                                Conferência final
-                            </span>
-
-                        </label>
-
-
-                    </div>
-
-
-                    <button
-                        class="finalizar-os"
-                        id="finalizar-os-btn"
-                    >
-                        ✓ FINALIZAR ORDEM DE SERVIÇO
-                    </button>
-
-
                 </div>
 
-            `;
+            </article>
+        `;
+
+    }
 
 
-            document.body.appendChild(
-                modal
-            );
+    /* =====================================================
+       FILTROS
+    ===================================================== */
 
+    document
+        .querySelectorAll(".filtro")
+        .forEach(botao => {
 
-            const checkboxes =
-                modal.querySelectorAll(
-                    ".check-os"
-                );
-
-
-            const finalizarBtn =
-                modal.querySelector(
-                    "#finalizar-os-btn"
-                );
-
-
-            finalizarBtn.addEventListener(
+            botao.addEventListener(
                 "click",
-                function () {
+                function() {
 
-                    let todosMarcados =
-                        true;
+                    document
+                        .querySelectorAll(".filtro")
+                        .forEach(item => {
 
+                            item.classList.remove(
+                                "ativo"
+                            );
 
-                    checkboxes.forEach(
-                        function (checkbox) {
-
-                            if (
-                                !checkbox.checked
-                            ) {
-
-                                todosMarcados =
-                                    false;
-                            }
-
-                        }
-                    );
+                        });
 
 
-                    if (!todosMarcados) {
-
-                        alert(
-                            "Marque todos os itens do checklist antes de finalizar."
-                        );
-
-                        return;
-                    }
+                    this.classList.add("ativo");
 
 
-                    pedido.status =
-                        "Concluído";
+                    filtroAtual =
+                        this.dataset.filtro;
 
 
-                    localStorage.setItem(
-                        "pedidosGD",
-                        JSON.stringify(
-                            pedidosNovos
-                        )
-                    );
+                    mostrarPedidos();
 
-
-                    modal.remove();
-
-
-                    renderizarPedidos();
-
-
-                    alert(
-                        "Ordem de serviço finalizada com sucesso!"
-                    );
                 }
             );
+
+        });
+
+
+    /* =====================================================
+       ALTERAR STATUS
+    ===================================================== */
+
+    function alterarStatus(id) {
+
+        const pedido =
+            todosPedidos.find(
+                item =>
+                    Number(item.id) === Number(id)
+            );
+
+
+        if (!pedido) {
+            return;
         }
 
 
-        /* =========================================
-           FILTROS
-        ========================================== */
+        let novoStatus;
 
-        const botoesFiltro =
-            document.querySelectorAll(
-                ".filtro-btn"
+
+        if (pedido.status === "Agendado") {
+
+            novoStatus =
+                "Em andamento";
+
+        } else if (
+            pedido.status === "Em andamento"
+        ) {
+
+            novoStatus =
+                "Concluído";
+
+        } else {
+
+            novoStatus =
+                "Agendado";
+
+        }
+
+
+        atualizarStatusSupabase(
+            pedido.id,
+            novoStatus
+        );
+
+    }
+
+
+    async function atualizarStatusSupabase(
+        id,
+        novoStatus
+    ) {
+
+        const resultado =
+            await supabaseClient
+                .from("pedidos")
+                .update({
+                    status: novoStatus
+                })
+                .eq("id", id);
+
+
+        if (resultado.error) {
+
+            console.error(
+                "Erro ao alterar status:",
+                resultado.error
             );
 
 
-        botoesFiltro.forEach(
-            function (botao) {
+            alert(
+                "Não foi possível alterar o status.\n\n" +
+                resultado.error.message
+            );
 
-                botao.addEventListener(
-                    "click",
-                    function () {
-
-                        const filtro =
-                            botao.dataset.filtro;
+            return;
+        }
 
 
-                        const cards =
-                            document.querySelectorAll(
-                                ".pedido-card"
-                            );
+        await carregarPedidos();
+
+    }
 
 
-                        cards.forEach(
-                            function (card) {
+    /* =====================================================
+       ORDEM DE SERVIÇO
+    ===================================================== */
 
-                                if (
-                                    filtro ===
-                                    "Todos"
-                                ) {
+    function abrirOS(id) {
 
-                                    card.style.display =
-                                        "";
-
-                                } else if (
-                                    card.dataset.status ===
-                                    filtro
-                                ) {
-
-                                    card.style.display =
-                                        "";
-
-                                } else {
-
-                                    card.style.display =
-                                        "none";
-                                }
-
-                            }
-                        );
+        const pedido =
+            todosPedidos.find(
+                item =>
+                    Number(item.id) === Number(id)
+            );
 
 
-                        botoesFiltro.forEach(
-                            function (outroBotao) {
-
-                                outroBotao.classList.remove(
-                                    "ativo"
-                                );
-
-                            }
-                        );
+        if (!pedido) {
+            return;
+        }
 
 
-                        botao.classList.add(
-                            "ativo"
-                        );
-                    }
+        pedidoOSAtual =
+            pedido;
+
+
+        const informacoes =
+            document.getElementById(
+                "informacoesOS"
+            );
+
+
+        informacoes.innerHTML = `
+
+            <div
+                style="
+                    background:#101010;
+                    border:1px solid #292929;
+                    border-radius:8px;
+                    padding:15px;
+                    margin-bottom:20px;
+                    line-height:1.8;
+                "
+            >
+
+                <strong>
+                    Cliente:
+                </strong>
+
+                ${escaparHTML(
+                    pedido.nome || "-"
+                )}
+
+                <br>
+
+                <strong>
+                    Veículo:
+                </strong>
+
+                ${escaparHTML(
+                    pedido.modelo || "-"
+                )}
+
+                <br>
+
+                <strong>
+                    Placa:
+                </strong>
+
+                ${escaparHTML(
+                    pedido.placa || "-"
+                )}
+
+                <br>
+
+                <strong>
+                    Pacote:
+                </strong>
+
+                ${escaparHTML(
+                    pedido.pacote || "-"
+                )}
+
+                <br>
+
+                <strong>
+                    Data:
+                </strong>
+
+                ${formatarData(
+                    pedido.data
+                )}
+
+                <br>
+
+                <strong>
+                    Horário:
+                </strong>
+
+                ${escaparHTML(
+                    pedido.horario || "-"
+                )}
+
+            </div>
+
+        `;
+
+
+        const checklist =
+            document.getElementById(
+                "checklist"
+            );
+
+
+        const itens = [
+
+            "Conferir estado geral do veículo",
+
+            "Conferir rodas e pneus",
+
+            "Realizar serviços do pacote",
+
+        ];
+
+
+        const extras =
+            Array.isArray(pedido.extras)
+                ? pedido.extras
+                : [];
+
+
+        extras.forEach(extra => {
+
+            let nome;
+
+
+            if (
+                typeof extra === "string"
+            ) {
+
+                nome = extra;
+
+            } else {
+
+                nome =
+                    extra.nome ||
+                    extra.servico ||
+                    extra.name ||
+                    "Serviço adicional";
+
+            }
+
+
+            itens.push(
+                `Realizar adicional: ${nome}`
+            );
+
+        });
+
+
+        itens.push(
+            "Secagem e acabamento"
+        );
+
+
+        itens.push(
+            "Conferência final do veículo"
+        );
+
+
+        checklist.innerHTML =
+            itens.map(
+                (item, index) => {
+
+                    return `
+                        <label class="check-item">
+
+                            <input
+                                type="checkbox"
+                                class="item-check"
+                                data-index="${index}"
+                            >
+
+                            <span>
+                                ${escaparHTML(item)}
+                            </span>
+
+                        </label>
+                    `;
+
+                }
+            ).join("");
+
+
+        document
+            .querySelectorAll(".item-check")
+            .forEach(check => {
+
+                check.addEventListener(
+                    "change",
+                    verificarChecklist
                 );
+
+            });
+
+
+        verificarChecklist();
+
+
+        document
+            .getElementById("modalOS")
+            .classList.add("ativo");
+
+    }
+
+
+    function verificarChecklist() {
+
+        const checks =
+            document.querySelectorAll(
+                ".item-check"
+            );
+
+
+        const todosMarcados =
+            checks.length > 0 &&
+            Array.from(checks)
+                .every(
+                    check =>
+                        check.checked
+                );
+
+
+        document
+            .getElementById(
+                "btnConcluir"
+            )
+            .disabled =
+                !todosMarcados;
+
+    }
+
+
+    function fecharOS() {
+
+        document
+            .getElementById(
+                "modalOS"
+            )
+            .classList.remove("ativo");
+
+
+        pedidoOSAtual =
+            null;
+
+    }
+
+
+    /* =====================================================
+       CONCLUIR ORDEM DE SERVIÇO
+    ===================================================== */
+
+    async function concluirOS() {
+
+        if (!pedidoOSAtual) {
+            return;
+        }
+
+
+        const checks =
+            document.querySelectorAll(
+                ".item-check"
+            );
+
+
+        const todosMarcados =
+            Array.from(checks)
+                .every(
+                    check =>
+                        check.checked
+                );
+
+
+        if (!todosMarcados) {
+
+            alert(
+                "Marque todos os itens do checklist antes de concluir."
+            );
+
+            return;
+        }
+
+
+        const resultado =
+            await supabaseClient
+                .from("pedidos")
+                .update({
+                    status: "Concluído"
+                })
+                .eq(
+                    "id",
+                    pedidoOSAtual.id
+                );
+
+
+        if (resultado.error) {
+
+            console.error(
+                "Erro ao concluir pedido:",
+                resultado.error
+            );
+
+
+            alert(
+                "Não foi possível concluir o pedido.\n\n" +
+                resultado.error.message
+            );
+
+            return;
+        }
+
+
+        alert(
+            "Ordem de serviço concluída com sucesso!"
+        );
+
+
+        fecharOS();
+
+
+        await carregarPedidos();
+
+    }
+
+
+    /* =====================================================
+       FECHAR MODAL CLICANDO FORA
+    ===================================================== */
+
+    document
+        .getElementById("modalOS")
+        .addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target === this
+                ) {
+
+                    fecharOS();
+
+                }
+
             }
         );
 
 
-        /* =========================================
-           INICIAR
-        ========================================== */
+    /* =====================================================
+       INICIALIZAÇÃO
+    ===================================================== */
 
-        renderizarPedidos();
+    carregarPedidos();
 
-    </script>
+</script>
 
 </body>
-
 </html>
