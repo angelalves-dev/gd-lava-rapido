@@ -86,6 +86,66 @@
 
     </main>
 
+    // =========================================
+// CONTADORES DE PEDIDOS
+// =========================================
+
+const contadorTodos =
+    document.querySelector("#contador-todos");
+
+const contadorAgendados =
+    document.querySelector("#contador-agendados");
+
+const contadorAndamento =
+    document.querySelector("#contador-andamento");
+
+const contadorConcluidos =
+    document.querySelector("#contador-concluidos");
+
+
+let totalAgendados = 0;
+let totalAndamento = 0;
+let totalConcluidos = 0;
+
+
+pedidosNovos.forEach(function (pedido) {
+
+    const status =
+        pedido.status || "Agendado";
+
+
+    if (status === "Agendado") {
+
+        totalAgendados++;
+
+    }
+
+    else if (status === "Em andamento") {
+
+        totalAndamento++;
+
+    }
+
+    else if (status === "Concluído") {
+
+        totalConcluidos++;
+
+    }
+
+});
+
+
+contadorTodos.textContent =
+    pedidosNovos.length;
+
+contadorAgendados.textContent =
+    totalAgendados;
+
+contadorAndamento.textContent =
+    totalAndamento;
+
+contadorConcluidos.textContent =
+    totalConcluidos;
 
     <script>
 
