@@ -1,6 +1,11 @@
 /* =========================================
+   GD LAVA RÁPIDO
+   ESTILO PRINCIPAL
+========================================= */
+
+/* =========================================
    RESET
-   ========================================= */
+========================================= */
 
 * {
     margin: 0;
@@ -22,7 +27,7 @@ body {
 
 /* =========================================
    CABEÇALHO
-   ========================================= */
+========================================= */
 
 .header {
     position: fixed;
@@ -31,6 +36,7 @@ body {
     z-index: 1000;
 
     background: rgba(5, 5, 5, 0.95);
+    backdrop-filter: blur(12px);
 
     border-bottom: 1px solid #333;
 }
@@ -78,7 +84,7 @@ body {
 
 /* =========================================
    HERO
-   ========================================= */
+========================================= */
 
 .hero {
     min-height: 100vh;
@@ -87,10 +93,15 @@ body {
     align-items: center;
 
     background:
+        radial-gradient(
+            circle at 80% 30%,
+            rgba(201, 162, 39, 0.12),
+            transparent 35%
+        ),
         linear-gradient(
             90deg,
-            rgba(0, 0, 0, 0.9),
-            rgba(0, 0, 0, 0.45)
+            rgba(0, 0, 0, 0.95),
+            rgba(0, 0, 0, 0.55)
         ),
         linear-gradient(
             135deg,
@@ -139,7 +150,7 @@ body {
 
 /* =========================================
    BOTÕES
-   ========================================= */
+========================================= */
 
 .btn {
     display: inline-block;
@@ -154,21 +165,25 @@ body {
 
     font-weight: bold;
 
-    border-radius: 4px;
+    border-radius: 6px;
 
     transition: 0.3s;
+
+    box-shadow: 0 8px 25px rgba(201, 162, 39, 0.15);
 }
 
 .btn:hover {
     background: #e1bd3b;
 
     transform: translateY(-3px);
+
+    box-shadow: 0 12px 30px rgba(201, 162, 39, 0.25);
 }
 
 
 /* =========================================
    SEÇÕES
-   ========================================= */
+========================================= */
 
 section {
     padding: 100px 20px;
@@ -195,7 +210,7 @@ section {
 
 /* =========================================
    SERVIÇOS
-   ========================================= */
+========================================= */
 
 .services {
     background: #111;
@@ -214,21 +229,30 @@ section {
 }
 
 .service-card {
-    background: #181818;
+    background:
+        linear-gradient(
+            145deg,
+            #1c1c1c,
+            #121212
+        );
 
     padding: 30px;
 
     border: 1px solid #292929;
 
-    border-radius: 8px;
+    border-radius: 12px;
 
     transition: 0.3s;
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
 }
 
 .service-card:hover {
     transform: translateY(-8px);
 
     border-color: #c9a227;
+
+    box-shadow: 0 20px 40px rgba(201, 162, 39, 0.08);
 }
 
 .service-card h3 {
@@ -258,14 +282,14 @@ section {
 
 /* =========================================
    BOTÃO ESCOLHER
-   ========================================= */
+========================================= */
 
 .select-btn {
     width: 100%;
 
     margin-top: 20px;
 
-    padding: 12px;
+    padding: 13px 16px;
 
     background: transparent;
 
@@ -273,7 +297,7 @@ section {
 
     border: 1px solid #c9a227;
 
-    border-radius: 4px;
+    border-radius: 7px;
 
     font-weight: bold;
 
@@ -286,12 +310,20 @@ section {
     background: #c9a227;
 
     color: #111;
+
+    transform: translateY(-2px);
+}
+
+.select-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
 }
 
 
 /* =========================================
    COMO FUNCIONA
-   ========================================= */
+========================================= */
 
 .how-it-works {
     background: #0b0b0b;
@@ -315,6 +347,8 @@ section {
     border-top: 2px solid #c9a227;
 
     background: #151515;
+
+    border-radius: 0 0 10px 10px;
 }
 
 .step span {
@@ -336,7 +370,7 @@ section {
 
 /* =========================================
    CONTATO
-   ========================================= */
+========================================= */
 
 .contact {
     text-align: center;
@@ -363,7 +397,7 @@ section {
 
 /* =========================================
    RODAPÉ
-   ========================================= */
+========================================= */
 
 footer {
     background: #050505;
@@ -381,8 +415,691 @@ footer p {
 
 
 /* =========================================
+   MODAL PRINCIPAL
+========================================= */
+
+.vehicle-selection {
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(201, 162, 39, 0.08),
+            transparent 35%
+        ),
+        rgba(0, 0, 0, 0.90);
+
+    backdrop-filter: blur(8px);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+
+    overflow-y: auto;
+
+    z-index: 9999;
+
+    animation: aparecerModal 0.25s ease;
+}
+
+@keyframes aparecerModal {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+.vehicle-box {
+    background:
+        linear-gradient(
+            145deg,
+            #191919,
+            #0f0f0f
+        );
+
+    border: 1px solid rgba(201, 162, 39, 0.55);
+
+    border-radius: 18px;
+
+    width: 100%;
+
+    max-width: 560px;
+
+    padding: 38px;
+
+    text-align: center;
+
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.65),
+        0 0 0 1px rgba(255, 255, 255, 0.02);
+
+    animation: subirModal 0.3s ease;
+}
+
+@keyframes subirModal {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+.vehicle-box h2 {
+    color: #f5f5f5;
+
+    font-size: 28px;
+
+    margin-bottom: 10px;
+}
+
+.vehicle-box > p {
+    color: #aaa;
+
+    margin-bottom: 10px;
+}
+
+.vehicle-box > p strong {
+    color: #c9a227;
+}
+
+
+/* =========================================
+   ESCOLHA DO VEÍCULO
+========================================= */
+
+.vehicle-buttons {
+    display: flex;
+
+    gap: 15px;
+
+    justify-content: center;
+
+    margin-top: 30px;
+}
+
+.vehicle-btn {
+    flex: 1;
+
+    background: #c9a227;
+
+    color: #111;
+
+    border: none;
+
+    border-radius: 9px;
+
+    padding: 16px 20px;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.vehicle-btn:hover {
+    transform: translateY(-3px);
+
+    background: #e0bd3a;
+
+    box-shadow: 0 10px 25px rgba(201, 162, 39, 0.18);
+}
+
+.vehicle-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+
+/* =========================================
+   EXTRAS
+========================================= */
+
+.extras-container {
+    margin-top: 25px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.extra-item {
+    display: grid;
+
+    grid-template-columns: auto 1fr auto;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 16px;
+
+    background: #151515;
+
+    border: 1px solid #2c2c2c;
+
+    border-radius: 10px;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+.extra-item:hover {
+    border-color: #c9a227;
+
+    background: #191919;
+}
+
+.extra-item span {
+    color: #ddd;
+}
+
+.extra-item strong {
+    color: #c9a227;
+}
+
+.extra-checkbox {
+    width: 18px;
+    height: 18px;
+
+    accent-color: #c9a227;
+}
+
+
+/* =========================================
+   TOTAL
+========================================= */
+
+.total-box {
+    margin-top: 25px;
+
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(201, 162, 39, 0.10),
+            rgba(201, 162, 39, 0.03)
+        );
+
+    border: 1px solid rgba(201, 162, 39, 0.35);
+
+    border-radius: 12px;
+
+    color: #c9a227;
+
+    font-size: 21px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+#total-servico {
+    font-size: 25px;
+}
+
+
+/* =========================================
+   FORMULÁRIOS
+========================================= */
+
+.form-group {
+    margin-top: 18px;
+
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+
+    color: #c9a227;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 7px;
+}
+
+.schedule-input,
+.form-group input {
+    width: 100%;
+
+    padding: 14px 15px;
+
+    background: #151515;
+
+    color: #fff;
+
+    border: 1px solid #383838;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    transition: 0.25s;
+}
+
+.schedule-input:focus,
+.form-group input:focus {
+    outline: none;
+
+    border-color: #c9a227;
+
+    box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.08);
+}
+
+.schedule-input::placeholder,
+.form-group input::placeholder {
+    color: #666;
+}
+
+
+/* =========================================
+   HORÁRIOS
+========================================= */
+
+.horarios-container {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin-top: 10px;
+}
+
+.horarios-container .vehicle-btn {
+    padding: 12px 8px;
+
+    background: #171717;
+
+    color: #c9a227;
+
+    border: 1px solid #444;
+}
+
+.horarios-container .vehicle-btn:hover {
+    background: #c9a227;
+
+    color: #111;
+}
+
+.horarios-container .horario-selecionado {
+    background: #c9a227 !important;
+
+    color: #111 !important;
+
+    border-color: #c9a227 !important;
+
+    box-shadow: 0 0 0 2px rgba(201, 162, 39, 0.15);
+}
+
+
+/* =========================================
+   RESUMO MODERNO
+========================================= */
+
+.resumo-box {
+    max-height: 90vh;
+
+    overflow-y: auto;
+}
+
+.resumo-pedido {
+    margin-top: 25px;
+
+    text-align: left;
+}
+
+.resumo-section {
+    background: #151515;
+
+    border: 1px solid #292929;
+
+    border-radius: 12px;
+
+    padding: 18px;
+
+    margin-bottom: 12px;
+}
+
+.resumo-section-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #c9a227;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 12px;
+}
+
+.resumo-section-title span {
+    font-size: 18px;
+}
+
+.resumo-item {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+    padding: 8px 0;
+
+    border-bottom: 1px solid #252525;
+}
+
+.resumo-item:last-child {
+    border-bottom: none;
+}
+
+.resumo-item span {
+    color: #888;
+}
+
+.resumo-item strong {
+    color: #eee;
+
+    text-align: right;
+}
+
+.resumo-extras {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.resumo-extra {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 10px 12px;
+
+    background: #101010;
+
+    border-radius: 8px;
+}
+
+.resumo-extra span {
+    color: #ccc;
+}
+
+.resumo-extra strong {
+    color: #c9a227;
+}
+
+.resumo-sem-extra {
+    color: #777;
+
+    font-size: 14px;
+}
+
+.resumo-total-final {
+    margin-top: 15px;
+
+    padding: 22px;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(201, 162, 39, 0.16),
+            rgba(201, 162, 39, 0.04)
+        );
+
+    border: 1px solid rgba(201, 162, 39, 0.5);
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.resumo-total-final span {
+    color: #aaa;
+
+    font-size: 14px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+.resumo-total-final strong {
+    color: #ffd84d;
+
+    font-size: 28px;
+}
+
+
+/* =========================================
+   BOTÃO DE CONFIRMAÇÃO
+========================================= */
+
+#confirmar-pedido {
+    background: #c9a227;
+
+    color: #111;
+
+    border: none;
+
+    font-size: 15px;
+
+    padding: 16px;
+}
+
+#confirmar-pedido:hover {
+    background: #e4c13d;
+}
+
+#confirmar-pedido:disabled {
+    opacity: 0.6;
+
+    cursor: wait;
+
+    transform: none;
+}
+
+
+/* =========================================
+   TELA DE SUCESSO
+========================================= */
+
+.sucesso-icon {
+    width: 78px;
+
+    height: 78px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 50%;
+
+    background: rgba(46, 204, 113, 0.12);
+
+    border: 1px solid rgba(46, 204, 113, 0.45);
+
+    color: #5cff91;
+
+    font-size: 38px;
+}
+
+.sucesso-titulo {
+    color: #fff;
+
+    font-size: 28px;
+
+    margin-bottom: 10px;
+}
+
+.sucesso-texto {
+    color: #aaa;
+
+    margin-bottom: 25px;
+}
+
+.sucesso-destaque {
+    padding: 18px;
+
+    background: #151515;
+
+    border: 1px solid #292929;
+
+    border-radius: 12px;
+
+    margin-bottom: 20px;
+}
+
+.sucesso-destaque span {
+    display: block;
+
+    color: #888;
+
+    font-size: 13px;
+
+    margin-bottom: 5px;
+}
+
+.sucesso-destaque strong {
+    color: #c9a227;
+
+    font-size: 20px;
+}
+
+
+/* =========================================
+   CHECKLIST
+========================================= */
+
+.checklist {
+    margin-top: 20px;
+}
+
+.checklist-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 14px;
+
+    margin-bottom: 10px;
+
+    background: #181818;
+
+    border: 1px solid #333;
+
+    border-radius: 8px;
+
+    color: #ddd;
+
+    text-align: left;
+}
+
+.checklist-item input {
+    width: 18px;
+
+    height: 18px;
+
+    accent-color: #c9a227;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status-pedido {
+    display: inline-block;
+
+    padding: 8px 16px;
+
+    border-radius: 20px;
+
+    font-weight: bold;
+
+    margin: 15px 0;
+}
+
+.status-agendado {
+    background: #5a4500;
+
+    color: #ffd84d;
+
+    border: 1px solid #c9a227;
+}
+
+.status-concluido {
+    background: #164d2a;
+
+    color: #5cff91;
+
+    border: 1px solid #2ecc71;
+}
+
+
+/* =========================================
    RESPONSIVIDADE
-   ========================================= */
+========================================= */
 
 @media (max-width: 900px) {
 
@@ -436,6 +1153,69 @@ footer p {
 }
 
 
+@media (max-width: 600px) {
+
+    .vehicle-box {
+        padding: 25px 20px;
+
+        border-radius: 15px;
+    }
+
+    .vehicle-box h2 {
+        font-size: 24px;
+    }
+
+    .vehicle-buttons {
+        flex-direction: column;
+    }
+
+    .vehicle-btn {
+        width: 100%;
+    }
+
+    .horarios-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .extra-item {
+        grid-template-columns: auto 1fr;
+    }
+
+    .extra-item strong {
+        grid-column: 2;
+    }
+
+    .total-box {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .resumo-item {
+        flex-direction: column;
+
+        gap: 4px;
+    }
+
+    .resumo-item strong {
+        text-align: left;
+    }
+
+    .resumo-total-final {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 8px;
+    }
+
+    .resumo-total-final strong {
+        font-size: 25px;
+    }
+
+}
+
+
 @media (max-width: 500px) {
 
     .nav-links {
@@ -446,558 +1226,12 @@ footer p {
         margin: auto;
     }
 
-}
-
-/* =========================================
-   ESCOLHA DO VEÍCULO
-========================================= */
-
-.vehicle-selection {
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background: rgba(0, 0, 0, 0.85);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    z-index: 9999;
-}
-
-.vehicle-box {
-    background: #111;
-
-    border: 1px solid #c9a227;
-
-    border-radius: 12px;
-
-    width: 90%;
-    max-width: 500px;
-
-    padding: 40px;
-
-    text-align: center;
-}
-
-.vehicle-box h2 {
-    color: #c9a227;
-
-    margin-bottom: 20px;
-}
-
-.vehicle-box p {
-    color: #ddd;
-
-    margin-bottom: 12px;
-}
-
-.vehicle-buttons {
-    display: flex;
-
-    gap: 20px;
-
-    justify-content: center;
-
-    margin-top: 30px;
-}
-
-.vehicle-btn {
-    background: #c9a227;
-
-    color: #111;
-
-    border: none;
-
-    border-radius: 6px;
-
-    padding: 15px 30px;
-
-    font-size: 16px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: 0.3s;
-}
-
-.vehicle-btn:hover {
-    transform: translateY(-3px);
-
-    background: #e0bd3a;
-}
-
-@media (max-width: 500px) {
-
-    .vehicle-buttons {
-        flex-direction: column;
+    section {
+        padding: 80px 15px;
     }
 
-    .vehicle-btn {
-        width: 100%;
+    .hero h1 {
+        font-size: 43px;
     }
 
-}
-
-/* =========================================
-   SERVIÇOS EXTRAS
-========================================= */
-
-.vehicle-box hr {
-    border: none;
-    border-top: 1px solid #333;
-    margin: 25px 0;
-}
-
-.vehicle-box h3 {
-    color: #c9a227;
-    margin-bottom: 20px;
-}
-
-.extra-service {
-    text-align: left;
-    margin: 12px 0;
-}
-
-.extra-service label {
-    display: block;
-
-    background: #181818;
-
-    border: 1px solid #333;
-
-    border-radius: 6px;
-
-    padding: 14px;
-
-    color: #ddd;
-
-    cursor: pointer;
-
-    transition: 0.3s;
-}
-
-.extra-service label:hover {
-    border-color: #c9a227;
-}
-
-.extra-checkbox {
-    margin-right: 10px;
-
-    accent-color: #c9a227;
-}
-
-.total-box {
-    margin-top: 25px;
-
-    padding: 18px;
-
-    border-top: 1px solid #c9a227;
-
-    color: #c9a227;
-
-    font-size: 20px;
-}
-
-#continuar-btn {
-    margin-top: 20px;
-    width: 100%;
-}
-
-/* =========================================
-   AGENDAMENTO
-========================================= */
-
-.schedule-input {
-    width: 100%;
-
-    box-sizing: border-box;
-
-    padding: 14px;
-
-    margin-bottom: 20px;
-
-    background: #181818;
-
-    color: #fff;
-
-    border: 1px solid #444;
-
-    border-radius: 6px;
-
-    font-size: 16px;
-}
-
-.schedule-input:focus {
-    outline: none;
-
-    border-color: #c9a227;
-}
-
-#agendar-btn {
-    width: 100%;
-
-    margin-top: 10px;
-}
-
-/* =========================================
-   ESCOLHA DO VEÍCULO
-========================================= */
-
-.vehicle-selection {
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background: rgba(0, 0, 0, 0.85);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    z-index: 9999;
-}
-
-.vehicle-box {
-    background: #111;
-
-    border: 1px solid #c9a227;
-
-    border-radius: 12px;
-
-    width: 90%;
-    max-width: 500px;
-
-    padding: 40px;
-
-    text-align: center;
-}
-
-.vehicle-box h2 {
-    color: #c9a227;
-
-    margin-bottom: 20px;
-}
-
-.vehicle-box p {
-    color: #ddd;
-
-    margin-bottom: 12px;
-}
-
-.vehicle-buttons {
-    display: flex;
-
-    gap: 20px;
-
-    justify-content: center;
-
-    margin-top: 30px;
-}
-
-.vehicle-btn {
-    background: #c9a227;
-
-    color: #111;
-
-    border: none;
-
-    border-radius: 6px;
-
-    padding: 15px 30px;
-
-    font-size: 16px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: 0.3s;
-}
-
-.vehicle-btn:hover {
-    transform: translateY(-3px);
-
-    background: #e0bd3a;
-}
-
-
-/* =========================================
-   SERVIÇOS EXTRAS
-========================================= */
-
-.vehicle-box hr {
-    border: none;
-
-    border-top: 1px solid #333;
-
-    margin: 25px 0;
-}
-
-.vehicle-box h3 {
-    color: #c9a227;
-
-    margin-bottom: 20px;
-}
-
-.extra-service {
-    text-align: left;
-
-    margin: 12px 0;
-}
-
-.extra-service label {
-    display: block;
-
-    background: #181818;
-
-    border: 1px solid #333;
-
-    border-radius: 6px;
-
-    padding: 14px;
-
-    color: #ddd;
-
-    cursor: pointer;
-
-    transition: 0.3s;
-}
-
-.extra-service label:hover {
-    border-color: #c9a227;
-}
-
-.extra-checkbox {
-    margin-right: 10px;
-
-    accent-color: #c9a227;
-}
-
-.total-box {
-    margin-top: 25px;
-
-    padding: 18px;
-
-    border-top: 1px solid #c9a227;
-
-    color: #c9a227;
-
-    font-size: 20px;
-}
-
-
-/* =========================================
-   AGENDAMENTO
-========================================= */
-
-.schedule-input {
-    width: 100%;
-
-    box-sizing: border-box;
-
-    padding: 14px;
-
-    margin-bottom: 20px;
-
-    background: #181818;
-
-    color: #fff;
-
-    border: 1px solid #444;
-
-    border-radius: 6px;
-
-    font-size: 16px;
-}
-
-.schedule-input:focus {
-    outline: none;
-
-    border-color: #c9a227;
-}
-
-#continuar-btn,
-#agendar-btn {
-    width: 100%;
-
-    margin-top: 20px;
-}
-
-
-/* =========================================
-   CELULAR
-========================================= */
-
-@media (max-width: 500px) {
-
-    .vehicle-buttons {
-        flex-direction: column;
-    }
-
-    .vehicle-btn {
-        width: 100%;
-    }
-
-    .vehicle-box {
-        padding: 25px;
-    }
-
-}
-
-/* =========================================
-   FORMULÁRIO DO CLIENTE
-========================================= */
-
-.form-label {
-    display: block;
-
-    text-align: left;
-
-    color: #c9a227;
-
-    font-weight: bold;
-
-    margin-bottom: 8px;
-}
-
-.form-label + .schedule-input {
-    margin-bottom: 18px;
-}
-
-/* =========================================
-   RESUMO DO PEDIDO
-========================================= */
-
-.resumo-box {
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-.resumo-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 20px;
-
-    padding: 12px 0;
-
-    border-bottom: 1px solid #292929;
-
-    text-align: left;
-}
-
-.resumo-item span {
-    color: #999;
-}
-
-.resumo-item strong {
-    color: #fff;
-    text-align: right;
-}
-
-.resumo-total {
-    margin-top: 25px;
-
-    padding: 20px;
-
-    border-top: 1px solid #c9a227;
-
-    color: #c9a227;
-
-    font-size: 22px;
-
-    font-weight: bold;
-}
-
-#confirmar-btn {
-    width: 100%;
-
-    margin-top: 20px;
-}
-
-@media (max-width: 500px) {
-
-    .resumo-item {
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 5px;
-    }
-
-    .resumo-item strong {
-        text-align: left;
-    }
-
-}
-
-/* =========================================
-   CHECKLIST DA ORDEM DE SERVIÇO
-========================================= */
-
-.checklist-box {
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-.check-item {
-    margin: 12px 0;
-    text-align: left;
-}
-
-.check-item label {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: #181818;
-    border: 1px solid #333;
-    border-radius: 6px;
-    padding: 15px;
-    color: #ddd;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.check-item label:hover {
-    border-color: #c9a227;
-}
-
-.check-item input {
-    width: 18px;
-    height: 18px;
-    accent-color: #c9a227;
-}
-
-/* =========================================
-   STATUS DOS PEDIDOS
-========================================= */
-
-.status-pedido {
-    display: inline-block;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: bold;
-    margin: 15px 0;
-}
-
-.status-agendado {
-    background: #5a4500;
-    color: #ffd84d;
-    border: 1px solid #c9a227;
-}
-
-.status-concluido {
-    background: #164d2a;
-    color: #5cff91;
-    border: 1px solid #2ecc71;
 }
