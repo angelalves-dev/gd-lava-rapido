@@ -15,28 +15,36 @@
 
 <body>
 
-    <!-- HEADER -->
+    <!-- =========================
+         HEADER
+    ========================== -->
 
     <header class="header">
 
         <nav class="navbar">
 
-            <a href="#inicio" class="logo">
+            <div class="logo">
                 GD <span>LAVA RÁPIDO</span>
-            </a>
+            </div>
 
             <ul class="nav-links">
 
                 <li>
-                    <a href="#inicio">Início</a>
+                    <a href="#inicio">
+                        Início
+                    </a>
                 </li>
 
                 <li>
-                    <a href="#servicos">Serviços</a>
+                    <a href="#servicos">
+                        Serviços
+                    </a>
                 </li>
 
                 <li>
-                    <a href="#como-funciona">Como funciona</a>
+                    <a href="#como-funciona">
+                        Como funciona
+                    </a>
                 </li>
 
             </ul>
@@ -48,68 +56,56 @@
 
     <main>
 
-        <!-- HERO -->
+        <!-- =========================
+             HERO
+        ========================== -->
 
         <section class="hero" id="inicio">
 
-            <div class="hero-overlay"></div>
-
             <div class="hero-content">
 
-                <div class="hero-badge">
-                    ✦ ESTÉTICA AUTOMOTIVA
-                </div>
+                <p class="subtitle">
+                    ESTÉTICA AUTOMOTIVA
+                </p>
 
                 <h1>
-                    CUIDADO COMPLETO
+                    CUIDADO COMPLETO<br>
                     <span>PARA O SEU VEÍCULO.</span>
                 </h1>
 
                 <p>
                     Escolha seu serviço, personalize seu atendimento
-                    e faça seu agendamento de forma rápida e prática.
+                    e agende de forma rápida e prática.
                 </p>
 
-                <div class="hero-buttons">
+                <a href="#servicos" class="btn">
+                    ESCOLHER SERVIÇO
+                </a>
 
-                    <a href="#servicos" class="btn">
-                        ESCOLHER SERVIÇO
-                        <span>→</span>
-                    </a>
-
-                    <a href="#como-funciona" class="btn-secondary">
-                        COMO FUNCIONA
-                    </a>
-
-                </div>
-
-            </div>
-
-            <div class="hero-scroll">
-                <span>ROLE PARA EXPLORAR</span>
-                <div class="scroll-line"></div>
             </div>
 
         </section>
 
 
-        <!-- SERVIÇOS -->
+        <!-- =========================
+             SERVIÇOS
+        ========================== -->
 
         <section class="services" id="servicos">
 
             <div class="section-title">
 
-                <div class="section-label">
-                    NOSSOS SERVIÇOS
-                </div>
+                <p class="subtitle">
+                    ESCOLHA SEU SERVIÇO
+                </p>
 
                 <h2>
-                    ESCOLHA SEU <span>PACOTE</span>
+                    NOSSOS PACOTES
                 </h2>
 
                 <p>
-                    Selecione o pacote que melhor atende às necessidades
-                    do seu veículo e personalize seu atendimento.
+                    Selecione o pacote que melhor atende às
+                    necessidades do seu veículo.
                 </p>
 
             </div>
@@ -118,17 +114,9 @@
             <div class="services-container">
 
 
-                <!-- ESSENCIAL -->
+                <!-- PACOTE ESSENCIAL -->
 
                 <div class="service-card">
-
-                    <div class="service-number">
-                        01
-                    </div>
-
-                    <div class="service-icon">
-                        🚗
-                    </div>
 
                     <h3>
                         Essencial
@@ -139,36 +127,29 @@
                         do veículo no dia a dia.
                     </p>
 
-                    <div class="service-price">
-                        <small>A partir de</small>
-                        <strong>R$ 50</strong>
-                    </div>
+                    <strong>
+                        A partir de R$ 50
+                    </strong>
 
                     <button
+                        type="button"
                         class="select-btn"
                         data-package="Essencial"
                         data-price="50">
+
                         ESCOLHER
-                        <span>→</span>
+
                     </button>
 
                 </div>
 
 
-                <!-- PLUS -->
+                <!-- PACOTE PLUS -->
 
                 <div class="service-card featured">
 
                     <div class="popular-badge">
                         MAIS ESCOLHIDO
-                    </div>
-
-                    <div class="service-number">
-                        02
-                    </div>
-
-                    <div class="service-icon">
-                        ✨
                     </div>
 
                     <h3>
@@ -180,33 +161,26 @@
                         cuidados adicionais.
                     </p>
 
-                    <div class="service-price">
-                        <small>A partir de</small>
-                        <strong>R$ 65</strong>
-                    </div>
+                    <strong>
+                        A partir de R$ 65
+                    </strong>
 
                     <button
+                        type="button"
                         class="select-btn"
                         data-package="Plus"
                         data-price="65">
+
                         ESCOLHER
-                        <span>→</span>
+
                     </button>
 
                 </div>
 
 
-                <!-- PREMIUM -->
+                <!-- PACOTE PREMIUM -->
 
                 <div class="service-card">
-
-                    <div class="service-number">
-                        03
-                    </div>
-
-                    <div class="service-icon">
-                        💎
-                    </div>
 
                     <h3>
                         Premium
@@ -217,17 +191,18 @@
                         um cuidado mais detalhado.
                     </p>
 
-                    <div class="service-price">
-                        <small>A partir de</small>
-                        <strong>R$ 120</strong>
-                    </div>
+                    <strong>
+                        A partir de R$ 120
+                    </strong>
 
                     <button
+                        type="button"
                         class="select-btn"
                         data-package="Premium"
                         data-price="120">
+
                         ESCOLHER
-                        <span>→</span>
+
                     </button>
 
                 </div>
@@ -237,23 +212,23 @@
         </section>
 
 
-        <!-- COMO FUNCIONA -->
+        <!-- =========================
+             COMO FUNCIONA
+        ========================== -->
 
-        <section class="how-it-works" id="como-funciona">
+        <section
+            class="how-it-works"
+            id="como-funciona">
 
             <div class="section-title">
 
-                <div class="section-label">
-                    PROCESSO SIMPLES
-                </div>
+                <p class="subtitle">
+                    SIMPLES E RÁPIDO
+                </p>
 
                 <h2>
-                    COMO <span>FUNCIONA</span>
+                    COMO FUNCIONA
                 </h2>
-
-                <p>
-                    Monte seu atendimento em poucos passos.
-                </p>
 
             </div>
 
@@ -263,13 +238,9 @@
 
                 <div class="step">
 
-                    <div class="step-top">
-                        <span>01</span>
-                    </div>
-
-                    <div class="step-icon">
-                        🚘
-                    </div>
+                    <span>
+                        01
+                    </span>
 
                     <h3>
                         Escolha o veículo
@@ -285,13 +256,9 @@
 
                 <div class="step">
 
-                    <div class="step-top">
-                        <span>02</span>
-                    </div>
-
-                    <div class="step-icon">
-                        🧽
-                    </div>
+                    <span>
+                        02
+                    </span>
 
                     <h3>
                         Monte seu serviço
@@ -307,13 +274,9 @@
 
                 <div class="step">
 
-                    <div class="step-top">
-                        <span>03</span>
-                    </div>
-
-                    <div class="step-icon">
-                        📅
-                    </div>
+                    <span>
+                        03
+                    </span>
 
                     <h3>
                         Agende
@@ -329,13 +292,9 @@
 
                 <div class="step">
 
-                    <div class="step-top">
-                        <span>04</span>
-                    </div>
-
-                    <div class="step-icon">
-                        ✓
-                    </div>
+                    <span>
+                        04
+                    </span>
 
                     <h3>
                         Confirme
@@ -353,30 +312,26 @@
         </section>
 
 
-        <!-- CONTATO -->
+        <!-- =========================
+             CONTATO
+        ========================== -->
 
         <section class="contact">
 
             <div class="contact-content">
 
-                <div class="section-label">
+                <p class="subtitle">
                     GD LAVA RÁPIDO
-                </div>
+                </p>
 
                 <h2>
-                    SEU CARRO MERECE
-                    <span>ESSE CUIDADO.</span>
+                    SEU CARRO MERECE ESSE CUIDADO.
                 </h2>
 
                 <p>
                     Escolha seus serviços e faça seu agendamento
-                    de forma rápida, prática e personalizada.
+                    de forma rápida e prática.
                 </p>
-
-                <a href="#servicos" class="btn">
-                    COMEÇAR AGORA
-                    <span>→</span>
-                </a>
 
             </div>
 
@@ -385,60 +340,52 @@
     </main>
 
 
-    <!-- FOOTER -->
+    <!-- =========================
+         FOOTER
+    ========================== -->
 
     <footer>
 
-        <div class="footer-content">
-
-            <div class="footer-logo">
-                GD <span>LAVA RÁPIDO</span>
-            </div>
-
-            <p>
-                Estética automotiva e cuidado completo
-                para o seu veículo.
-            </p>
-
-            <div class="footer-line"></div>
-
-            <small>
-                © 2026 GD Lava Rápido - Estética Automotiva
-            </small>
-
-        </div>
+        <p>
+            © 2026 GD Lava Rápido - Estética Automotiva
+        </p>
 
     </footer>
 
 
-    <!-- MODAL DE ESCOLHA DO VEÍCULO -->
+    <!-- =========================
+         MODAL - ESCOLHA DO VEÍCULO
+    ========================== -->
 
-    <div id="vehicleModal" class="modal">
+    <div
+        id="vehicleModal"
+        class="vehicle-modal">
 
-        <div class="modal-overlay"></div>
-
-        <div class="modal-content">
+        <div class="vehicle-modal-content">
 
             <button
                 type="button"
                 class="modal-close"
                 id="closeVehicleModal">
+
                 ×
+
             </button>
+
 
             <div class="modal-header">
 
-                <div class="modal-label">
+                <p class="subtitle">
                     PRIMEIRO PASSO
-                </div>
+                </p>
 
                 <h2>
-                    QUAL É O SEU <span>VEÍCULO?</span>
+                    QUAL É O SEU VEÍCULO?
                 </h2>
 
                 <p>
                     Selecione o tipo de veículo para
-                    continuar seu agendamento.
+                    continuar seu atendimento.
                 </p>
 
             </div>
@@ -454,11 +401,11 @@
                     class="vehicle-box"
                     data-vehicle="Carro">
 
-                    <div class="vehicle-box-icon">
+                    <div class="vehicle-icon">
                         🚗
                     </div>
 
-                    <div class="vehicle-box-info">
+                    <div class="vehicle-info">
 
                         <strong>
                             Carro
@@ -484,11 +431,11 @@
                     class="vehicle-box"
                     data-vehicle="Moto">
 
-                    <div class="vehicle-box-icon">
+                    <div class="vehicle-icon">
                         🏍️
                     </div>
 
-                    <div class="vehicle-box-info">
+                    <div class="vehicle-info">
 
                         <strong>
                             Moto
@@ -513,9 +460,15 @@
     </div>
 
 
-    <!-- SCRIPTS -->
+    <!-- =========================
+         SUPABASE
+    ========================== -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- =========================
+         JAVASCRIPT DO SISTEMA
+    ========================== -->
 
     <script src="js/script.js"></script>
 
