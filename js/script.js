@@ -1,3 +1,7 @@
+/* =========================================
+   SELEÇÃO DO PACOTE
+========================================= */
+
 const botoes = document.querySelectorAll(".select-btn");
 
 botoes.forEach(function (botao) {
@@ -11,7 +15,11 @@ botoes.forEach(function (botao) {
         const precoTexto = card.querySelector("strong").textContent;
 
         const preco = parseFloat(
-            precoTexto.replace("A partir de R$", "").replace(",", ".")
+            precoTexto
+                .replace("A partir de R$", "")
+                .replace(/\./g, "")
+                .replace(",", ".")
+                .trim()
         );
 
         const escolhaVeiculo = document.createElement("div");
@@ -24,7 +32,8 @@ botoes.forEach(function (botao) {
                 <h2>Escolha seu veículo</h2>
 
                 <p>
-                    Você escolheu o pacote <strong>${nome}</strong>.
+                    Você escolheu o pacote
+                    <strong>${nome}</strong>.
                 </p>
 
                 <p>
@@ -33,11 +42,17 @@ botoes.forEach(function (botao) {
 
                 <div class="vehicle-buttons">
 
-                    <button class="vehicle-btn" data-veiculo="Carro">
+                    <button
+                        class="vehicle-btn"
+                        data-veiculo="Carro"
+                    >
                         🚗 Carro
                     </button>
 
-                    <button class="vehicle-btn" data-veiculo="Moto">
+                    <button
+                        class="vehicle-btn"
+                        data-veiculo="Moto"
+                    >
                         🏍️ Moto
                     </button>
 
@@ -55,7 +70,8 @@ botoes.forEach(function (botao) {
 
             botaoVeiculo.addEventListener("click", function () {
 
-                const veiculo = botaoVeiculo.dataset.veiculo;
+                const veiculo =
+                    botaoVeiculo.dataset.veiculo;
 
                 mostrarServicosExtras(
                     escolhaVeiculo,
@@ -63,15 +79,15 @@ botoes.forEach(function (botao) {
                     nome,
                     preco
                 );
-
             });
-
         });
-
     });
-
 });
 
+
+/* =========================================
+   SERVIÇOS EXTRAS
+========================================= */
 
 function mostrarServicosExtras(
     janela,
@@ -86,182 +102,271 @@ function mostrarServicosExtras(
             <h2>Personalize seu serviço</h2>
 
             <p>
-                Veículo: <strong>${veiculo}</strong>
+                Veículo selecionado:
+                <strong>${veiculo}</strong>
             </p>
 
             <p>
-                Pacote: <strong>${nomePacote}</strong>
+                Pacote:
+                <strong>${nomePacote}</strong>
             </p>
 
-            <hr>
+            <div class="extras-container">
 
-            <h3>Serviços adicionais</h3>
+                <label class="extra-item">
 
-            <div class="extra-service">
-                <label>
-                    <input type="checkbox" class="extra-checkbox" data-preco="30">
-                    Lavagem externa — R$ 30,00
+                    <input
+                        type="checkbox"
+                        class="extra-checkbox"
+                        data-nome="Lavagem externa"
+                        data-preco="30"
+                    >
+
+                    <span>
+                        Lavagem externa
+                    </span>
+
+                    <strong>
+                        + R$ 30,00
+                    </strong>
+
                 </label>
+
+
+                <label class="extra-item">
+
+                    <input
+                        type="checkbox"
+                        class="extra-checkbox"
+                        data-nome="Higienização interna"
+                        data-preco="50"
+                    >
+
+                    <span>
+                        Higienização interna
+                    </span>
+
+                    <strong>
+                        + R$ 50,00
+                    </strong>
+
+                </label>
+
+
+                <label class="extra-item">
+
+                    <input
+                        type="checkbox"
+                        class="extra-checkbox"
+                        data-nome="Enceramento"
+                        data-preco="40"
+                    >
+
+                    <span>
+                        Enceramento
+                    </span>
+
+                    <strong>
+                        + R$ 40,00
+                    </strong>
+
+                </label>
+
+
+                <label class="extra-item">
+
+                    <input
+                        type="checkbox"
+                        class="extra-checkbox"
+                        data-nome="Polimento"
+                        data-preco="100"
+                    >
+
+                    <span>
+                        Polimento
+                    </span>
+
+                    <strong>
+                        + R$ 100,00
+                    </strong>
+
+                </label>
+
             </div>
 
-            <div class="extra-service">
-                <label>
-                    <input type="checkbox" class="extra-checkbox" data-preco="50">
-                    Higienização interna — R$ 50,00
-                </label>
-            </div>
-
-            <div class="extra-service">
-                <label>
-                    <input type="checkbox" class="extra-checkbox" data-preco="40">
-                    Enceramento — R$ 40,00
-                </label>
-            </div>
-
-            <div class="extra-service">
-                <label>
-                    <input type="checkbox" class="extra-checkbox" data-preco="100">
-                    Polimento — R$ 100,00
-                </label>
-            </div>
 
             <div class="total-box">
-                <strong>
-                    Total: R$ 
-                    <span id="total">
-                        ${precoPacote.toFixed(2).replace(".", ",")}
-                    </span>
+
+                <span>
+                    Total:
+                </span>
+
+                <strong id="total-servico">
+                    ${formatarMoeda(precoPacote)}
                 </strong>
+
             </div>
 
-            <button id="continuar-btn" class="vehicle-btn">
+
+            <button
+                class="select-btn"
+                id="continuar-extras"
+            >
                 CONTINUAR
             </button>
 
         </div>
     `;
+
 
     const checkboxes =
         janela.querySelectorAll(".extra-checkbox");
 
     const totalElemento =
-        janela.querySelector("#total");
+        janela.querySelector("#total-servico");
+
 
     checkboxes.forEach(function (checkbox) {
 
-        checkbox.addEventListener("change", function () {
+        checkbox.addEventListener(
+            "change",
+            function () {
 
-            let total = precoPacote;
+                let total =
+                    precoPacote;
 
-            checkboxes.forEach(function (item) {
+                checkboxes.forEach(
+                    function (item) {
 
-                if (item.checked) {
-                    total += parseFloat(item.dataset.preco);
+                        if (item.checked) {
+
+                            total +=
+                                parseFloat(
+                                    item.dataset.preco
+                                );
+                        }
+                    }
+                );
+
+                totalElemento.textContent =
+                    formatarMoeda(total);
+            }
+        );
+    });
+
+
+    const botaoContinuar =
+        janela.querySelector("#continuar-extras");
+
+
+    botaoContinuar.addEventListener(
+        "click",
+        function () {
+
+            const extrasSelecionados = [];
+
+            checkboxes.forEach(
+                function (checkbox) {
+
+                    if (checkbox.checked) {
+
+                        extrasSelecionados.push({
+
+                            nome:
+                                checkbox.dataset.nome,
+
+                            preco:
+                                parseFloat(
+                                    checkbox.dataset.preco
+                                )
+                        });
+                    }
                 }
+            );
 
-            });
 
-            totalElemento.textContent =
-                total.toFixed(2).replace(".", ",");
+            let total =
+                precoPacote;
 
-        });
 
-    });
+            extrasSelecionados.forEach(
+                function (extra) {
 
-    const continuar =
-        janela.querySelector("#continuar-btn");
+                    total += extra.preco;
+                }
+            );
 
-    continuar.addEventListener("click", function () {
 
-    const extrasSelecionados = [];
-
-    checkboxes.forEach(function (checkbox) {
-
-        if (checkbox.checked) {
-
-            const nomeExtra =
-                checkbox.parentElement.textContent.trim();
-
-            extrasSelecionados.push(nomeExtra);
-
+            mostrarAgendamento(
+                janela,
+                veiculo,
+                nomePacote,
+                precoPacote,
+                extrasSelecionados,
+                total
+            );
         }
-
-    });
-
-    mostrarAgendamento(
-        janela,
-        veiculo,
-        nomePacote,
-        totalElemento.textContent,
-        extrasSelecionados
     );
-
-});
-
 }
 
+
+/* =========================================
+   AGENDAMENTO
+========================================= */
 
 function mostrarAgendamento(
     janela,
     veiculo,
     nomePacote,
-    total,
-    extrasSelecionados
+    precoPacote,
+    extrasSelecionados,
+    total
 ) {
 
     janela.innerHTML = `
+
         <div class="vehicle-box">
 
-            <h2>Agende seu atendimento</h2>
+            <h2>Escolha o dia e horário</h2>
 
             <p>
-                Veículo: <strong>${veiculo}</strong>
+                Escolha quando deseja realizar
+                o serviço.
             </p>
 
-            <p>
-                Pacote: <strong>${nomePacote}</strong>
-            </p>
 
-            <p>
-                Total: <strong>R$ ${total}</strong>
-            </p>
+            <div class="form-group">
 
-            <hr>
+                <label>
+                    Data:
+                </label>
 
-            <h3>Escolha a data</h3>
+                <input
+                    type="date"
+                    id="data-agendamento"
+                >
 
-            <input
-                type="date"
-                id="data-agendamento"
-                class="schedule-input"
-            >
+            </div>
 
-            <h3>Escolha o horário</h3>
 
-            <select
-                id="horario-agendamento"
-                class="schedule-input"
-            >
+            <div class="form-group">
 
-                <option value="">
-                    Selecione um horário
-                </option>
+                <label>
+                    Horário:
+                </label>
 
-                <option value="08:00">08:00</option>
-                <option value="09:00">09:00</option>
-                <option value="10:00">10:00</option>
-                <option value="11:00">11:00</option>
-                <option value="13:00">13:00</option>
-                <option value="14:00">14:00</option>
-                <option value="15:00">15:00</option>
-                <option value="16:00">16:00</option>
-                <option value="17:00">17:00</option>
+                <div
+                    class="horarios-container"
+                    id="horarios-container"
+                >
+                </div>
 
-            </select>
+            </div>
+
 
             <button
-                id="agendar-btn"
-                class="vehicle-btn"
+                class="select-btn"
+                id="continuar-agendamento"
             >
                 CONTINUAR
             </button>
@@ -269,127 +374,389 @@ function mostrarAgendamento(
         </div>
     `;
 
-    const campoData =
-        janela.querySelector("#data-agendamento");
 
-    const hoje = new Date();
+    const inputData =
+        janela.querySelector(
+            "#data-agendamento"
+        );
 
-    const ano = hoje.getFullYear();
-    const mes = String(hoje.getMonth() + 1).padStart(2, "0");
-    const dia = String(hoje.getDate()).padStart(2, "0");
 
-    campoData.min = `${ano}-${mes}-${dia}`;
+    const horariosContainer =
+        janela.querySelector(
+            "#horarios-container"
+        );
 
-    const botaoAgendar =
-        janela.querySelector("#agendar-btn");
 
-    botaoAgendar.addEventListener("click", function () {
+    const botaoContinuar =
+        janela.querySelector(
+            "#continuar-agendamento"
+        );
 
-    const data = campoData.value;
 
-    const horario =
-        janela.querySelector("#horario-agendamento").value;
+    /* DATA MÍNIMA = HOJE */
 
-    if (!data) {
+    const hoje =
+        new Date();
 
-        alert("Por favor, escolha uma data.");
+    const ano =
+        hoje.getFullYear();
 
-        return;
+    const mes =
+        String(
+            hoje.getMonth() + 1
+        ).padStart(2, "0");
+
+    const dia =
+        String(
+            hoje.getDate()
+        ).padStart(2, "0");
+
+
+    const dataAtual =
+        `${ano}-${mes}-${dia}`;
+
+
+    inputData.min =
+        dataAtual;
+
+
+    /* =========================================
+       CRIA HORÁRIOS
+    ========================================= */
+
+    const horarios = [
+        "08:00",
+        "09:00",
+        "10:00",
+        "11:00",
+        "13:00",
+        "14:00",
+        "15:00",
+        "16:00",
+        "17:00"
+    ];
+
+
+    function criarHorarios(dataSelecionada) {
+
+        horariosContainer.innerHTML = "";
+
+        let horarioSelecionado = "";
+
+
+        const pedidosSalvos =
+            JSON.parse(
+                localStorage.getItem("pedidosGD")
+            ) || [];
+
+
+        const horariosOcupados =
+            pedidosSalvos
+                .filter(function (pedido) {
+
+                    return (
+                        pedido.data ===
+                        dataSelecionada
+                    );
+                })
+                .map(function (pedido) {
+
+                    return pedido.horario;
+                });
+
+
+        horarios.forEach(
+            function (horario) {
+
+                const botaoHorario =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                botaoHorario.type =
+                    "button";
+
+
+                botaoHorario.classList.add(
+                    "vehicle-btn"
+                );
+
+
+                botaoHorario.textContent =
+                    horario;
+
+
+                /* HORÁRIO JÁ OCUPADO */
+
+                if (
+                    horariosOcupados.includes(
+                        horario
+                    )
+                ) {
+
+                    botaoHorario.disabled =
+                        true;
+
+                    botaoHorario.textContent =
+                        `${horario} - Ocupado`;
+
+                    botaoHorario.style.opacity =
+                        "0.4";
+
+                    botaoHorario.style.cursor =
+                        "not-allowed";
+
+                } else {
+
+                    botaoHorario.addEventListener(
+                        "click",
+                        function () {
+
+                            horarioSelecionado =
+                                horario;
+
+
+                            const botoes =
+                                horariosContainer
+                                    .querySelectorAll(
+                                        ".vehicle-btn"
+                                    );
+
+
+                            botoes.forEach(
+                                function (botao) {
+
+                                    botao.classList
+                                        .remove(
+                                            "horario-selecionado"
+                                        );
+                                }
+                            );
+
+
+                            botaoHorario.classList.add(
+                                "horario-selecionado"
+                            );
+                        }
+                    );
+                }
+
+
+                horariosContainer.appendChild(
+                    botaoHorario
+                );
+            }
+        );
+
+
+        return function () {
+            return horarioSelecionado;
+        };
     }
 
-    if (!horario) {
 
-        alert("Por favor, escolha um horário.");
+    let obterHorarioSelecionado =
+        criarHorarios("");
 
-        return;
-    }
 
-    mostrarDadosCliente(
-    janela,
-    veiculo,
-    nomePacote,
-    data,
-    horario,
-    total,
-    extrasSelecionados
-);
+    /* =========================================
+       QUANDO ESCOLHER UMA DATA
+    ========================================= */
 
-});
+    inputData.addEventListener(
+        "change",
+        function () {
+
+            const dataSelecionada =
+                inputData.value;
+
+
+            obterHorarioSelecionado =
+                criarHorarios(
+                    dataSelecionada
+                );
+        }
+    );
+
+
+    /* =========================================
+       CONTINUAR
+    ========================================= */
+
+    botaoContinuar.addEventListener(
+        "click",
+        function () {
+
+            const data =
+                inputData.value;
+
+
+            const horario =
+                obterHorarioSelecionado();
+
+
+            if (!data) {
+
+                alert(
+                    "Escolha uma data."
+                );
+
+                return;
+            }
+
+
+            if (!horario) {
+
+                alert(
+                    "Escolha um horário disponível."
+                );
+
+                return;
+            }
+
+
+            /* =========================================
+               SEGUNDA VERIFICAÇÃO
+               EVITA DUPLICIDADE NO MOMENTO DO SALVAMENTO
+            ========================================= */
+
+            const pedidosSalvos =
+                JSON.parse(
+                    localStorage.getItem(
+                        "pedidosGD"
+                    )
+                ) || [];
+
+
+            const horarioJaOcupado =
+                pedidosSalvos.some(
+                    function (pedido) {
+
+                        return (
+                            pedido.data === data &&
+                            pedido.horario === horario
+                        );
+                    }
+                );
+
+
+            if (horarioJaOcupado) {
+
+                alert(
+                    "Esse horário acabou de ser ocupado. Escolha outro horário."
+                );
+
+                obterHorarioSelecionado =
+                    criarHorarios(data);
+
+                return;
+            }
+
+
+            mostrarDadosCliente(
+                janela,
+                veiculo,
+                nomePacote,
+                extrasSelecionados,
+                data,
+                horario,
+                total
+            );
+        }
+    );
 }
 
 
-// =========================================
-// DADOS DO CLIENTE
-// =========================================
+/* =========================================
+   DADOS DO CLIENTE
+========================================= */
 
 function mostrarDadosCliente(
     janela,
     veiculo,
     nomePacote,
+    extrasSelecionados,
     data,
     horario,
-    total,
-    extrasSelecionados
+    total
 ) {
 
     janela.innerHTML = `
+
         <div class="vehicle-box">
 
             <h2>Seus dados</h2>
 
             <p>
-                Preencha seus dados para continuar.
+                Preencha os dados para
+                finalizar o agendamento.
             </p>
 
-            <hr>
 
-            <label class="form-label">
-                Nome completo
-            </label>
+            <div class="form-group">
 
-            <input
-                type="text"
-                id="nome-cliente"
-                class="schedule-input"
-                placeholder="Digite seu nome"
-            >
+                <label>
+                    Nome:
+                </label>
 
-            <label class="form-label">
-                WhatsApp
-            </label>
+                <input
+                    type="text"
+                    id="nome-cliente"
+                    placeholder="Seu nome"
+                >
 
-            <input
-                type="tel"
-                id="whatsapp-cliente"
-                class="schedule-input"
-                placeholder="(92) 99999-9999"
-            >
+            </div>
 
-            <label class="form-label">
-                Modelo do veículo
-            </label>
 
-            <input
-                type="text"
-                id="modelo-veiculo"
-                class="schedule-input"
-                placeholder="Ex: Honda Civic"
-            >
+            <div class="form-group">
 
-            <label class="form-label">
-                Placa
-            </label>
+                <label>
+                    WhatsApp:
+                </label>
 
-            <input
-                type="text"
-                id="placa-veiculo"
-                class="schedule-input"
-                placeholder="Ex: ABC1D23"
-            >
+                <input
+                    type="tel"
+                    id="whatsapp-cliente"
+                    placeholder="(92) 99999-9999"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Modelo do veículo:
+                </label>
+
+                <input
+                    type="text"
+                    id="modelo-veiculo"
+                    placeholder="Ex: Honda Civic"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Placa:
+                </label>
+
+                <input
+                    type="text"
+                    id="placa-veiculo"
+                    placeholder="ABC1D23"
+                >
+
+            </div>
+
 
             <button
-                id="finalizar-dados-btn"
-                class="vehicle-btn"
+                class="select-btn"
+                id="continuar-dados"
             >
                 CONTINUAR
             </button>
@@ -398,91 +765,92 @@ function mostrarDadosCliente(
     `;
 
 
-    // =========================================
-    // BOTÃO CONTINUAR
-    // =========================================
-
-    const botaoFinalizar =
-        janela.querySelector("#finalizar-dados-btn");
+    const nomeInput =
+        janela.querySelector(
+            "#nome-cliente"
+        );
 
 
-    botaoFinalizar.addEventListener(
+    const whatsappInput =
+        janela.querySelector(
+            "#whatsapp-cliente"
+        );
+
+
+    const modeloInput =
+        janela.querySelector(
+            "#modelo-veiculo"
+        );
+
+
+    const placaInput =
+        janela.querySelector(
+            "#placa-veiculo"
+        );
+
+
+    const botaoContinuar =
+        janela.querySelector(
+            "#continuar-dados"
+        );
+
+
+    botaoContinuar.addEventListener(
         "click",
         function () {
 
             const nome =
-                janela.querySelector("#nome-cliente").value.trim();
+                nomeInput.value.trim();
+
 
             const whatsapp =
-                janela.querySelector("#whatsapp-cliente").value.trim();
+                whatsappInput.value.trim();
+
 
             const modelo =
-                janela.querySelector("#modelo-veiculo").value.trim();
+                modeloInput.value.trim();
+
 
             const placa =
-                janela.querySelector("#placa-veiculo").value.trim();
+                placaInput.value.trim();
 
 
-            // =========================================
-            // VALIDAÇÃO
-            // =========================================
+            if (
+                !nome ||
+                !whatsapp ||
+                !modelo ||
+                !placa
+            ) {
 
-            if (!nome) {
-
-                alert("Digite seu nome.");
-
-                return;
-            }
-
-            if (!whatsapp) {
-
-                alert("Digite seu WhatsApp.");
-
-                return;
-            }
-
-            if (!modelo) {
-
-                alert("Digite o modelo do veículo.");
-
-                return;
-            }
-
-            if (!placa) {
-
-                alert("Digite a placa do veículo.");
+                alert(
+                    "Preencha todos os campos."
+                );
 
                 return;
             }
 
 
-            // =========================================
-            // TESTE FINAL
-            // =========================================
-
-               mostrarResumoPedido(
-    janela,
-    nome,
-    whatsapp,
-    modelo,
-    placa,
-    veiculo,
-    nomePacote,
-    data,
-    horario,
-    total,
-    extrasSelecionados
-);
-
+            mostrarResumoPedido(
+                janela,
+                nome,
+                whatsapp,
+                modelo,
+                placa,
+                veiculo,
+                nomePacote,
+                extrasSelecionados,
+                data,
+                horario,
+                total
+            );
         }
-
     );
-
 }
 
-        // =========================================
-// RESUMO DO PEDIDO
-// =========================================
+
+/* =========================================
+   RESUMO DO PEDIDO
+========================================= */
 
 function mostrarResumoPedido(
     janela,
@@ -492,148 +860,270 @@ function mostrarResumoPedido(
     placa,
     veiculo,
     nomePacote,
+    extrasSelecionados,
     data,
     horario,
-    total,
-    extrasSelecionados
+    total
 ) {
 
+    let listaExtras = "";
+
+
+    if (
+        extrasSelecionados.length === 0
+    ) {
+
+        listaExtras =
+            "<p>Nenhum serviço extra.</p>";
+
+    } else {
+
+        listaExtras =
+            extrasSelecionados
+                .map(function (extra) {
+
+                    return `
+                        <p>
+                            ${extra.nome}
+                            -
+                            ${formatarMoeda(
+                                extra.preco
+                            )}
+                        </p>
+                    `;
+                })
+                .join("");
+    }
+
+
     janela.innerHTML = `
-        <div class="vehicle-box resumo-box">
 
-            <h2>Resumo do pedido</h2>
+        <div class="vehicle-box">
 
-            <p>
-                Confira os dados antes de confirmar.
-            </p>
+            <h2>
+                Confirme seu pedido
+            </h2>
 
-            <hr>
 
-            <div class="resumo-item">
-                <span>Cliente</span>
-                <strong>${nome}</strong>
+            <div class="resumo-pedido">
+
+                <h3>
+                    Cliente
+                </h3>
+
+                <p>
+                    <strong>Nome:</strong>
+                    ${nome}
+                </p>
+
+                <p>
+                    <strong>WhatsApp:</strong>
+                    ${whatsapp}
+                </p>
+
+
+                <h3>
+                    Veículo
+                </h3>
+
+                <p>
+                    <strong>Tipo:</strong>
+                    ${veiculo}
+                </p>
+
+                <p>
+                    <strong>Modelo:</strong>
+                    ${modelo}
+                </p>
+
+                <p>
+                    <strong>Placa:</strong>
+                    ${placa}
+                </p>
+
+
+                <h3>
+                    Serviço
+                </h3>
+
+                <p>
+                    <strong>Pacote:</strong>
+                    ${nomePacote}
+                </p>
+
+
+                <h3>
+                    Serviços extras
+                </h3>
+
+                ${listaExtras}
+
+
+                <h3>
+                    Agendamento
+                </h3>
+
+                <p>
+                    <strong>Data:</strong>
+                    ${formatarData(data)}
+                </p>
+
+                <p>
+                    <strong>Horário:</strong>
+                    ${horario}
+                </p>
+
+
+                <div class="total-box">
+
+                    <span>
+                        Total:
+                    </span>
+
+                    <strong>
+                        ${formatarMoeda(total)}
+                    </strong>
+
+                </div>
+
             </div>
 
-            <div class="resumo-item">
-                <span>WhatsApp</span>
-                <strong>${whatsapp}</strong>
-            </div>
-
-            <div class="resumo-item">
-                <span>Veículo</span>
-                <strong>${veiculo}</strong>
-            </div>
-
-            <div class="resumo-item">
-                <span>Modelo</span>
-                <strong>${modelo}</strong>
-            </div>
-
-            <div class="resumo-item">
-                <span>Placa</span>
-                <strong>${placa}</strong>
-            </div>
-
-            <div class="resumo-item">
-                <span>Pacote</span>
-                <strong>${nomePacote}</strong>
-            </div>
-
-<div class="resumo-item">
-    <span>Extras</span>
-    <strong>
-        ${
-            extrasSelecionados.length > 0
-                ? extrasSelecionados.join(", ")
-                : "Nenhum"
-        }
-    </strong>
-</div>
-            <div class="resumo-item">
-                <span>Data</span>
-                <strong>${data}</strong>
-            </div>
-
-            <div class="resumo-item">
-                <span>Horário</span>
-                <strong>${horario}</strong>
-            </div>
-
-            <div class="resumo-total">
-                TOTAL: R$ ${total}
-            </div>
 
             <button
-                id="confirmar-btn"
-                class="vehicle-btn"
+                class="select-btn"
+                id="confirmar-pedido"
             >
-                CONFIRMAR AGENDAMENTO
+                CONFIRMAR PEDIDO
             </button>
 
         </div>
     `;
 
 
-    // =========================================
-    // CONFIRMAR
-    // =========================================
-
-    const confirmar =
-        janela.querySelector("#confirmar-btn");
-
-    confirmar.addEventListener(
-    "click",
-    function () {
-
-        const pedido = {
-            
-            id: Date.now(),
-            nome: nome,
-            whatsapp: whatsapp,
-            modelo: modelo,
-            placa: placa,
-            veiculo: veiculo,
-            pacote: nomePacote,
-            extras: extrasSelecionados,
-            data: data,
-            horario: horario,
-            total: total,
-            status: "Agendado"
-
-        };
-
-        const pedidosSalvos =
-    JSON.parse(localStorage.getItem("pedidosGD")) || [];
-
-pedidosSalvos.push(pedido);
-
-localStorage.setItem(
-    "pedidosGD",
-    JSON.stringify(pedidosSalvos)
-);
-        mostrarChecklist(
-            janela,
-            nome,
-            whatsapp,
-            modelo,
-            placa,
-            veiculo,
-            nomePacote,
-            extrasSelecionados,
-            data,
-            horario,
-            total,
-            pedido.id
+    const botaoConfirmar =
+        janela.querySelector(
+            "#confirmar-pedido"
         );
 
-    }
-);
 
+    botaoConfirmar.addEventListener(
+        "click",
+        function () {
+
+
+            /* =========================================
+               ÚLTIMA VERIFICAÇÃO DO HORÁRIO
+            ========================================= */
+
+            const pedidosSalvos =
+                JSON.parse(
+                    localStorage.getItem(
+                        "pedidosGD"
+                    )
+                ) || [];
+
+
+            const horarioJaOcupado =
+                pedidosSalvos.some(
+                    function (pedido) {
+
+                        return (
+                            pedido.data === data &&
+                            pedido.horario === horario
+                        );
+                    }
+                );
+
+
+            if (horarioJaOcupado) {
+
+                alert(
+                    "Esse horário já foi reservado. Por favor, faça um novo agendamento."
+                );
+
+                return;
+            }
+
+
+            /* =========================================
+               CRIAR PEDIDO
+            ========================================= */
+
+            const pedido = {
+
+                id:
+                    Date.now(),
+
+                nome:
+                    nome,
+
+                whatsapp:
+                    whatsapp,
+
+                modelo:
+                    modelo,
+
+                placa:
+                    placa,
+
+                veiculo:
+                    veiculo,
+
+                pacote:
+                    nomePacote,
+
+                extras:
+                    extrasSelecionados,
+
+                data:
+                    data,
+
+                horario:
+                    horario,
+
+                total:
+                    total,
+
+                status:
+                    "Agendado"
+            };
+
+
+            pedidosSalvos.push(
+                pedido
+            );
+
+
+            localStorage.setItem(
+                "pedidosGD",
+                JSON.stringify(
+                    pedidosSalvos
+                )
+            );
+
+
+            mostrarChecklist(
+                janela,
+                nome,
+                whatsapp,
+                modelo,
+                placa,
+                veiculo,
+                nomePacote,
+                extrasSelecionados,
+                data,
+                horario,
+                total,
+                pedido.id
+            );
+        }
+    );
 }
 
-// =========================================
-// CHECKLIST DO SERVIÇO
-// =========================================
+
+/* =========================================
+   CHECKLIST
+========================================= */
 
 function mostrarChecklist(
     janela,
@@ -650,180 +1140,317 @@ function mostrarChecklist(
     pedidoId
 ) {
 
-    janela.innerHTML = `
-        <div class="vehicle-box checklist-box">
+    let checklistExtras = "";
 
-            <h2>Ordem de Serviço</h2>
+
+    extrasSelecionados.forEach(
+        function (extra) {
+
+            checklistExtras += `
+
+                <label class="checklist-item">
+
+                    <input
+                        type="checkbox"
+                        class="check-item"
+                    >
+
+                    <span>
+                        Realizar:
+                        ${extra.nome}
+                    </span>
+
+                </label>
+
+            `;
+        }
+    );
+
+
+    janela.innerHTML = `
+
+        <div class="vehicle-box">
+
+            <h2>
+                Ordem de serviço
+            </h2>
+
 
             <p>
-                Serviço do cliente
+                Pedido criado com sucesso.
             </p>
 
-            <hr>
 
-            <div class="resumo-item">
-                <span>Cliente</span>
-                <strong>${nome}</strong>
+            <div class="resumo-pedido">
+
+                <p>
+                    <strong>Cliente:</strong>
+                    ${nome}
+                </p>
+
+                <p>
+                    <strong>WhatsApp:</strong>
+                    ${whatsapp}
+                </p>
+
+                <p>
+                    <strong>Veículo:</strong>
+                    ${veiculo}
+                </p>
+
+                <p>
+                    <strong>Modelo:</strong>
+                    ${modelo}
+                </p>
+
+                <p>
+                    <strong>Placa:</strong>
+                    ${placa}
+                </p>
+
+                <p>
+                    <strong>Pacote:</strong>
+                    ${nomePacote}
+                </p>
+
+                <p>
+                    <strong>Data:</strong>
+                    ${formatarData(data)}
+                </p>
+
+                <p>
+                    <strong>Horário:</strong>
+                    ${horario}
+                </p>
+
+                <p>
+                    <strong>Total:</strong>
+                    ${formatarMoeda(total)}
+                </p>
+
             </div>
 
-            <div class="resumo-item">
-                <span>Veículo</span>
-                <strong>${veiculo} - ${modelo}</strong>
+
+            <h3>
+                Checklist do serviço
+            </h3>
+
+
+            <div class="checklist">
+
+                <label class="checklist-item">
+
+                    <input
+                        type="checkbox"
+                        class="check-item"
+                    >
+
+                    <span>
+                        Conferir estado geral do veículo
+                    </span>
+
+                </label>
+
+
+                <label class="checklist-item">
+
+                    <input
+                        type="checkbox"
+                        class="check-item"
+                    >
+
+                    <span>
+                        Conferir rodas e pneus
+                    </span>
+
+                </label>
+
+
+                <label class="checklist-item">
+
+                    <input
+                        type="checkbox"
+                        class="check-item"
+                    >
+
+                    <span>
+                        Realizar serviços do pacote
+                    </span>
+
+                </label>
+
+
+                ${checklistExtras}
+
+
+                <label class="checklist-item">
+
+                    <input
+                        type="checkbox"
+                        class="check-item"
+                    >
+
+                    <span>
+                        Secagem e acabamento
+                    </span>
+
+                </label>
+
+
+                <label class="checklist-item">
+
+                    <input
+                        type="checkbox"
+                        class="check-item"
+                    >
+
+                    <span>
+                        Conferência final
+                    </span>
+
+                </label>
+
             </div>
 
-            <div class="resumo-item">
-                <span>Placa</span>
-                <strong>${placa}</strong>
-            </div>
 
-            <div class="resumo-item">
-                <span>Pacote</span>
-                <strong>${nomePacote}</strong>
-            </div>
+            <button
+                class="select-btn"
+                id="finalizar-servico"
+            >
+                FINALIZAR SERVIÇO
+            </button>
 
-            <div class="resumo-item">
-                <span>Data</span>
-                <strong>${data}</strong>
-            </div>
-
-            <div class="resumo-item">
-                <span>Horário</span>
-                <strong>${horario}</strong>
-            </div>
-
-            <div class="resumo-total">
-                TOTAL: R$ ${total}
-            </div>
-
-            <hr>
-
-            <h3>Checklist do funcionário</h3>
-
-<div class="check-item">
-    <label>
-        <input type="checkbox">
-        Conferir estado geral do veículo
-    </label>
-</div>
-
-<div class="check-item">
-    <label>
-        <input type="checkbox">
-        Conferir rodas e pneus
-    </label>
-</div>
-
-<div class="check-item">
-    <label>
-        <input type="checkbox">
-        Realizar serviços do pacote ${nomePacote}
-    </label>
-</div>
-
-${extrasSelecionados.map(function (extra) {
-
-    return `
-        <div class="check-item">
-            <label>
-                <input type="checkbox">
-                Realizar: ${extra}
-            </label>
         </div>
     `;
 
-}).join("")}
 
-<div class="check-item">
-    <label>
-        <input type="checkbox">
-        Secagem e acabamento do veículo
-    </label>
-</div>
-
-<div class="check-item">
-    <label>
-        <input type="checkbox">
-        Conferência final
-    </label>
-</div>
-
-<button
-    id="finalizar-servico-btn"
-    class="vehicle-btn"
->
-    FINALIZAR SERVIÇO
-</button>
-        </div>
-    `;
-
-    const botaoFinalizar =
-    janela.querySelector("#finalizar-servico-btn");
-
-botaoFinalizar.addEventListener(
-    "click",
-    function () {
-
-        const checkboxes =
-            janela.querySelectorAll(
-                '.check-item input[type="checkbox"]'
-            );
-
-        let todosConcluidos = true;
-
-        checkboxes.forEach(function (checkbox) {
-
-            if (!checkbox.checked) {
-                todosConcluidos = false;
-            }
-
-        });
-
-        if (!todosConcluidos) {
-
-            alert(
-                "Antes de finalizar, marque todas as etapas do checklist."
-            );
-
-            return;
-        }
-const pedidosSalvos =
-    JSON.parse(localStorage.getItem("pedidosGD")) || [];
-
-const pedidoEncontrado =
-    pedidosSalvos.find(function (pedido) {
-
-        return pedido.id === pedidoId;
-
-    });
-
-if (pedidoEncontrado) {
-
-    pedidoEncontrado.status = "Concluído";
-
-    localStorage.setItem(
-        "pedidosGD",
-        JSON.stringify(pedidosSalvos)
-    );
-
-}
-
-if (pedidoEncontrado) {
-
-    pedidoEncontrado.status = "Concluído";
-
-    localStorage.setItem(
-        "pedidosGD",
-        JSON.stringify(pedidosSalvos)
-    );
-
-}
-        alert(
-            "Serviço finalizado com sucesso!\n\n" +
-            "Cliente: " + nome + "\n" +
-            "Veículo: " + modelo + "\n" +
-            "Placa: " + placa
+    const checkboxes =
+        janela.querySelectorAll(
+            ".check-item"
         );
 
+
+    const botaoFinalizar =
+        janela.querySelector(
+            "#finalizar-servico"
+        );
+
+
+    botaoFinalizar.addEventListener(
+        "click",
+        function () {
+
+            let todosMarcados =
+                true;
+
+
+            checkboxes.forEach(
+                function (checkbox) {
+
+                    if (
+                        !checkbox.checked
+                    ) {
+
+                        todosMarcados =
+                            false;
+                    }
+                }
+            );
+
+
+            if (!todosMarcados) {
+
+                alert(
+                    "Marque todos os itens do checklist antes de finalizar."
+                );
+
+                return;
+            }
+
+
+            const pedidosSalvos =
+                JSON.parse(
+                    localStorage.getItem(
+                        "pedidosGD"
+                    )
+                ) || [];
+
+
+            const pedidoEncontrado =
+                pedidosSalvos.find(
+                    function (pedido) {
+
+                        return (
+                            pedido.id ===
+                            pedidoId
+                        );
+                    }
+                );
+
+
+            if (pedidoEncontrado) {
+
+                pedidoEncontrado.status =
+                    "Concluído";
+
+
+                localStorage.setItem(
+                    "pedidosGD",
+                    JSON.stringify(
+                        pedidosSalvos
+                    )
+                );
+            }
+
+
+            alert(
+                "Serviço finalizado com sucesso!"
+            );
+
+
+            janela.remove();
+        }
+    );
+}
+
+
+/* =========================================
+   FORMATAR MOEDA
+========================================= */
+
+function formatarMoeda(valor) {
+
+    return valor.toLocaleString(
+        "pt-BR",
+        {
+            style: "currency",
+            currency: "BRL"
+        }
+    );
+}
+
+
+/* =========================================
+   FORMATAR DATA
+========================================= */
+
+function formatarData(data) {
+
+    if (!data) {
+        return "";
     }
-);
+
+
+    const partes =
+        data.split("-");
+
+
+    if (partes.length !== 3) {
+        return data;
+    }
+
+
+    return `
+        ${partes[2]}/${partes[1]}/${partes[0]}
+    `;
 }
