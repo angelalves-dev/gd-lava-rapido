@@ -1235,3 +1235,310 @@ footer p {
     }
 
 }
+
+/* =========================================
+   MODAL DE ESCOLHA DO VEÍCULO
+========================================= */
+
+.vehicle-modal {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.82);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 9999;
+    overflow-y: auto;
+}
+
+/* Quando o JavaScript abrir o modal */
+.vehicle-modal.active {
+    display: flex;
+}
+
+
+/* CONTEÚDO */
+
+.vehicle-modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    padding: 38px;
+    background: #111111;
+    border: 1px solid rgba(201, 162, 39, 0.35);
+    border-radius: 20px;
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.65),
+        0 0 40px rgba(201, 162, 39, 0.08);
+    animation: vehicleModalOpen 0.25s ease;
+}
+
+
+/* ANIMAÇÃO */
+
+@keyframes vehicleModalOpen {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* CABEÇALHO */
+
+.vehicle-modal-content .modal-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.vehicle-modal-content .modal-header .subtitle {
+    margin-bottom: 8px;
+    color: #c9a227;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.vehicle-modal-content .modal-header h2 {
+    margin-bottom: 10px;
+    font-size: 30px;
+    line-height: 1.2;
+    color: #ffffff;
+}
+
+.vehicle-modal-content .modal-header p:last-child {
+    color: #999999;
+    font-size: 14px;
+}
+
+
+/* BOTÃO FECHAR */
+
+.vehicle-modal-content .modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid #333333;
+    border-radius: 50%;
+
+    background: #1a1a1a;
+    color: #ffffff;
+
+    font-size: 25px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.vehicle-modal-content .modal-close:hover {
+    background: #c9a227;
+    border-color: #c9a227;
+    color: #000000;
+    transform: rotate(90deg);
+}
+
+
+/* SELEÇÃO DE VEÍCULOS */
+
+.vehicle-selection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+
+/* CARD DO VEÍCULO */
+
+.vehicle-box {
+    position: relative;
+
+    min-height: 170px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px 18px;
+
+    border: 1px solid #333333;
+    border-radius: 16px;
+
+    background: #181818;
+    color: #ffffff;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.vehicle-box:hover {
+    transform: translateY(-5px);
+    border-color: #c9a227;
+    background: #1d1d1d;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+}
+
+
+/* ÍCONE */
+
+.vehicle-icon {
+    width: 65px;
+    height: 65px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 14px;
+
+    border-radius: 50%;
+
+    background: rgba(201, 162, 39, 0.1);
+    border: 1px solid rgba(201, 162, 39, 0.25);
+
+    font-size: 32px;
+}
+
+
+/* INFORMAÇÕES */
+
+.vehicle-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.vehicle-info strong {
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.vehicle-info span {
+    font-size: 12px;
+    color: #888888;
+}
+
+
+/* SETA */
+
+.vehicle-arrow {
+    position: absolute;
+    top: 14px;
+    right: 15px;
+
+    color: #c9a227;
+    font-size: 18px;
+
+    transition: transform 0.2s ease;
+}
+
+.vehicle-box:hover .vehicle-arrow {
+    transform: translateX(4px);
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .vehicle-modal {
+        padding: 15px;
+    }
+
+    .vehicle-modal-content {
+        max-width: 100%;
+        max-height: calc(100vh - 30px);
+        padding: 30px 20px 25px;
+        border-radius: 18px;
+    }
+
+    .vehicle-modal-content .modal-header {
+        margin-bottom: 20px;
+    }
+
+    .vehicle-modal-content .modal-header h2 {
+        font-size: 24px;
+    }
+
+    .vehicle-selection {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .vehicle-box {
+        min-height: 125px;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 15px;
+        padding: 18px;
+    }
+
+    .vehicle-icon {
+        width: 55px;
+        height: 55px;
+        min-width: 55px;
+        margin-bottom: 0;
+        font-size: 27px;
+    }
+
+    .vehicle-info {
+        align-items: flex-start;
+    }
+
+    .vehicle-arrow {
+        top: 50%;
+        right: 18px;
+        transform: translateY(-50%);
+    }
+
+    .vehicle-box:hover .vehicle-arrow {
+        transform: translateY(-50%) translateX(4px);
+    }
+
+}
+
+
+/* =========================================
+   EVITAR SCROLL DA PÁGINA COM MODAL ABERTO
+========================================= */
+
+body.modal-open {
+    overflow: hidden;
+}
