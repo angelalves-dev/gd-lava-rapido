@@ -1,20 +1,15 @@
-/* =========================================
+/* =====================================================
    GD LAVA RÁPIDO
-   SISTEMA DE PEDIDOS E AGENDAMENTOS
-========================================= */
+   SISTEMA DE AGENDAMENTO
+===================================================== */
 
 
-/* =========================================
-   CONFIGURAÇÃO SUPABASE
-========================================= */
+/* =====================================================
+   SUPABASE
+===================================================== */
 
 const SUPABASE_URL =
     "https://ljswwokxcgglqluzwctq.supabase.co";
-
-/*
-    COLOQUE AQUI A MESMA PUBLISHABLE KEY
-    QUE VOCÊ JÁ USA ATUALMENTE.
-*/
 
 const SUPABASE_KEY =
     "sb_publishable_CS4rdWdRC9iVrHNvXXCzHA_6kH6WRlG";
@@ -27,1552 +22,1074 @@ window.supabaseClient =
     );
 
 
-/* =========================================
-   INICIAR SISTEMA
-========================================= */
+/* =====================================================
+   VARIÁVEIS DO PEDIDO
+===================================================== */
+
+let pedidoAtual = {
+    pacote: "",
+    precoPacote: 0,
+    veiculo: "",
+    extras: [],
+    total: 0,
+    data: "",
+    horario: "",
+    nome: "",
+    whatsapp: "",
+    modelo: "",
+    placa: ""
+};
+
+
+/* =====================================================
+   ELEMENTOS
+===================================================== */
+
+const vehicleModal =
+    document.getElementById("vehicleModal");
+
+const closeVehicleModal =
+    document.getElementById("closeVehicleModal");
+
+
+/* =====================================================
+   SELEÇÃO DOS PACOTES
+===================================================== */
+
+const botoesPacote =
+    document.querySelectorAll(".select-btn");
+
+
+botoesPacote.forEach(function (botao) {
+
+    botao.addEventListener("click", function () {
+
+        const pacote =
+            botao.dataset.package;
+
+        const preco =
+            Number(botao.dataset.price);
+
+
+        pedidoAtual.pacote = pacote;
+        pedidoAtual.precoPacote = preco;
+        pedidoAtual.total = preco;
+
+
+        abrirModalVeiculo();
+
+    });
+
+});
+
+
+/* =====================================================
+   ABRIR MODAL DO VEÍCULO
+===================================================== */
+
+function abrirModalVeiculo() {
+
+    if (!vehicleModal) {
+        return;
+    }
+
+
+    vehicleModal.style.display = "flex";
+
+    document.body.classList.add("modal-open");
+
+}
+
+
+/* =====================================================
+   FECHAR MODAL DO VEÍCULO
+===================================================== */
+
+function fecharModalVeiculo() {
+
+    if (!vehicleModal) {
+        return;
+    }
+
+
+    vehicleModal.style.display = "none";
+
+    document.body.classList.remove("modal-open");
+
+}
+
+
+/* =====================================================
+   BOTÃO X
+===================================================== */
+
+if (closeVehicleModal) {
+
+    closeVehicleModal.addEventListener(
+        "click",
+        function (event) {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            fecharModalVeiculo();
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   CLICAR FORA DO MODAL
+===================================================== */
+
+if (vehicleModal) {
+
+    vehicleModal.addEventListener(
+        "click",
+        function (event) {
+
+            if (event.target === vehicleModal) {
+
+                fecharModalVeiculo();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   TECLA ESC
+===================================================== */
 
 document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+    "keydown",
+    function (event) {
 
-        iniciarSelecaoPacotes();
+        if (event.key === "Escape") {
+
+            fecharModalVeiculo();
+
+        }
 
     }
 );
 
 
-/* =========================================
-   SELEÇÃO DO PACOTE
-========================================= */
+/* =====================================================
+   ESCOLHA DO VEÍCULO
+===================================================== */
 
-function iniciarSelecaoPacotes() {
+const botoesVeiculo =
+    document.querySelectorAll(".vehicle-box");
 
-    const botoes =
-        document.querySelectorAll(".select-btn");
 
-    botoes.forEach(function (botao) {
+botoesVeiculo.forEach(function (botao) {
 
-        botao.addEventListener(
+    botao.addEventListener("click", function () {
+
+        const veiculo =
+            botao.dataset.vehicle;
+
+
+        pedidoAtual.veiculo = veiculo;
+
+
+        fecharModalVeiculo();
+
+        mostrarServicosExtras();
+
+    });
+
+});
+
+
+/* =====================================================
+   SERVIÇOS EXTRAS
+===================================================== */
+
+function mostrarServicosExtras() {
+
+    const extrasExistentes =
+        document.getElementById("extras-container");
+
+
+    if (extrasExistentes) {
+        extrasExistentes.remove();
+    }
+
+
+    const container =
+        document.createElement("section");
+
+    container.id = "extras-container";
+
+    container.className = "extras-section";
+
+
+    container.innerHTML = `
+
+        <div class="section-title">
+
+            <p class="subtitle">
+                PERSONALIZE SEU ATENDIMENTO
+            </p>
+
+            <h2>
+                ADICIONE <span>SERVIÇOS EXTRAS</span>
+            </h2>
+
+            <p>
+                Escolha os serviços adicionais que deseja contratar.
+            </p>
+
+        </div>
+
+
+        <div class="extras-list">
+
+            <label class="extra-service">
+
+                <input
+                    type="checkbox"
+                    class="extra-checkbox"
+                    data-name="Lavagem externa"
+                    data-price="30">
+
+                <span>
+                    Lavagem externa
+                </span>
+
+                <strong>
+                    + R$ 30
+                </strong>
+
+            </label>
+
+
+            <label class="extra-service">
+
+                <input
+                    type="checkbox"
+                    class="extra-checkbox"
+                    data-name="Higienização interna"
+                    data-price="50">
+
+                <span>
+                    Higienização interna
+                </span>
+
+                <strong>
+                    + R$ 50
+                </strong>
+
+            </label>
+
+
+            <label class="extra-service">
+
+                <input
+                    type="checkbox"
+                    class="extra-checkbox"
+                    data-name="Enceramento"
+                    data-price="40">
+
+                <span>
+                    Enceramento
+                </span>
+
+                <strong>
+                    + R$ 40
+                </strong>
+
+            </label>
+
+
+            <label class="extra-service">
+
+                <input
+                    type="checkbox"
+                    class="extra-checkbox"
+                    data-name="Polimento"
+                    data-price="100">
+
+                <span>
+                    Polimento
+                </span>
+
+                <strong>
+                    + R$ 100
+                </strong>
+
+            </label>
+
+        </div>
+
+
+        <div class="total-box">
+
+            <span>
+                TOTAL DO SERVIÇO
+            </span>
+
+            <strong id="total-display">
+                R$ ${formatarMoeda(pedidoAtual.precoPacote)}
+            </strong>
+
+        </div>
+
+
+        <button
+            type="button"
+            id="continuarExtras"
+            class="btn">
+
+            CONTINUAR
+
+        </button>
+
+    `;
+
+
+    const services =
+        document.getElementById("servicos");
+
+
+    services.after(container);
+
+
+    const checkboxes =
+        container.querySelectorAll(".extra-checkbox");
+
+
+    checkboxes.forEach(function (checkbox) {
+
+        checkbox.addEventListener(
+            "change",
+            atualizarTotal
+        );
+
+    });
+
+
+    document
+        .getElementById("continuarExtras")
+        .addEventListener(
             "click",
             function () {
 
-                const card =
-                    botao.parentElement;
+                salvarExtras();
 
-                const titulo =
-                    card.querySelector("h3");
-
-                const precoElemento =
-                    card.querySelector("strong");
-
-                if (
-                    !titulo ||
-                    !precoElemento
-                ) {
-                    return;
-                }
-
-                const nome =
-                    titulo.textContent.trim();
-
-                const precoTexto =
-                    precoElemento.textContent;
-
-                const preco =
-                    parseFloat(
-                        precoTexto
-                            .replace(
-                                "A partir de R$",
-                                ""
-                            )
-                            .replace(
-                                "R$",
-                                ""
-                            )
-                            .replace(
-                                /\./g,
-                                ""
-                            )
-                            .replace(
-                                ",",
-                                "."
-                            )
-                            .trim()
-                    );
-
-                if (isNaN(preco)) {
-
-                    alert(
-                        "Não foi possível identificar o preço do pacote."
-                    );
-
-                    return;
-                }
-
-                const escolhaVeiculo =
-                    document.createElement(
-                        "div"
-                    );
-
-                escolhaVeiculo.classList.add(
-                    "vehicle-selection"
-                );
-
-                escolhaVeiculo.innerHTML = `
-
-                    <div class="vehicle-box">
-
-                        <p class="subtitle">
-                            ETAPA 1 DE 5
-                        </p>
-
-                        <h2>
-                            Escolha seu veículo
-                        </h2>
-
-                        <p>
-                            Você escolheu o pacote
-                            <strong>${nome}</strong>.
-                        </p>
-
-                        <p>
-                            Agora informe o tipo de veículo:
-                        </p>
-
-                        <div class="vehicle-buttons">
-
-                            <button
-                                type="button"
-                                class="vehicle-btn"
-                                data-veiculo="Carro"
-                            >
-                                🚗 Carro
-                            </button>
-
-                            <button
-                                type="button"
-                                class="vehicle-btn"
-                                data-veiculo="Moto"
-                            >
-                                🏍️ Moto
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                `;
-
-                document.body.appendChild(
-                    escolhaVeiculo
-                );
-
-                const botoesVeiculo =
-                    escolhaVeiculo.querySelectorAll(
-                        ".vehicle-btn"
-                    );
-
-                botoesVeiculo.forEach(
-                    function (botaoVeiculo) {
-
-                        botaoVeiculo.addEventListener(
-                            "click",
-                            function () {
-
-                                const veiculo =
-                                    botaoVeiculo.dataset.veiculo;
-
-                                mostrarServicosExtras(
-                                    escolhaVeiculo,
-                                    veiculo,
-                                    nome,
-                                    preco
-                                );
-
-                            }
-                        );
-
-                    }
-                );
+                mostrarAgendamento();
 
             }
         );
+
+
+    container.scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =====================================================
+   ATUALIZAR TOTAL
+===================================================== */
+
+function atualizarTotal() {
+
+    let total =
+        pedidoAtual.precoPacote;
+
+
+    const checkboxes =
+        document.querySelectorAll(".extra-checkbox");
+
+
+    checkboxes.forEach(function (checkbox) {
+
+        if (checkbox.checked) {
+
+            total +=
+                Number(checkbox.dataset.price);
+
+        }
+
+    });
+
+
+    pedidoAtual.total = total;
+
+
+    const display =
+        document.getElementById("total-display");
+
+
+    if (display) {
+
+        display.textContent =
+            formatarMoeda(total);
+
+    }
+
+}
+
+
+/* =====================================================
+   SALVAR EXTRAS
+===================================================== */
+
+function salvarExtras() {
+
+    pedidoAtual.extras = [];
+
+
+    const checkboxes =
+        document.querySelectorAll(".extra-checkbox");
+
+
+    checkboxes.forEach(function (checkbox) {
+
+        if (checkbox.checked) {
+
+            pedidoAtual.extras.push({
+
+                nome: checkbox.dataset.name,
+
+                preco:
+                    Number(checkbox.dataset.price)
+
+            });
+
+        }
 
     });
 
 }
 
 
-/* =========================================
-   SERVIÇOS EXTRAS
-========================================= */
-
-function mostrarServicosExtras(
-    janela,
-    veiculo,
-    nomePacote,
-    precoPacote
-) {
-
-    janela.innerHTML = `
-
-        <div class="vehicle-box">
-
-            <p class="subtitle">
-                ETAPA 2 DE 5
-            </p>
-
-            <h2>
-                Personalize seu serviço
-            </h2>
-
-            <p>
-                ${veiculo} •
-                <strong>${nomePacote}</strong>
-            </p>
-
-            <div class="extras-container">
-
-                <label class="extra-item">
-
-                    <input
-                        type="checkbox"
-                        class="extra-checkbox"
-                        data-nome="Lavagem externa"
-                        data-preco="30"
-                    >
-
-                    <span>
-                        Lavagem externa
-                    </span>
-
-                    <strong>
-                        + R$ 30,00
-                    </strong>
-
-                </label>
-
-                <label class="extra-item">
-
-                    <input
-                        type="checkbox"
-                        class="extra-checkbox"
-                        data-nome="Higienização interna"
-                        data-preco="50"
-                    >
-
-                    <span>
-                        Higienização interna
-                    </span>
-
-                    <strong>
-                        + R$ 50,00
-                    </strong>
-
-                </label>
-
-                <label class="extra-item">
-
-                    <input
-                        type="checkbox"
-                        class="extra-checkbox"
-                        data-nome="Enceramento"
-                        data-preco="40"
-                    >
-
-                    <span>
-                        Enceramento
-                    </span>
-
-                    <strong>
-                        + R$ 40,00
-                    </strong>
-
-                </label>
-
-                <label class="extra-item">
-
-                    <input
-                        type="checkbox"
-                        class="extra-checkbox"
-                        data-nome="Polimento"
-                        data-preco="100"
-                    >
-
-                    <span>
-                        Polimento
-                    </span>
-
-                    <strong>
-                        + R$ 100,00
-                    </strong>
-
-                </label>
-
-            </div>
-
-            <div class="total-box">
-
-                <span>
-                    Total estimado
-                </span>
-
-                <strong id="total-servico">
-                    ${formatarMoeda(precoPacote)}
-                </strong>
-
-            </div>
-
-            <button
-                type="button"
-                class="select-btn"
-                id="continuar-extras"
-            >
-                CONTINUAR
-            </button>
-
-        </div>
-
-    `;
-
-    const checkboxes =
-        janela.querySelectorAll(
-            ".extra-checkbox"
-        );
-
-    const totalElemento =
-        janela.querySelector(
-            "#total-servico"
-        );
-
-    checkboxes.forEach(
-        function (checkbox) {
-
-            checkbox.addEventListener(
-                "change",
-                function () {
-
-                    let total =
-                        precoPacote;
-
-                    checkboxes.forEach(
-                        function (item) {
-
-                            if (item.checked) {
-
-                                total +=
-                                    parseFloat(
-                                        item.dataset.preco
-                                    );
-
-                            }
-
-                        }
-                    );
-
-                    totalElemento.textContent =
-                        formatarMoeda(total);
-
-                }
-            );
-
-        }
-    );
-
-    const botaoContinuar =
-        janela.querySelector(
-            "#continuar-extras"
-        );
-
-    botaoContinuar.addEventListener(
-        "click",
-        function () {
-
-            const extrasSelecionados =
-                [];
-
-            checkboxes.forEach(
-                function (checkbox) {
-
-                    if (checkbox.checked) {
-
-                        extrasSelecionados.push({
-
-                            nome:
-                                checkbox.dataset.nome,
-
-                            preco:
-                                parseFloat(
-                                    checkbox.dataset.preco
-                                )
-
-                        });
-
-                    }
-
-                }
-            );
-
-            let total =
-                precoPacote;
-
-            extrasSelecionados.forEach(
-                function (extra) {
-
-                    total += extra.preco;
-
-                }
-            );
-
-            mostrarAgendamento(
-                janela,
-                veiculo,
-                nomePacote,
-                precoPacote,
-                extrasSelecionados,
-                total
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
+/* =====================================================
    AGENDAMENTO
-========================================= */
+===================================================== */
 
-function mostrarAgendamento(
-    janela,
-    veiculo,
-    nomePacote,
-    precoPacote,
-    extrasSelecionados,
-    total
-) {
+function mostrarAgendamento() {
 
-    janela.innerHTML = `
+    const antigo =
+        document.getElementById("schedule-container");
 
-        <div class="vehicle-box">
+
+    if (antigo) {
+        antigo.remove();
+    }
+
+
+    const container =
+        document.createElement("section");
+
+
+    container.id =
+        "schedule-container";
+
+
+    container.className =
+        "schedule-section";
+
+
+    container.innerHTML = `
+
+        <div class="section-title">
 
             <p class="subtitle">
-                ETAPA 3 DE 5
+                PRÓXIMO PASSO
             </p>
 
             <h2>
-                Escolha o dia e horário
+                ESCOLHA O <span>HORÁRIO</span>
             </h2>
 
             <p>
-                Selecione quando deseja realizar o serviço.
+                Escolha a melhor data e horário para o atendimento.
             </p>
 
-            <div class="form-group">
+        </div>
 
-                <label>
-                    Data
-                </label>
 
-                <input
-                    type="date"
-                    id="data-agendamento"
-                    class="schedule-input"
-                >
+        <div class="schedule-form">
 
-            </div>
+            <label>
+                Data
+            </label>
 
-            <div class="form-group">
+            <input
+                type="date"
+                id="dataAgendamento"
+                class="schedule-input">
 
-                <label>
-                    Horário disponível
-                </label>
 
-                <div
-                    class="horarios-container"
-                    id="horarios-container"
-                ></div>
+            <label>
+                Horário
+            </label>
 
-            </div>
+            <select
+                id="horarioAgendamento"
+                class="schedule-input">
+
+                <option value="">
+                    Selecione um horário
+                </option>
+
+                <option value="08:00">
+                    08:00
+                </option>
+
+                <option value="09:00">
+                    09:00
+                </option>
+
+                <option value="10:00">
+                    10:00
+                </option>
+
+                <option value="11:00">
+                    11:00
+                </option>
+
+                <option value="13:00">
+                    13:00
+                </option>
+
+                <option value="14:00">
+                    14:00
+                </option>
+
+                <option value="15:00">
+                    15:00
+                </option>
+
+                <option value="16:00">
+                    16:00
+                </option>
+
+                <option value="17:00">
+                    17:00
+                </option>
+
+            </select>
+
 
             <button
                 type="button"
-                class="select-btn"
-                id="continuar-agendamento"
-            >
+                id="continuarAgendamento"
+                class="btn">
+
                 CONTINUAR
+
             </button>
 
         </div>
 
     `;
 
-    const inputData =
-        janela.querySelector(
-            "#data-agendamento"
+
+    document
+        .getElementById("extras-container")
+        .after(container);
+
+
+    const dataInput =
+        document.getElementById(
+            "dataAgendamento"
         );
 
-    const horariosContainer =
-        janela.querySelector(
-            "#horarios-container"
-        );
-
-    const botaoContinuar =
-        janela.querySelector(
-            "#continuar-agendamento"
-        );
 
     const hoje =
         new Date();
 
+
     const ano =
         hoje.getFullYear();
+
 
     const mes =
         String(
             hoje.getMonth() + 1
         ).padStart(2, "0");
 
+
     const dia =
         String(
             hoje.getDate()
         ).padStart(2, "0");
 
-    const dataAtual =
+
+    dataInput.min =
         `${ano}-${mes}-${dia}`;
 
-    inputData.min =
-        dataAtual;
 
-    const horarios = [
-
-        "08:00",
-        "09:00",
-        "10:00",
-        "11:00",
-        "13:00",
-        "14:00",
-        "15:00",
-        "16:00",
-        "17:00"
-
-    ];
-
-    let horarioSelecionado =
-        "";
-
-    function carregarHorarios(
-        dataSelecionada
-    ) {
-
-        horariosContainer.innerHTML =
-            "";
-
-        horarioSelecionado =
-            "";
-
-        if (!dataSelecionada) {
-            return;
-        }
-
-        const pedidosSalvos =
-            obterPedidosLocais();
-
-        const horariosOcupados =
-            pedidosSalvos
-                .filter(
-                    function (pedido) {
-
-                        return (
-                            pedido.data ===
-                            dataSelecionada
-                        );
-
-                    }
-                )
-                .map(
-                    function (pedido) {
-
-                        return pedido.horario;
-
-                    }
-                );
-
-        horarios.forEach(
-            function (horario) {
-
-                const botaoHorario =
-                    document.createElement(
-                        "button"
-                    );
-
-                botaoHorario.type =
-                    "button";
-
-                botaoHorario.classList.add(
-                    "vehicle-btn"
-                );
-
-                botaoHorario.textContent =
-                    horario;
-
-                if (
-                    horariosOcupados.includes(
-                        horario
-                    )
-                ) {
-
-                    botaoHorario.disabled =
-                        true;
-
-                    botaoHorario.textContent =
-                        `${horario} - Ocupado`;
-
-                } else {
-
-                    botaoHorario.addEventListener(
-                        "click",
-                        function () {
-
-                            horarioSelecionado =
-                                horario;
-
-                            const botoes =
-                                horariosContainer.querySelectorAll(
-                                    ".vehicle-btn"
-                                );
-
-                            botoes.forEach(
-                                function (botao) {
-
-                                    botao.classList.remove(
-                                        "horario-selecionado"
-                                    );
-
-                                }
-                            );
-
-                            botaoHorario.classList.add(
-                                "horario-selecionado"
-                            );
-
-                        }
-                    );
-
-                }
-
-                horariosContainer.appendChild(
-                    botaoHorario
-                );
-
-            }
+    document
+        .getElementById("continuarAgendamento")
+        .addEventListener(
+            "click",
+            validarAgendamento
         );
+
+
+    container.scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =====================================================
+   VALIDAR AGENDAMENTO
+===================================================== */
+
+function validarAgendamento() {
+
+    const data =
+        document.getElementById(
+            "dataAgendamento"
+        ).value;
+
+
+    const horario =
+        document.getElementById(
+            "horarioAgendamento"
+        ).value;
+
+
+    if (!data || !horario) {
+
+        alert(
+            "Selecione a data e o horário do atendimento."
+        );
+
+        return;
 
     }
 
-    inputData.addEventListener(
-        "change",
-        function () {
 
-            carregarHorarios(
-                inputData.value
-            );
+    pedidoAtual.data = data;
+    pedidoAtual.horario = horario;
 
-        }
-    );
 
-    botaoContinuar.addEventListener(
-        "click",
-        function () {
-
-            const data =
-                inputData.value;
-
-            if (!data) {
-
-                alert(
-                    "Escolha uma data."
-                );
-
-                return;
-            }
-
-            if (!horarioSelecionado) {
-
-                alert(
-                    "Escolha um horário disponível."
-                );
-
-                return;
-            }
-
-            const horarioJaOcupado =
-                obterPedidosLocais()
-                    .some(
-                        function (pedido) {
-
-                            return (
-                                pedido.data ===
-                                data &&
-                                pedido.horario ===
-                                horarioSelecionado
-                            );
-
-                        }
-                    );
-
-            if (horarioJaOcupado) {
-
-                alert(
-                    "Esse horário já foi ocupado. Escolha outro."
-                );
-
-                carregarHorarios(
-                    data
-                );
-
-                return;
-            }
-
-            mostrarDadosCliente(
-                janela,
-                veiculo,
-                nomePacote,
-                extrasSelecionados,
-                data,
-                horarioSelecionado,
-                total
-            );
-
-        }
-    );
+    mostrarFormularioCliente();
 
 }
 
 
-/* =========================================
-   DADOS DO CLIENTE
-========================================= */
+/* =====================================================
+   FORMULÁRIO DO CLIENTE
+===================================================== */
 
-function mostrarDadosCliente(
-    janela,
-    veiculo,
-    nomePacote,
-    extrasSelecionados,
-    data,
-    horario,
-    total
-) {
+function mostrarFormularioCliente() {
 
-    janela.innerHTML = `
-
-        <div class="vehicle-box">
-
-            <p class="subtitle">
-                ETAPA 4 DE 5
-            </p>
-
-            <h2>
-                Seus dados
-            </h2>
-
-            <p>
-                Preencha os dados para finalizar o agendamento.
-            </p>
-
-            <div class="form-group">
-
-                <label>
-                    Nome
-                </label>
-
-                <input
-                    type="text"
-                    id="nome-cliente"
-                    placeholder="Seu nome"
-                >
-
-            </div>
-
-            <div class="form-group">
-
-                <label>
-                    WhatsApp
-                </label>
-
-                <input
-                    type="tel"
-                    id="whatsapp-cliente"
-                    placeholder="(92) 99999-9999"
-                >
-
-            </div>
-
-            <div class="form-group">
-
-                <label>
-                    Modelo do veículo
-                </label>
-
-                <input
-                    type="text"
-                    id="modelo-veiculo"
-                    placeholder="Ex: Honda Civic"
-                >
-
-            </div>
-
-            <div class="form-group">
-
-                <label>
-                    Placa
-                </label>
-
-                <input
-                    type="text"
-                    id="placa-veiculo"
-                    placeholder="ABC1D23"
-                >
-
-            </div>
-
-            <button
-                type="button"
-                class="select-btn"
-                id="continuar-dados"
-            >
-                REVISAR PEDIDO
-            </button>
-
-        </div>
-
-    `;
-
-    const nomeInput =
-        janela.querySelector(
-            "#nome-cliente"
+    const antigo =
+        document.getElementById(
+            "customer-container"
         );
 
-    const whatsappInput =
-        janela.querySelector(
-            "#whatsapp-cliente"
-        );
 
-    const modeloInput =
-        janela.querySelector(
-            "#modelo-veiculo"
-        );
-
-    const placaInput =
-        janela.querySelector(
-            "#placa-veiculo"
-        );
-
-    const botaoContinuar =
-        janela.querySelector(
-            "#continuar-dados"
-        );
-
-    botaoContinuar.addEventListener(
-        "click",
-        function () {
-
-            const nome =
-                nomeInput.value.trim();
-
-            const whatsapp =
-                whatsappInput.value.trim();
-
-            const modelo =
-                modeloInput.value.trim();
-
-            const placa =
-                placaInput.value.trim();
-
-            if (
-                !nome ||
-                !whatsapp ||
-                !modelo ||
-                !placa
-            ) {
-
-                alert(
-                    "Preencha todos os campos."
-                );
-
-                return;
-            }
-
-            mostrarResumoPedido(
-                janela,
-                nome,
-                whatsapp,
-                modelo,
-                placa,
-                veiculo,
-                nomePacote,
-                extrasSelecionados,
-                data,
-                horario,
-                total
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   RESUMO MODERNO DO PEDIDO
-========================================= */
-
-function mostrarResumoPedido(
-    janela,
-    nome,
-    whatsapp,
-    modelo,
-    placa,
-    veiculo,
-    nomePacote,
-    extrasSelecionados,
-    data,
-    horario,
-    total
-) {
-
-    let listaExtras = "";
-
-    if (
-        extrasSelecionados.length ===
-        0
-    ) {
-
-        listaExtras = `
-
-            <div class="resumo-sem-extra">
-                Nenhum serviço adicional selecionado.
-            </div>
-
-        `;
-
-    } else {
-
-        listaExtras =
-            extrasSelecionados
-                .map(
-                    function (extra) {
-
-                        return `
-
-                            <div class="resumo-extra">
-
-                                <span>
-                                    ${extra.nome}
-                                </span>
-
-                                <strong>
-                                    ${formatarMoeda(
-                                        extra.preco
-                                    )}
-                                </strong>
-
-                            </div>
-
-                        `;
-
-                    }
-                )
-                .join("");
-
+    if (antigo) {
+        antigo.remove();
     }
 
-    janela.innerHTML = `
 
-        <div class="vehicle-box resumo-box">
+    const container =
+        document.createElement("section");
+
+
+    container.id =
+        "customer-container";
+
+
+    container.className =
+        "customer-section";
+
+
+    container.innerHTML = `
+
+        <div class="section-title">
 
             <p class="subtitle">
-                ETAPA 5 DE 5
+                ÚLTIMA ETAPA
             </p>
 
             <h2>
-                Revise seu pedido
+                SEUS <span>DADOS</span>
             </h2>
 
             <p>
-                Confira todos os detalhes antes de confirmar.
+                Informe seus dados para finalizar o pedido.
             </p>
-
-            <div class="resumo-pedido">
-
-                <div class="resumo-section">
-
-                    <div class="resumo-section-title">
-                        <span>👤</span>
-                        Cliente
-                    </div>
-
-                    <div class="resumo-item">
-
-                        <span>
-                            Nome
-                        </span>
-
-                        <strong>
-                            ${nome}
-                        </strong>
-
-                    </div>
-
-                    <div class="resumo-item">
-
-                        <span>
-                            WhatsApp
-                        </span>
-
-                        <strong>
-                            ${whatsapp}
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <div class="resumo-section">
-
-                    <div class="resumo-section-title">
-                        <span>🚗</span>
-                        Veículo
-                    </div>
-
-                    <div class="resumo-item">
-
-                        <span>
-                            Tipo
-                        </span>
-
-                        <strong>
-                            ${veiculo}
-                        </strong>
-
-                    </div>
-
-                    <div class="resumo-item">
-
-                        <span>
-                            Modelo
-                        </span>
-
-                        <strong>
-                            ${modelo}
-                        </strong>
-
-                    </div>
-
-                    <div class="resumo-item">
-
-                        <span>
-                            Placa
-                        </span>
-
-                        <strong>
-                            ${placa}
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <div class="resumo-section">
-
-                    <div class="resumo-section-title">
-                        <span>✨</span>
-                        Serviço
-                    </div>
-
-                    <div class="resumo-item">
-
-                        <span>
-                            Pacote
-                        </span>
-
-                        <strong>
-                            ${nomePacote}
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <div class="resumo-section">
-
-                    <div class="resumo-section-title">
-                        <span>➕</span>
-                        Serviços adicionais
-                    </div>
-
-                    <div class="resumo-extras">
-
-                        ${listaExtras}
-
-                    </div>
-
-                </div>
-
-
-                <div class="resumo-section">
-
-                    <div class="resumo-section-title">
-                        <span>📅</span>
-                        Agendamento
-                    </div>
-
-                    <div class="resumo-item">
-
-                        <span>
-                            Data
-                        </span>
-
-                        <strong>
-                            ${formatarData(data)}
-                        </strong>
-
-                    </div>
-
-                    <div class="resumo-item">
-
-                        <span>
-                            Horário
-                        </span>
-
-                        <strong>
-                            ${horario}
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <div class="resumo-total-final">
-
-                    <span>
-                        Total do serviço
-                    </span>
-
-                    <strong>
-                        ${formatarMoeda(total)}
-                    </strong>
-
-                </div>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="select-btn"
-                id="confirmar-pedido"
-            >
-                ✓ CONFIRMAR AGENDAMENTO
-            </button>
 
         </div>
 
-    `;
 
-    const botaoConfirmar =
-        janela.querySelector(
-            "#confirmar-pedido"
-        );
+        <form id="customerForm" class="customer-form">
 
-    botaoConfirmar.addEventListener(
-        "click",
-        async function () {
+            <label>
+                Nome
+            </label>
 
-            botaoConfirmar.disabled =
-                true;
+            <input
+                type="text"
+                id="nomeCliente"
+                required
+                placeholder="Seu nome">
 
-            botaoConfirmar.textContent =
-                "SALVANDO AGENDAMENTO...";
 
-            const horarioJaOcupado =
-                obterPedidosLocais()
-                    .some(
-                        function (pedido) {
+            <label>
+                WhatsApp
+            </label>
 
-                            return (
-                                pedido.data ===
-                                data &&
-                                pedido.horario ===
-                                horario
-                            );
+            <input
+                type="tel"
+                id="whatsappCliente"
+                required
+                placeholder="(92) 99999-9999">
 
-                        }
-                    );
 
-            if (horarioJaOcupado) {
+            <label>
+                Modelo do veículo
+            </label>
 
-                alert(
-                    "Esse horário já foi reservado. Escolha outro."
-                );
+            <input
+                type="text"
+                id="modeloVeiculo"
+                required
+                placeholder="Ex: Toyota Corolla">
 
-                botaoConfirmar.disabled =
-                    false;
 
-                botaoConfirmar.textContent =
-                    "✓ CONFIRMAR AGENDAMENTO";
+            <label>
+                Placa
+            </label>
 
-                return;
-            }
+            <input
+                type="text"
+                id="placaVeiculo"
+                required
+                placeholder="ABC-1234">
 
-            const pedido = {
-
-                nome:
-                    nome,
-
-                whatsapp:
-                    whatsapp,
-
-                modelo:
-                    modelo,
-
-                placa:
-                    placa,
-
-                veiculo:
-                    veiculo,
-
-                pacote:
-                    nomePacote,
-
-                extras:
-                    extrasSelecionados,
-
-                data:
-                    data,
-
-                horario:
-                    horario,
-
-                total:
-                    total,
-
-                status:
-                    "Agendado"
-
-            };
-
-            try {
-
-                const resultado =
-                    await window.supabaseClient
-                        .from("pedidos")
-                        .insert(pedido);
-
-                if (
-                    resultado.error
-                ) {
-
-                    console.error(
-                        "Erro ao salvar pedido:",
-                        resultado.error
-                    );
-
-                    alert(
-                        "Não foi possível salvar o pedido. Verifique a conexão com o sistema."
-                    );
-
-                    botaoConfirmar.disabled =
-                        false;
-
-                    botaoConfirmar.textContent =
-                        "✓ CONFIRMAR AGENDAMENTO";
-
-                    return;
-                }
-
-                const pedidoLocal = {
-
-                    id:
-                        Date.now(),
-
-                    ...pedido
-
-                };
-
-                salvarBackupLocal(
-                    pedidoLocal
-                );
-
-                mostrarSucessoAgendamento(
-                    janela,
-                    pedidoLocal
-                );
-
-            } catch (erro) {
-
-                console.error(
-                    "Erro inesperado ao salvar pedido:",
-                    erro
-                );
-
-                alert(
-                    "Não foi possível salvar o pedido. Verifique a conexão com o sistema."
-                );
-
-                botaoConfirmar.disabled =
-                    false;
-
-                botaoConfirmar.textContent =
-                    "✓ CONFIRMAR AGENDAMENTO";
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   SUCESSO DO AGENDAMENTO
-========================================= */
-
-function mostrarSucessoAgendamento(
-    janela,
-    pedido
-) {
-
-    janela.innerHTML = `
-
-        <div class="vehicle-box">
-
-            <div class="sucesso-icon">
-                ✓
-            </div>
-
-            <h2 class="sucesso-titulo">
-                Agendamento confirmado!
-            </h2>
-
-            <p class="sucesso-texto">
-                Seu pedido foi registrado com sucesso.
-            </p>
-
-            <div class="sucesso-destaque">
-
-                <span>
-                    DATA E HORÁRIO
-                </span>
-
-                <strong>
-                    ${formatarData(pedido.data)}
-                    às
-                    ${pedido.horario}
-                </strong>
-
-            </div>
-
-            <div class="resumo-section">
-
-                <div class="resumo-section-title">
-                    <span>🚗</span>
-                    Resumo
-                </div>
-
-                <div class="resumo-item">
-
-                    <span>
-                        Veículo
-                    </span>
-
-                    <strong>
-                        ${pedido.veiculo}
-                    </strong>
-
-                </div>
-
-                <div class="resumo-item">
-
-                    <span>
-                        Modelo
-                    </span>
-
-                    <strong>
-                        ${pedido.modelo}
-                    </strong>
-
-                </div>
-
-                <div class="resumo-item">
-
-                    <span>
-                        Pacote
-                    </span>
-
-                    <strong>
-                        ${pedido.pacote}
-                    </strong>
-
-                </div>
-
-                <div class="resumo-item">
-
-                    <span>
-                        Total
-                    </span>
-
-                    <strong>
-                        ${formatarMoeda(
-                            Number(pedido.total)
-                        )}
-                    </strong>
-
-                </div>
-
-            </div>
-
-            <p class="sucesso-texto">
-                A GD Lava Rápido já recebeu seu pedido.
-            </p>
 
             <button
-                type="button"
-                class="select-btn"
-                id="fechar-sucesso"
-            >
-                CONCLUIR
+                type="submit"
+                class="btn">
+
+                FINALIZAR AGENDAMENTO
+
             </button>
 
-        </div>
+        </form>
 
     `;
 
-    const botaoFechar =
-        janela.querySelector(
-            "#fechar-sucesso"
+
+    const schedule =
+        document.getElementById(
+            "schedule-container"
         );
 
-    botaoFechar.addEventListener(
-        "click",
-        function () {
 
-            janela.remove();
-
-        }
-    );
-
-}
+    schedule.after(container);
 
 
-/* =========================================
-   BACKUP LOCAL
-========================================= */
+    document
+        .getElementById("customerForm")
+        .addEventListener(
+            "submit",
+            finalizarPedido
+        );
 
-function salvarBackupLocal(
-    pedido
-) {
 
-    const pedidosSalvos =
-        obterPedidosLocais();
-
-    pedidosSalvos.push(
-        pedido
-    );
-
-    localStorage.setItem(
-        "pedidosGD",
-        JSON.stringify(
-            pedidosSalvos
-        )
-    );
+    container.scrollIntoView({
+        behavior: "smooth"
+    });
 
 }
 
 
-/* =========================================
-   OBTER PEDIDOS LOCAIS
-========================================= */
+/* =====================================================
+   FINALIZAR PEDIDO
+===================================================== */
 
-function obterPedidosLocais() {
+async function finalizarPedido(event) {
+
+    event.preventDefault();
+
+
+    pedidoAtual.nome =
+        document.getElementById(
+            "nomeCliente"
+        ).value.trim();
+
+
+    pedidoAtual.whatsapp =
+        document.getElementById(
+            "whatsappCliente"
+        ).value.trim();
+
+
+    pedidoAtual.modelo =
+        document.getElementById(
+            "modeloVeiculo"
+        ).value.trim();
+
+
+    pedidoAtual.placa =
+        document.getElementById(
+            "placaVeiculo"
+        ).value.trim();
+
+
+    const pedido = {
+
+        nome:
+            pedidoAtual.nome,
+
+        whatsapp:
+            pedidoAtual.whatsapp,
+
+        modelo:
+            pedidoAtual.modelo,
+
+        placa:
+            pedidoAtual.placa,
+
+        veiculo:
+            pedidoAtual.veiculo,
+
+        pacote:
+            pedidoAtual.pacote,
+
+        extras:
+            pedidoAtual.extras,
+
+        data:
+            pedidoAtual.data,
+
+        horario:
+            pedidoAtual.horario,
+
+        total:
+            pedidoAtual.total,
+
+        status:
+            "Agendado"
+
+    };
+
 
     try {
 
-        return (
-            JSON.parse(
-                localStorage.getItem(
-                    "pedidosGD"
-                )
-            ) || []
+        const resultado =
+            await window.supabaseClient
+                .from("pedidos")
+                .insert(pedido);
+
+
+        if (resultado.error) {
+
+            console.error(
+                resultado.error
+            );
+
+            alert(
+                "Não foi possível salvar o pedido."
+            );
+
+            return;
+
+        }
+
+
+        salvarPedidoLocal(pedido);
+
+        mostrarSucesso(pedido);
+
+    }
+
+    catch (erro) {
+
+        console.error(erro);
+
+        alert(
+            "Ocorreu um erro ao finalizar o agendamento."
         );
-
-    } catch (erro) {
-
-        console.error(
-            "Erro ao ler pedidos locais:",
-            erro
-        );
-
-        return [];
 
     }
 
 }
 
 
-/* =========================================
-   FORMATAR MOEDA
-========================================= */
+/* =====================================================
+   SALVAR BACKUP LOCAL
+===================================================== */
 
-function formatarMoeda(
-    valor
-) {
+function salvarPedidoLocal(pedido) {
 
-    return Number(
-        valor
-    ).toLocaleString(
+    const pedidos =
+        JSON.parse(
+            localStorage.getItem(
+                "pedidosGD"
+            ) || "[]"
+        );
+
+
+    pedidos.push({
+
+        ...pedido,
+
+        created_at:
+            new Date().toISOString()
+
+    });
+
+
+    localStorage.setItem(
+        "pedidosGD",
+        JSON.stringify(pedidos)
+    );
+
+}
+
+
+/* =====================================================
+   TELA DE SUCESSO
+===================================================== */
+
+function mostrarSucesso(pedido) {
+
+    const customer =
+        document.getElementById(
+            "customer-container"
+        );
+
+
+    if (customer) {
+        customer.remove();
+    }
+
+
+    const success =
+        document.createElement("section");
+
+
+    success.className =
+        "success-section";
+
+
+    success.innerHTML = `
+
+        <div class="resumo-box">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <p class="subtitle">
+                AGENDAMENTO REALIZADO
+            </p>
+
+            <h2>
+                PEDIDO <span>CONFIRMADO!</span>
+            </h2>
+
+            <p>
+                Obrigado, ${pedido.nome}.
+                Seu atendimento foi registrado.
+            </p>
+
+
+            <div class="resumo-dados">
+
+                <p>
+                    <strong>Veículo:</strong>
+                    ${pedido.veiculo}
+                </p>
+
+                <p>
+                    <strong>Pacote:</strong>
+                    ${pedido.pacote}
+                </p>
+
+                <p>
+                    <strong>Data:</strong>
+                    ${formatarData(pedido.data)}
+                </p>
+
+                <p>
+                    <strong>Horário:</strong>
+                    ${pedido.horario}
+                </p>
+
+                <p>
+                    <strong>Total:</strong>
+                    ${formatarMoeda(pedido.total)}
+                </p>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    document
+        .querySelector("main")
+        .appendChild(success);
+
+
+    success.scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =====================================================
+   FORMATAÇÃO DE MOEDA
+===================================================== */
+
+function formatarMoeda(valor) {
+
+    return Number(valor).toLocaleString(
         "pt-BR",
         {
-            style:
-                "currency",
-
-            currency:
-                "BRL"
+            style: "currency",
+            currency: "BRL"
         }
     );
 
 }
 
 
-/* =========================================
-   FORMATAR DATA
-========================================= */
+/* =====================================================
+   FORMATAÇÃO DE DATA
+===================================================== */
 
-function formatarData(
-    data
-) {
+function formatarData(data) {
 
     if (!data) {
         return "";
     }
 
+
     const partes =
         data.split("-");
 
-    if (
-        partes.length !== 3
-    ) {
 
+    if (partes.length !== 3) {
         return data;
-
     }
 
-    return (
-        `${partes[2]}/${partes[1]}/${partes[0]}`
-    );
+
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
 
 }
