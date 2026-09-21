@@ -1542,3 +1542,136 @@ footer p {
 body.modal-open {
     overflow: hidden;
 }
+
+/* =========================================
+   OPÇÕES DE VEÍCULO - MODELO ANTIGO
+========================================= */
+
+.vehicle-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 9999;
+}
+
+.vehicle-modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    padding: 30px;
+    background: #151515;
+    border: 1px solid #333;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.modal-header h2 {
+    margin: 5px 0 8px;
+    font-size: 24px;
+}
+
+.modal-header p:last-child {
+    color: #999;
+    font-size: 14px;
+}
+
+
+/* BOTÃO X */
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+
+    width: 32px;
+    height: 32px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #222;
+    color: #fff;
+
+    font-size: 22px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    background: #c9a227;
+    color: #000;
+}
+
+
+/* OPÇÕES */
+
+.vehicle-selection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.vehicle-box {
+    min-height: 120px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    border: 1px solid #333;
+    border-radius: 10px;
+
+    background: #1d1d1d;
+    color: #fff;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.vehicle-box:hover {
+    border-color: #c9a227;
+    background: #242424;
+    transform: translateY(-2px);
+}
+
+.vehicle-icon {
+    font-size: 34px;
+}
+
+.vehicle-box strong {
+    font-size: 17px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 500px) {
+
+    .vehicle-modal-content {
+        max-width: 340px;
+        padding: 25px 20px;
+    }
+
+    .vehicle-selection {
+        grid-template-columns: 1fr;
+    }
+
+    .vehicle-box {
+        min-height: 90px;
+    }
+
+}
