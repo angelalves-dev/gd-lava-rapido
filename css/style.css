@@ -1,6 +1,30 @@
-/* =========================================
+/* =========================================================
+   GD LAVA RÁPIDO
+   ESTILO PREMIUM / PROFISSIONAL
+========================================================= */
+
+:root {
+    --bg: #08090a;
+    --bg-soft: #101214;
+    --card: #151719;
+    --card-light: #1b1e21;
+
+    --gold: #c9a227;
+    --gold-light: #e1c45c;
+    --gold-dark: #9f7d16;
+
+    --white: #ffffff;
+    --text: #eeeeee;
+    --muted: #92969a;
+    --border: rgba(255, 255, 255, 0.08);
+
+    --radius: 16px;
+    --transition: 0.25s ease;
+}
+
+/* =========================================================
    RESET
-========================================= */
+========================================================= */
 
 * {
     margin: 0;
@@ -14,18 +38,13 @@ html {
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #0d0d0d;
-    color: #ffffff;
+    background: var(--bg);
+    color: var(--white);
     line-height: 1.6;
 }
 
 body.modal-open {
     overflow: hidden;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
 }
 
 button,
@@ -39,25 +58,38 @@ button {
     cursor: pointer;
 }
 
-/* =========================================
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* =========================================================
    HEADER
-========================================= */
+========================================================= */
 
 header {
     position: fixed;
     top: 0;
     left: 0;
+
     width: 100%;
+
     z-index: 1000;
-    background: rgba(13, 13, 13, 0.95);
-    border-bottom: 1px solid #222;
-    backdrop-filter: blur(10px);
+
+    background: rgba(8, 9, 10, 0.88);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .header-container {
-    max-width: 1200px;
+    max-width: 1180px;
+
     margin: 0 auto;
-    padding: 18px 25px;
+
+    padding: 18px 28px;
 
     display: flex;
     align-items: center;
@@ -65,34 +97,68 @@ header {
 }
 
 .logo {
-    color: #c9a227;
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: 1px;
+    color: var(--white);
+
+    font-size: 20px;
+    font-weight: 900;
+
+    letter-spacing: 2px;
+}
+
+.logo::after {
+    content: ".";
+    color: var(--gold);
 }
 
 nav {
     display: flex;
-    gap: 25px;
+    align-items: center;
+    gap: 30px;
 }
 
 nav a {
-    color: #ffffff;
-    font-size: 14px;
-    transition: 0.2s ease;
+    position: relative;
+
+    color: #c9c9c9;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: var(--transition);
+}
+
+nav a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -7px;
+
+    width: 0;
+    height: 2px;
+
+    background: var(--gold);
+
+    transition: var(--transition);
 }
 
 nav a:hover {
-    color: #c9a227;
+    color: var(--white);
 }
 
-/* =========================================
+nav a:hover::after {
+    width: 100%;
+}
+
+/* =========================================================
    HERO
-========================================= */
+========================================================= */
 
 .hero {
     min-height: 100vh;
-    padding: 150px 25px 80px;
+
+    padding: 160px 25px 100px;
 
     display: flex;
     align-items: center;
@@ -100,325 +166,538 @@ nav a:hover {
 
     text-align: center;
 
+    position: relative;
+
+    overflow: hidden;
+
     background:
-        linear-gradient(
-            rgba(0, 0, 0, 0.72),
-            rgba(0, 0, 0, 0.85)
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(201, 162, 39, 0.12),
+            transparent 35%
         ),
         radial-gradient(
-            circle at center,
-            #333333 0%,
-            #111111 45%,
-            #080808 100%
+            circle at 10% 80%,
+            rgba(201, 162, 39, 0.05),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #090a0b 0%,
+            #111315 50%,
+            #070809 100%
         );
 }
 
+.hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 600px;
+    height: 600px;
+
+    border-radius: 50%;
+
+    background: rgba(201, 162, 39, 0.04);
+
+    filter: blur(80px);
+
+    top: -250px;
+    left: 50%;
+
+    transform: translateX(-50%);
+}
+
 .hero-content {
+    position: relative;
+
+    z-index: 2;
+
     max-width: 850px;
 }
 
 .hero .subtitle {
-    color: #c9a227;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    margin-bottom: 15px;
+    display: inline-block;
+
+    margin-bottom: 20px;
+
+    color: var(--gold-light);
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
 }
 
 .hero h1 {
-    font-size: clamp(38px, 7vw, 70px);
-    line-height: 1.05;
     margin-bottom: 25px;
+
+    font-size: clamp(42px, 7vw, 76px);
+
+    line-height: 0.98;
+
+    letter-spacing: -2px;
+}
+
+.hero h1::first-line {
+    color: var(--white);
 }
 
 .hero p {
     max-width: 650px;
-    margin: 0 auto 30px;
-    color: #b8b8b8;
+
+    margin: 0 auto 35px;
+
+    color: var(--muted);
+
     font-size: 17px;
 }
 
 .hero-button {
-    display: inline-block;
-    padding: 14px 28px;
-    border-radius: 8px;
-    background: #c9a227;
-    color: #000;
-    font-weight: 700;
-    transition: 0.2s ease;
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 190px;
+
+    padding: 15px 28px;
+
+    border: 1px solid var(--gold);
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        135deg,
+        var(--gold-light),
+        var(--gold)
+    );
+
+    color: #080808;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    box-shadow:
+        0 10px 35px rgba(201, 162, 39, 0.16);
+
+    transition: var(--transition);
 }
 
 .hero-button:hover {
-    background: #e0bd45;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 15px 40px rgba(201, 162, 39, 0.25);
 }
 
-/* =========================================
+/* =========================================================
    SEÇÕES
-========================================= */
+========================================================= */
 
 section {
-    padding: 90px 25px;
+    padding: 105px 25px;
 }
 
 .section-container {
-    max-width: 1200px;
+    max-width: 1180px;
+
     margin: 0 auto;
 }
 
 .section-header {
     text-align: center;
-    margin-bottom: 50px;
+
+    max-width: 700px;
+
+    margin: 0 auto 55px;
 }
 
 .section-header .subtitle {
-    color: #c9a227;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    margin-bottom: 8px;
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: var(--gold-light);
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 2.5px;
+
+    text-transform: uppercase;
 }
 
 .section-header h2 {
-    font-size: 35px;
+    font-size: clamp(30px, 4vw, 43px);
+
+    line-height: 1.1;
+
+    margin-bottom: 14px;
+
+    letter-spacing: -1px;
 }
 
 .section-header p {
-    max-width: 650px;
-    margin: 12px auto 0;
-    color: #999;
+    color: var(--muted);
+
+    font-size: 15px;
 }
 
-/* =========================================
+/* =========================================================
    SERVIÇOS
-========================================= */
+========================================================= */
 
 .services {
-    background: #111111;
+    position: relative;
+
+    background:
+        linear-gradient(
+            180deg,
+            #0c0d0f 0%,
+            #101214 100%
+        );
 }
 
 .services-grid {
-    max-width: 1050px;
+    max-width: 1100px;
+
     margin: 0 auto;
 
     display: grid;
+
     grid-template-columns: repeat(3, 1fr);
+
     gap: 22px;
+
+    align-items: stretch;
 }
 
 .service-card {
     position: relative;
 
-    padding: 30px 25px;
+    display: flex;
 
-    background: #181818;
-    border: 1px solid #292929;
-    border-radius: 14px;
+    flex-direction: column;
 
-    transition: 0.25s ease;
+    padding: 32px 28px;
+
+    min-height: 430px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.045),
+            rgba(255,255,255,0.015)
+        );
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,0.20);
+
+    transition: var(--transition);
 }
 
 .service-card:hover {
-    transform: translateY(-5px);
-    border-color: #c9a227;
+    transform: translateY(-7px);
+
+    border-color: rgba(201, 162, 39, 0.45);
+
+    box-shadow:
+        0 20px 55px rgba(0,0,0,0.35);
 }
 
 .service-card.featured {
-    border-color: #c9a227;
+    border-color: rgba(201, 162, 39, 0.65);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(201,162,39,0.09),
+            rgba(255,255,255,0.02)
+        );
 }
 
 .service-card .badge {
     position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
 
-    padding: 5px 12px;
+    top: 18px;
+    right: 18px;
 
-    background: #c9a227;
-    color: #000;
+    padding: 6px 10px;
 
     border-radius: 20px;
 
-    font-size: 10px;
+    background: rgba(201, 162, 39, 0.13);
+
+    border: 1px solid rgba(201, 162, 39, 0.35);
+
+    color: var(--gold-light);
+
+    font-size: 9px;
+
     font-weight: 800;
-    white-space: nowrap;
+
+    letter-spacing: 0.8px;
 }
 
 .service-card h3 {
-    font-size: 24px;
     margin-bottom: 8px;
+
+    font-size: 25px;
+
+    font-weight: 800;
 }
 
 .service-card .price {
-    color: #c9a227;
-    font-size: 27px;
-    font-weight: 800;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+
+    color: var(--gold-light);
+
+    font-size: 30px;
+
+    font-weight: 900;
 }
 
 .service-card ul {
     list-style: none;
-    margin-bottom: 25px;
+
+    margin-bottom: 30px;
 }
 
 .service-card li {
     position: relative;
-    padding-left: 20px;
-    margin-bottom: 10px;
-    color: #bbb;
+
+    padding-left: 25px;
+
+    margin-bottom: 12px;
+
+    color: #b7b9bb;
+
     font-size: 14px;
 }
 
 .service-card li::before {
     content: "✓";
+
     position: absolute;
+
     left: 0;
-    color: #c9a227;
-    font-weight: bold;
+    top: 0;
+
+    color: var(--gold-light);
+
+    font-weight: 900;
 }
 
 .select-btn {
     width: 100%;
-    padding: 13px 18px;
 
-    border: 1px solid #c9a227;
-    border-radius: 8px;
+    margin-top: auto;
+
+    padding: 14px 18px;
+
+    border: 1px solid rgba(201, 162, 39, 0.55);
+
+    border-radius: 9px;
 
     background: transparent;
-    color: #c9a227;
 
-    font-weight: 700;
+    color: var(--gold-light);
 
-    transition: 0.2s ease;
+    font-size: 13px;
+
+    font-weight: 800;
+
+    transition: var(--transition);
 }
 
 .select-btn:hover {
-    background: #c9a227;
-    color: #000;
+    background: var(--gold);
+
+    color: #080808;
+
+    border-color: var(--gold);
+
+    transform: translateY(-2px);
 }
 
-/* =========================================
+/* =========================================================
    COMO FUNCIONA
-========================================= */
+========================================================= */
 
 .how-it-works {
-    background: #0d0d0d;
+    background: #08090a;
 }
 
 .steps {
-    max-width: 1000px;
+    max-width: 1050px;
+
     margin: 0 auto;
 
     display: grid;
+
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+
+    gap: 18px;
 }
 
 .step {
+    position: relative;
+
+    padding: 30px 20px;
+
     text-align: center;
-    padding: 25px 15px;
+
+    background: rgba(255,255,255,0.025);
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
 }
 
 .step-number {
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
 
-    margin: 0 auto 15px;
+    margin: 0 auto 18px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border: 1px solid #c9a227;
     border-radius: 50%;
 
-    color: #c9a227;
-    font-weight: 800;
+    background: rgba(201, 162, 39, 0.08);
+
+    border: 1px solid rgba(201, 162, 39, 0.4);
+
+    color: var(--gold-light);
+
+    font-size: 15px;
+
+    font-weight: 900;
 }
 
 .step h3 {
     margin-bottom: 8px;
-    font-size: 17px;
+
+    font-size: 16px;
 }
 
 .step p {
-    color: #999;
-    font-size: 14px;
+    color: var(--muted);
+
+    font-size: 13px;
 }
 
-/* =========================================
+/* =========================================================
    CONTATO
-========================================= */
+========================================================= */
 
 .contact {
-    background: #111111;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(201,162,39,0.08),
+            transparent 50%
+        ),
+        #101214;
+
     text-align: center;
 }
 
 .contact-content {
-    max-width: 700px;
+    max-width: 650px;
+
     margin: 0 auto;
 }
 
+.contact-content h2 {
+    font-size: 38px;
+
+    margin-bottom: 15px;
+}
+
 .contact-content p {
-    color: #999;
-    margin: 15px 0 25px;
+    margin-bottom: 28px;
+
+    color: var(--muted);
 }
 
 .whatsapp-button {
-    display: inline-block;
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
 
     padding: 14px 28px;
 
-    background: #c9a227;
+    border-radius: 9px;
+
+    background: var(--gold);
+
     color: #000;
 
-    border-radius: 8px;
+    font-weight: 800;
 
-    font-weight: 700;
-
-    transition: 0.2s ease;
+    transition: var(--transition);
 }
 
 .whatsapp-button:hover {
-    background: #e0bd45;
-    transform: translateY(-2px);
+    background: var(--gold-light);
+
+    transform: translateY(-3px);
 }
 
-/* =========================================
+/* =========================================================
    FOOTER
-========================================= */
+========================================================= */
 
 footer {
     padding: 30px 20px;
 
-    background: #080808;
+    background: #060708;
 
-    border-top: 1px solid #222;
+    border-top: 1px solid var(--border);
 
     text-align: center;
 
-    color: #777;
-    font-size: 13px;
+    color: #666;
+
+    font-size: 12px;
 }
 
-/* =========================================
-   MODAL DO VEÍCULO
-========================================= */
+/* =========================================================
+   MODAL VEÍCULO
+========================================================= */
 
 .vehicle-modal {
     position: fixed;
+
     inset: 0;
 
     display: none;
 
     align-items: center;
+
     justify-content: center;
 
     padding: 20px;
 
-    background: rgba(0, 0, 0, 0.80);
+    background:
+        rgba(0, 0, 0, 0.82);
+
+    backdrop-filter: blur(8px);
+
+    -webkit-backdrop-filter: blur(8px);
 
     z-index: 9999;
 }
@@ -427,115 +706,139 @@ footer {
     position: relative;
 
     width: 100%;
-    max-width: 400px;
 
-    padding: 30px 25px;
+    max-width: 440px;
 
-    background: #151515;
+    padding: 38px 30px 32px;
 
-    border: 1px solid #333;
+    background:
+        linear-gradient(
+            145deg,
+            #191b1e,
+            #101214
+        );
 
-    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.10);
 
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+    border-radius: 20px;
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,0.65);
+
+    animation: modalEntrada 0.25s ease;
 }
 
-/* =========================================
+@keyframes modalEntrada {
+
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* =========================================================
    BOTÃO X
-========================================= */
+========================================================= */
 
 .modal-close {
     position: absolute;
 
-    top: 10px;
-    right: 10px;
+    top: 15px;
+    right: 15px;
 
     width: 36px;
     height: 36px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     padding: 0;
 
-    border: 1px solid #444;
+    border: 1px solid rgba(255,255,255,0.10);
+
     border-radius: 50%;
 
-    background: #222;
+    background: #202326;
 
     color: #ffffff;
 
-    font-size: 25px;
-    font-weight: 400;
+    font-size: 23px;
 
     line-height: 1;
 
     cursor: pointer;
 
-    z-index: 10000;
+    z-index: 20;
 
-    transition: 0.2s ease;
+    transition: var(--transition);
 }
 
 .modal-close:hover {
-    background: #c9a227;
-    border-color: #c9a227;
+    background: var(--gold);
+
+    border-color: var(--gold);
+
     color: #000;
 
-    transform: scale(1.05);
+    transform: rotate(90deg);
 }
 
-/* =========================================
-   CABEÇALHO DO MODAL
-========================================= */
+/* =========================================================
+   CABEÇALHO MODAL
+========================================================= */
 
 .modal-header {
     text-align: center;
 
-    margin-bottom: 25px;
+    margin-bottom: 28px;
 
-    padding: 0 35px 0 10px;
+    padding: 0 30px;
 }
 
 .modal-header .subtitle {
-    color: #c9a227;
-
-    font-size: 11px;
-
-    font-weight: 700;
-
-    letter-spacing: 1.5px;
-
     margin-bottom: 7px;
+
+    color: var(--gold-light);
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
 }
 
 .modal-header h2 {
-    margin: 0 0 8px;
+    margin-bottom: 7px;
 
     color: #ffffff;
 
-    font-size: 23px;
+    font-size: 25px;
+
+    line-height: 1.2;
 }
 
 .modal-header p:last-child {
-    margin: 0;
+    color: #8f9397;
 
-    color: #999;
-
-    font-size: 14px;
+    font-size: 13px;
 }
 
-/* =========================================
-   ESCOLHA CARRO / MOTO
-========================================= */
+/* =========================================================
+   CARRO / MOTO
+========================================================= */
 
 .vehicle-selection {
     display: flex;
 
-    justify-content: center;
-
     align-items: center;
+    justify-content: center;
 
     gap: 14px;
 
@@ -543,90 +846,113 @@ footer {
 }
 
 .vehicle-box {
-    width: 135px;
-    min-width: 135px;
-
-    height: 115px;
+    width: 145px;
+    height: 125px;
 
     display: flex;
 
     flex-direction: column;
 
     align-items: center;
-
     justify-content: center;
 
-    gap: 8px;
+    gap: 10px;
 
-    padding: 10px;
+    padding: 15px;
 
-    border: 1px solid #333;
+    border: 1px solid rgba(255,255,255,0.09);
 
-    border-radius: 10px;
+    border-radius: 13px;
 
-    background: #1d1d1d;
+    background:
+        linear-gradient(
+            145deg,
+            #202326,
+            #17191b
+        );
 
     color: #ffffff;
 
-    cursor: pointer;
-
-    transition: 0.2s ease;
+    transition: var(--transition);
 }
 
 .vehicle-box:hover {
-    border-color: #c9a227;
+    border-color: var(--gold);
 
-    background: #242424;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(201,162,39,0.14),
+            #181a1c
+        );
 
-    transform: translateY(-2px);
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,0.3);
 }
 
 .vehicle-icon {
-    font-size: 30px;
+    font-size: 34px;
+
+    line-height: 1;
 }
 
 .vehicle-box strong {
     font-size: 15px;
 
-    font-weight: 600;
+    font-weight: 700;
 }
 
-/* =========================================
+/* =========================================================
    EXTRAS
-========================================= */
+========================================================= */
 
 .extras-container {
-    margin-top: 20px;
+    margin-top: 25px;
 }
 
 .extras-container h3 {
     margin-bottom: 15px;
+
+    font-size: 18px;
 }
 
 .extra-service {
     display: flex;
+
     align-items: center;
     justify-content: space-between;
 
     gap: 15px;
 
-    padding: 14px;
+    padding: 14px 16px;
 
-    margin-bottom: 10px;
+    margin-bottom: 9px;
 
-    background: #1b1b1b;
+    background: #181a1c;
 
-    border: 1px solid #303030;
+    border: 1px solid rgba(255,255,255,0.07);
 
-    border-radius: 8px;
+    border-radius: 10px;
+
+    transition: var(--transition);
+}
+
+.extra-service:hover {
+    border-color: rgba(201,162,39,0.35);
 }
 
 .extra-service label {
     display: flex;
+
     align-items: center;
+
     gap: 10px;
 
-    color: #ddd;
+    color: #d4d4d4;
+
+    font-size: 13px;
 
     cursor: pointer;
 }
@@ -635,56 +961,71 @@ footer {
     width: 17px;
     height: 17px;
 
-    accent-color: #c9a227;
+    accent-color: var(--gold);
 }
 
 .extra-price {
-    color: #c9a227;
-    font-weight: 700;
+    color: var(--gold-light);
+
+    font-size: 13px;
+
+    font-weight: 800;
 }
 
-/* =========================================
-   BOTÕES
-========================================= */
+/* =========================================================
+   BOTÕES DO SISTEMA
+========================================================= */
 
 .continue-btn,
 .next-btn,
 .confirm-btn {
     width: 100%;
 
-    padding: 14px 18px;
-
     margin-top: 20px;
+
+    padding: 14px 18px;
 
     border: none;
 
-    border-radius: 8px;
+    border-radius: 9px;
 
-    background: #c9a227;
+    background:
+        linear-gradient(
+            135deg,
+            var(--gold-light),
+            var(--gold)
+        );
 
-    color: #000;
+    color: #080808;
 
-    font-weight: 700;
+    font-size: 13px;
 
-    transition: 0.2s ease;
+    font-weight: 900;
+
+    transition: var(--transition);
 }
 
 .continue-btn:hover,
 .next-btn:hover,
 .confirm-btn:hover {
-    background: #e0bd45;
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(201,162,39,0.18);
 }
 
-/* =========================================
+/* =========================================================
    AGENDAMENTO
-========================================= */
+========================================================= */
 
 .schedule-container {
-    margin-top: 20px;
+    margin-top: 25px;
 }
 
 .schedule-container h3 {
     margin-bottom: 15px;
+
+    font-size: 18px;
 }
 
 .schedule-grid {
@@ -692,49 +1033,53 @@ footer {
 
     grid-template-columns: repeat(2, 1fr);
 
-    gap: 10px;
+    gap: 9px;
 }
 
 .schedule-option {
-    padding: 12px;
+    padding: 13px;
 
-    border: 1px solid #333;
+    border: 1px solid rgba(255,255,255,0.08);
 
-    border-radius: 8px;
+    border-radius: 9px;
 
-    background: #1b1b1b;
+    background: #181a1c;
 
-    color: #fff;
-
-    cursor: pointer;
+    color: #ddd;
 
     text-align: center;
 
-    transition: 0.2s ease;
+    transition: var(--transition);
 }
 
 .schedule-option:hover {
-    border-color: #c9a227;
+    border-color: var(--gold);
+
+    color: var(--gold-light);
 }
 
 .schedule-option.selected {
-    background: #c9a227;
+    background: var(--gold);
+
+    border-color: var(--gold);
 
     color: #000;
 
-    border-color: #c9a227;
+    font-weight: 800;
 }
 
-/* =========================================
-   FORMULÁRIO DO CLIENTE
-========================================= */
+/* =========================================================
+   FORMULÁRIO
+========================================================= */
 
 .customer-container {
-    margin-top: 20px;
+    margin-top: 25px;
 }
 
 .customer-container h3 {
     margin-bottom: 15px;
+
+    font-size: 18px;
 }
 
 .customer-form {
@@ -742,13 +1087,17 @@ footer {
 
     flex-direction: column;
 
-    gap: 12px;
+    gap: 8px;
 }
 
 .customer-form label {
-    color: #ccc;
+    margin-top: 7px;
 
-    font-size: 13px;
+    color: #b9b9b9;
+
+    font-size: 12px;
+
+    font-weight: 600;
 }
 
 .customer-form input,
@@ -756,103 +1105,121 @@ footer {
 .customer-form textarea {
     width: 100%;
 
-    padding: 13px;
+    padding: 13px 14px;
 
-    border: 1px solid #333;
+    border: 1px solid rgba(255,255,255,0.09);
 
-    border-radius: 8px;
+    border-radius: 9px;
 
     outline: none;
 
-    background: #1b1b1b;
+    background: #181a1c;
 
-    color: #fff;
+    color: #ffffff;
 
     font-size: 14px;
+
+    transition: var(--transition);
+}
+
+.customer-form input::placeholder,
+.customer-form textarea::placeholder {
+    color: #666;
 }
 
 .customer-form input:focus,
 .customer-form select:focus,
 .customer-form textarea:focus {
-    border-color: #c9a227;
+    border-color: var(--gold);
+
+    box-shadow:
+        0 0 0 3px rgba(201,162,39,0.08);
 }
 
-/* =========================================
-   RESUMO DO PEDIDO
-========================================= */
+/* =========================================================
+   RESUMO
+========================================================= */
 
 .order-summary {
-    margin-top: 20px;
+    margin-top: 25px;
 
     padding: 20px;
 
-    background: #1b1b1b;
+    background: #181a1c;
 
-    border: 1px solid #333;
+    border: 1px solid rgba(255,255,255,0.08);
 
-    border-radius: 10px;
+    border-radius: 12px;
 }
 
 .order-summary h3 {
     margin-bottom: 15px;
 
-    color: #c9a227;
+    color: var(--gold-light);
+
+    font-size: 18px;
 }
 
 .summary-item {
     display: flex;
 
+    align-items: center;
     justify-content: space-between;
 
     gap: 20px;
 
-    padding: 8px 0;
+    padding: 10px 0;
 
-    border-bottom: 1px solid #292929;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
 
-    color: #ccc;
+    color: #aaa;
 
-    font-size: 14px;
+    font-size: 13px;
+}
+
+.summary-item strong {
+    color: #ddd;
 }
 
 .summary-total {
     display: flex;
 
+    align-items: center;
     justify-content: space-between;
 
     margin-top: 15px;
 
     color: #fff;
 
-    font-size: 20px;
+    font-size: 19px;
 
-    font-weight: 800;
+    font-weight: 900;
 }
 
 .summary-total strong {
-    color: #c9a227;
+    color: var(--gold-light);
 }
 
-/* =========================================
+/* =========================================================
    CHECKLIST
-========================================= */
+========================================================= */
 
 .checklist {
     margin-top: 20px;
 
     padding: 20px;
 
-    background: #181818;
+    background: #181a1c;
 
-    border: 1px solid #333;
+    border: 1px solid rgba(255,255,255,0.08);
 
-    border-radius: 10px;
+    border-radius: 12px;
 }
 
 .checklist h3 {
-    color: #c9a227;
-
     margin-bottom: 15px;
+
+    color: var(--gold-light);
 }
 
 .checklist-item {
@@ -862,11 +1229,13 @@ footer {
 
     gap: 10px;
 
-    padding: 10px 0;
+    padding: 11px 0;
 
-    color: #ccc;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
 
-    border-bottom: 1px solid #292929;
+    color: #bbb;
+
+    font-size: 13px;
 }
 
 .checklist-item:last-child {
@@ -877,50 +1246,56 @@ footer {
     width: 17px;
     height: 17px;
 
-    accent-color: #c9a227;
+    accent-color: var(--gold);
 }
 
-/* =========================================
+/* =========================================================
    STATUS
-========================================= */
+========================================================= */
 
 .status {
-    display: inline-block;
+    display: inline-flex;
+
+    align-items: center;
 
     padding: 5px 10px;
 
     border-radius: 20px;
 
-    font-size: 11px;
+    font-size: 10px;
 
-    font-weight: 700;
+    font-weight: 800;
 }
 
 .status-pendente {
-    background: #332d19;
-    color: #e5c75b;
+    background: rgba(201,162,39,0.12);
+
+    color: var(--gold-light);
 }
 
 .status-confirmado {
-    background: #193321;
+    background: rgba(50,180,90,0.12);
+
     color: #70d58a;
 }
 
 .status-concluido {
-    background: #192b33;
+    background: rgba(60,170,200,0.12);
+
     color: #70c7d5;
 }
 
 .status-cancelado {
-    background: #331919;
-    color: #d57070;
+    background: rgba(210,70,70,0.12);
+
+    color: #e27b7b;
 }
 
-/* =========================================
+/* =========================================================
    RESPONSIVIDADE
-========================================= */
+========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 950px) {
 
     .services-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -934,53 +1309,64 @@ footer {
 @media (max-width: 700px) {
 
     .header-container {
-        padding: 15px 18px;
+        padding: 16px 18px;
     }
 
     nav {
-        gap: 12px;
+        gap: 15px;
     }
 
     nav a {
-        font-size: 12px;
+        font-size: 11px;
     }
 
     section {
-        padding: 70px 18px;
+        padding: 80px 18px;
     }
 
     .services-grid {
         grid-template-columns: 1fr;
-        max-width: 420px;
+
+        max-width: 430px;
     }
 
     .steps {
         grid-template-columns: 1fr;
-        max-width: 450px;
-        margin: 0 auto;
+
+        max-width: 430px;
+    }
+
+    .service-card {
+        min-height: auto;
     }
 }
 
-/* =========================================
+/* =========================================================
    CELULAR
-========================================= */
+========================================================= */
 
 @media (max-width: 500px) {
 
     .hero {
-        padding: 130px 18px 70px;
+        padding: 135px 18px 80px;
     }
 
     .hero h1 {
-        font-size: 38px;
+        font-size: 40px;
+
+        letter-spacing: -1px;
     }
 
     .hero p {
-        font-size: 15px;
+        font-size: 14px;
     }
 
     .section-header h2 {
-        font-size: 28px;
+        font-size: 30px;
+    }
+
+    .contact-content h2 {
+        font-size: 30px;
     }
 
     /* MODAL */
@@ -990,27 +1376,31 @@ footer {
     }
 
     .vehicle-modal-content {
-        max-width: 340px;
+        max-width: 350px;
 
-        padding: 28px 18px 22px;
+        padding: 35px 18px 25px;
+
+        border-radius: 17px;
     }
 
     .modal-close {
-        top: 9px;
-        right: 9px;
+        top: 12px;
+        right: 12px;
 
         width: 34px;
         height: 34px;
 
-        font-size: 23px;
+        font-size: 22px;
     }
 
     .modal-header {
-        padding-right: 35px;
+        padding: 0 25px;
+
+        margin-bottom: 24px;
     }
 
     .modal-header h2 {
-        font-size: 21px;
+        font-size: 22px;
     }
 
     .vehicle-selection {
@@ -1018,14 +1408,12 @@ footer {
     }
 
     .vehicle-box {
-        width: 120px;
-        min-width: 120px;
-
-        height: 100px;
+        width: 125px;
+        height: 105px;
     }
 
     .vehicle-icon {
-        font-size: 27px;
+        font-size: 29px;
     }
 
     .vehicle-box strong {
@@ -1037,6 +1425,6 @@ footer {
     }
 
     .extra-service {
-        align-items: flex-start;
+        padding: 12px;
     }
 }
