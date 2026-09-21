@@ -17,7 +17,7 @@ const SUPABASE_URL =
    QUE JÁ ESTÁ NO SEU SCRIPT ATUAL.
 */
 const SUPABASE_KEY =
-    "COLE_AQUI_A_MESMA_CHAVE_PUBLICAVEL_DO_SEU_SCRIPT_ATUAL";
+    "sb_publishable_CS4rdWdRC9iVrHNvXXCzHA_6kH6WRlG";
 
 
 window.supabaseClient =
